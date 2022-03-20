@@ -1,0 +1,218 @@
+@font-face{
+    font-family: CircularStd-Medium;
+    src: url("../font/Circular/CircularStd-Medium.otf") format("opentype");
+}
+
+*{
+    outline: none;
+    margin: 0;
+    padding: 0;
+    font-family: CircularStd-Medium;
+    border: none;
+    
+}
+body{
+    background-color: white;
+    text-align: center;
+    overflow-x: hidden;
+}
+.top{
+    height: 86px;
+    border-bottom: 1px solid rgb(182, 179, 179);
+}
+.top img{
+    width: 220px;
+    position: relative;
+    left: 1%;
+    margin-top: -30px;
+}
+.logins h4{
+    margin-top: 40px;
+    text-align: center;
+    font-size: 24px;
+}
+.apps-login{
+    text-align: center;
+}
+#facebook{
+    background-color: rgb(59, 89, 152);
+    color: white;
+    text-transform: uppercase;
+    width: 450px;
+    height: 50px;
+    border-radius: 40px;
+    margin-top: 10px;
+    transition: 0.1s;
+    cursor: pointer;
+}
+#facebook:hover{
+    border: 1px solid black;
+    transition: 0.1s;
+}
+#apple{
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    text-transform: uppercase;
+    width: 450px;
+    height: 50px;
+    border-radius: 40px;
+    margin-top: 10px;
+    transition: 0.1s;
+    cursor: pointer;
+}
+#apple:hover{
+    border: 1px solid black;
+    transition: 0.1s;
+}
+#google{
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #878787;
+    text-transform: uppercase;
+    width: 450px;
+    height: 50px;
+    border-radius: 40px;
+    margin-top: 10px;
+    border: 1px solid;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    transition: 0.1s;
+    cursor: pointer;
+}
+#google:hover{
+    border-color: black;
+    transition: 0.1s;
+}
+#telefone{
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #878787;
+    text-transform: uppercase;
+    width: 450px;
+    height: 50px;
+    border-radius: 40px;
+    margin-top: 10px;
+    border: 1px solid;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    transition: 0.1s;
+    cursor: pointer;
+}
+#telefone:hover{
+    border-color: black;
+    transition: 0.1s;
+}
+
+hr {
+
+    unicode-bidi: isolate;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    overflow: hidden;
+    border-style: inset;
+    border-width: 1px;
+}
+#hr1{
+    margin-top: 20px;
+    position: relative;
+    left: -9.5%;
+    width: 14%;
+}
+#hr2{
+    margin-top: 20px;
+    position: relative;
+    left: 9.5%;
+    width: 14%;
+    top: -49px;
+}
+.ou span{
+position: relative;
+top: -15px;
+}
+#emailP{
+    position: relative;
+    left: -6%;
+    top: -8px;
+    color: black;
+}
+#email{
+    width: 440px;
+    height: 60px;
+    font-size: 18px;
+    padding-left: 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(68, 68, 68, 0.6);
+}
+#senhaP{
+    position: relative;
+    left: -15.5%;
+    top: 15px;
+    color: black;
+}
+#senha{
+    margin-top: 20px;
+    width: 440px;
+    height: 60px;
+    font-size: 18px;
+    padding-left: 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(68, 68, 68, 0.6);
+}
+.login-container a{
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.7);
+    position: relative;
+    top: 10px;
+    left: -11.4%;
+}
+#cadastrar{
+    background-color: #1ed760;
+    width: 220px;
+    height: 55px;
+    font-size: 18px;
+    border-radius: 30px;
+    position: relative;
+    top: -5px;
+    left: 12%;
+    cursor: pointer;
+}
+#entrar{
+    background-color: #1ed760;
+    width: 120px;
+    height: 45px;
+    font-size: 16px;
+    border-radius: 30px;
+    position: relative;
+    top: -20px;
+    left: 24.5%;
+    cursor: pointer;
+}
+#inscreverse{
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #878787;
+    text-transform: uppercase;
+    width: 450px;
+    height: 50px;
+    border-radius: 40px;
+    margin-bottom: 30px;
+    margin-top: 10px;
+    border: 1px solid;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    transition: 0.1s;
+}
+#inscreverse:hover{
+    border-color: black;
+    transition: 0.1s;
+}
+
+#irparalogin{
+    font-size: 16px;
+    background: transparent;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration:underline;
+    text-decoration-color: blue;
+}
+#criarconta{
+    position: absolute;
+    left: 40%;
+    top: 100%;
+}

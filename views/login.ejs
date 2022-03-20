@@ -1,0 +1,51 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/login.css">
+        <title>Document</title>
+    </head>
+    <body>
+
+        <div  class="top">
+            <img src="logo.png" alt="">
+        </div>
+        <div class="logins">
+            <h4>Para continuar, faça login no Spotify.</h4>
+            <div class="apps-login">
+                <button id="facebook"><span style="position: relative;font-size: 16px; left: -20px;" class="square-icons fa fa-facebook"></span>CONTINUAR COM O FACEBOOK</button><br>
+                <button id="apple"><span style="position: relative;font-size: 16px; left: -20px;" class="square-icons fa fa-apple"></span>CONTINUAR COM A APPLE</button><br>
+                <button id="google"><span style="position: relative;color: black; font-size: 16px; left: -20px;" class="square-icons fa fa-google"></span>CONTINUAR COM O GOOGLE</button><br>
+                <button id="telefone">CONTINUAR COM UM NÚMERO DE TELEFONE</button>
+            </div>
+        </div>
+        <div class="ou">
+            <hr id="hr1">
+            <span>OU</span>
+            <hr id="hr2">
+        </div>
+        <div class="login-container">
+            <form action="/inicio" method="POST">
+                <p id="emailP">Endereço de e-mail ou nome de usuário</p>
+                <input type="text" id="email" name="login" placeholder="Endereço de e-mail ou nome de usuário" required><br>
+                <p id="senhaP">Senha</p>
+                <input type="password" id="senha" name="password" placeholder="Senha"required><br>
+                <a href="#">Esqueceu sua senha?</a> <br>
+                <input type="checkbox" style="position: relative; top: 25px;width: 30px; left: -16.7%;"><p style="font-size: 14px; color: rgba(0, 0, 0, 0.9); position: relative;left: -11%; top: 7px;">Lembrar de mim</p>
+                <a><input type="submit" name="entrar" id="entrar" value="ENTRAR"></a>
+            </form>
+        </div>
+        <hr style="width: 35%;"> <br><br>
+        
+        <footer>
+            <form action="/cadastro" method="post">
+                <h3>Não tem uma conta?</h3> <br>
+                <a href="#"><button  id="inscreverse">INSCREVER-SE NO SPOTIFY</button></a>
+            </form>
+        </footer>
+    </body>
+    </html>
+    
+    
