@@ -22,34 +22,6 @@ app.get('/login',(req,res)=>{
 app.get('/cadastro',(req,res)=>{
     res.render('cadastro')
 })
-//----------------------
-const { Sequelize } = require("sequelize")
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-    ssl: true,
-    dialectOptions: {
-        ssl: {
-            rejectUnauthorized: false
-        }
-    },
-})
-
-sequelize.define("TabelaTest",{
-    id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    },
-    nome:{
-        type: DataTypes.TEXT
-    }
-})
-sequelize.models.TabelaTest.create({
-    nome: 'test'
-})
-sequelize.models.TabelaTest.findAll().then(res=>{
-    console.log(res);
-})
-//-----------------------------
 
 const port = parseInt(process.env.PORT) || 3000
 app.listen(port,()=>{
