@@ -22,9 +22,10 @@
                 <input style="display: none;" name="poster" id="file" type="file" accept="image/*" onchange="loadFile(event)" required/><br><br><br>
                 <label onclick="selecionar()" for="selecao-arquivo">Selecione o poster</label><br><br>
                 <img src="img/imagem-vazia.jpg" onclick="selecionar()" alt="Selecioanr uma imagem" id="output"/>
-                <input style="display: none;" onchange="adicionarAdudio()" type="file" name="audio" id="audio" required><br><br>
+                <input style="display: none;" onchange="adicionarAdudio()" type="file" name="audio" accept=".mp3" id="audio" required><br><br>
                 <label onclick="selecionarAudio()"  for="selecao-arquivo">Selecione a Musica</label>
-                <p id="nome">Não há arquivo selecionado</p>
+                <p id="nome">Não há arquivo selecionado.</p>
+                <input type="submit" id="enviar" value="Enviar">
             </form>
         </div>
     </div>

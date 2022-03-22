@@ -5,7 +5,7 @@ var text = document.getElementById('nome')
 var audio = document.getElementById('audio')
 
 function adicionarAdudio(){
-    var nome = "Não há arquivo selecionado. Selecionar arquivo...";
+    var nome = "Não há arquivo selecionado.";
     if(audio.files.length > 0) nome = audio.files[0].name;
     text.innerHTML = nome;
 }
