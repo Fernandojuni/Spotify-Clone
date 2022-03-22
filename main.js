@@ -28,9 +28,11 @@ app.get('/login',(req,res)=>{
 })
 app.get('/cadastro',(req,res)=>{
     res.render('cadastro')
-    cloudinary.uploader.upload("public/img/logo.png",
-        { public_id: "olympic_flag" }, 
-        function(error, result) {console.log(result); });
+
+})
+app.get('/administrador',(req,res)=>{
+    res.render('administrador')
+
 })
 
 const port = parseInt(process.env.PORT) || 3000
