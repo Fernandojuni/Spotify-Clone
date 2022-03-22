@@ -4,10 +4,17 @@ const bodyParser = require('body-parser');
 const session = require('express-session')
 const path = require('path');
 const { parse } = require('path');
+var cloudinary = require('cloudinary').v2
 
 const routers = require('./routers.js')
 
 const app = express();
+
+cloudinary.config({ 
+    cloud_name: 'dgcnfudya', 
+    api_key: '634395634388475', 
+    api_secret: 'sGIzXYveDRCN_iSnjKepzB8mMd8' 
+});
 
 app.use(express.static('views'));
 app.use(express.static('public'));
@@ -21,6 +28,9 @@ app.get('/login',(req,res)=>{
 })
 app.get('/cadastro',(req,res)=>{
     res.render('cadastro')
+    cloudinary.uploader.upload("public/img/logo.png",
+        { public_id: "olympic_flag" }, 
+        function(error, result) {console.log(result); });
 })
 
 const port = parseInt(process.env.PORT) || 3000
