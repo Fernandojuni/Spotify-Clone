@@ -6,12 +6,14 @@ const path = require('path');
 const { parse } = require('path');
 var cloudinary = require('cloudinary').v2
 
+require('dotenv').config()
+
 const app = express();
 
 cloudinary.config({ 
-    cloud_name: 'dgcnfudya', 
-    api_key: '634395634388475', 
-    api_secret: 'sGIzXYveDRCN_iSnjKepzB8mMd8' 
+    cloud_name: process.env.cloud_name, 
+    api_key: process.env.api_key, 
+    api_secret: process.env.api_secret
 });
 
 app.use(express.static('views'));
@@ -21,6 +23,20 @@ app.set('views', path.join(__dirname, '/views'))
 app.set('view engine', 'ejs');
 
 
+
+//------------------POST-----------------
+
+app.post('/addMusica',(req,res)=>{
+    //corrigir isso para pegar oque o cliente selecionar
+    let nomeMusica = req.body.nomeMusica
+    let nomeBanda = req.body.nomeBanda
+    cloudinary.uploader.upload("public/img/imagem-vazia.jpg",
+        { public_id: "imagem-vazia" }, 
+    function(error, result) {console.log(result); if(error)console.log(error); });
+    res.redirect('/login')
+})
+
+//-----------------GET--------------------
 app.get('/login',(req,res)=>{
     res.render('login')
 })
