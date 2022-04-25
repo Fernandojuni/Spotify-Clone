@@ -6,8 +6,6 @@ const path = require('path');
 const { parse } = require('path');
 var cloudinary = require('cloudinary').v2
 
-const routers = require('./routers.js')
-
 const app = express();
 
 cloudinary.config({ 
