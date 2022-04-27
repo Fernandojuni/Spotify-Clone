@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session')
 const path = require('path');
 const { parse } = require('path');
+const res = require('express/lib/response');
 const cloudinary = require('cloudinary').v2
 
 
@@ -41,6 +42,10 @@ app.post('/addMusica',(req,res)=>{
 })
 
 //-----------------GET--------------------
+app.get("/",(req,res)=>{
+    res.render("index")
+})
+
 app.get('/login',(req,res)=>{
     res.render('login')
 })
