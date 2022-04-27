@@ -13,31 +13,52 @@ body {
   display: flex ; 
   background-color: black; 
   color: white;
-  justify-content: center;
+  height: 60px;
  }
- #navbar .nacbar-container {
+ #navbar .navbar-container {
      display: flex;
-     justify-content: space-between;
-     align-items: center;
      padding: 50px 0;
      width: 60%    
  }
  #navbar .navbar-container .logo{
      height: 40px;
      width: auto;
+     
+ }
+ .navbar-container{
+     display: flex;
  }
  #navbar .navbar-container ul{
      display: flex;
      list-style: none;
-     front-weigth: bold;
+     font-weight: bold;
+     justify-content: right;
+     position: relative;
+     top: -40px;
+     right: -35%;
+
      
  }
  #navbar .navbar-container ul li{
      padding: 0 20px;
+     cursor: pointer;
+     
  }
+ #navbar .navbar-container ul li:hover{
+    color: #1ed760;
+}
  #navbar .navbar-container ul li:nth-child(3){
      border-left: 1px solid white;
  }
+ .logo{
+    position: relative;
+    left: -35%; 
+    top: -40px;
+
+ }
+ 
  /* Showcase */
+ 
+
  
 
