@@ -1,14 +1,18 @@
+//-------------importes------------
 const express = require('express')
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const session = require('express-session')
 const path = require('path');
 const { parse } = require('path');
-var cloudinary = require('cloudinary').v2
+const cloudinary = require('cloudinary').v2
+
+
+
+//------------Configs--------------
+const app = express();
 
 require('dotenv').config()
-
-const app = express();
 
 cloudinary.config({ 
     cloud_name: process.env.cloud_name, 
@@ -49,7 +53,21 @@ app.get('/administrador',(req,res)=>{
 
 })
 
-const port = parseInt(process.env.PORT) || 3000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const port = parseInt(process.env.PORT) || 80
 app.listen(port,()=>{
-    console.log(`Servidor ativo na porta ${port}`);
+    console.log(`Servidor rodando na porta ${port}`);
 });
