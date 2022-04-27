@@ -35,7 +35,7 @@ app.post('/addMusica',(req,res)=>{
     //corrigir isso para pegar oque o cliente selecionar
     let nomeMusica = req.body.nomeMusica
     let nomeBanda = req.body.nomeBanda
-    cloudinary.uploader.upload("public/img/imagem-vazia.jpg",
+    cloudinary.uploader.upload("C:/Users/junio/OneDrive/Área de Trabalho/Spotify-heroku/public/img/imagem-vazia.jpg",
         { public_id: "imagem-vazia" }, 
     function(error, result) {console.log(result); if(error)console.log(error); });
     res.redirect('/login')
