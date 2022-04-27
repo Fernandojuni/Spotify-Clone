@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const session = require('express-session')
 const path = require('path');
 const { parse } = require('path');
-const res = require('express/lib/response');
 const cloudinary = require('cloudinary').v2
 
 
@@ -21,6 +20,9 @@ cloudinary.config({
     api_secret: process.env.api_secret
 });
 
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json())
 app.use(express.static('views'));
 app.use(express.static('public'));
 app.use('/public', express.static(path.join(__dirname, 'public')));
@@ -35,9 +37,12 @@ app.post('/addMusica',(req,res)=>{
     //corrigir isso para pegar oque o cliente selecionar
     let nomeMusica = req.body.nomeMusica
     let nomeBanda = req.body.nomeBanda
-    cloudinary.uploader.upload("C:/Users/junio/OneDrive/Área de Trabalho/Spotify-heroku/public/img/imagem-vazia.jpg",
-        { public_id: "imagem-vazia" }, 
+    let poster = req.body.poster
+    let audio = req.body.audio
+    cloudinary.uploader.upload(poster,
+        { public_id: nomeMusica }, 
     function(error, result) {console.log(result); if(error)console.log(error); });
+
     res.redirect('/login')
 })
 
