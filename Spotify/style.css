@@ -1,0 +1,43 @@
+ * {
+     box-sizing: border-box;
+     padding: 0px;
+     margin: auto;
+    }
+ 
+
+body {
+    font-family: 'Roboto', sans-serif;
+ }
+ /* Navbar */
+ #navbar {
+  display: flex ; 
+  background-color: black; 
+  color: white;
+  justify-content: center;
+ }
+ #navbar .nacbar-container {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     padding: 50px 0;
+     width: 60%    
+ }
+ #navbar .navbar-container .logo{
+     height: 40px;
+     width: auto;
+ }
+ #navbar .navbar-container ul{
+     display: flex;
+     list-style: none;
+     front-weigth: bold;
+     
+ }
+ #navbar .navbar-container ul li{
+     padding: 0 20px;
+ }
+ #navbar .navbar-container ul li:nth-child(3){
+     border-left: 1px solid white;
+ }
+ /* Showcase */
+ 
+
