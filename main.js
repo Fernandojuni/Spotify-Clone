@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const session = require('express-session')
 const path = require('path');
 const { parse } = require('path');
-const fs = require('fs');
 const cloudinary = require('cloudinary').v2
 
 
