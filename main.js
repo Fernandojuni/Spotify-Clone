@@ -39,6 +39,7 @@ app.set('view engine', 'ejs');
 
 //-------------Banco de dados--------------
 const Sequelize = require('sequelize');
+const { where } = require('sequelize');
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
     protocol: 'postgres',
@@ -74,6 +75,22 @@ const cadastros = sequelize.define('cadastros', {
     senha: {
         type: Sequelize.STRING,
         require: true
+    },
+    nome_usuario:{
+        type: Sequelize.STRING,
+        require: true
+    },
+    data_aniversario:{
+        type: Sequelize.DATE,
+        require: true
+    },
+    genero:{
+        type: Sequelize.STRING,
+        require: true
+    },
+    premium:{
+        type: Sequelize.BOOLEAN,
+        require: true
     }
 });
 
@@ -85,13 +102,25 @@ init()
 
 //------------------POST-----------------
 
+
 app.post('/alth',(req,res)=>{
     let login = req.body.email
-    let senha = req.body.password
-    if (login == "adm" && senha == "adm") {
-        req.session.login = login
-        res.redirect('/inicio')
-    }
+    let senha2 = req.body.password
+    cadastros.findOne({
+        where:{
+            email: req.body.email,
+            senha: req.body.password
+        }
+    }).then((result)=>{
+        if (result) {           
+            if (login == result.email && senha2 == result.senha) {
+                req.session.login = login
+                res.redirect('/inicio')
+            }
+        }else{
+            res.redirect("/login?senha=false")
+        }
+    })
 })
 
 app.post('/althCadastro',(req,res)=>{
@@ -111,7 +140,7 @@ app.post('/althCadastro',(req,res)=>{
                 console.log('cadastrado');
                 res.redirect('/login')
             }).catch(function(erro){
-                console.log('erro'+ erro);
+                console.log('erro:'+ erro);
             })
         }
     }).catch((err)=>{
@@ -142,7 +171,12 @@ app.get('/login',(req,res)=>{
     if (req.session.login) {
         res.redirect('/inicio')
     }else{
-        res.render('login')
+        if (req.query.senha == "false") {
+            
+            res.render("login",{mensage:"Senha ou email incorretos"})
+        }else{
+            res.render("login",{mensage:null})
+        }
     }
     
 })
