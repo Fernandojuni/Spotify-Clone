@@ -11,13 +11,22 @@ const cloudinary = require('cloudinary').v2
 //-------------Banco de dados--------------
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
-    ssl: true,
     dialectOptions: {
-        ssl: {
-            rejectUnauthorized: false
-        }
-    },
-})
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
+  }
+);
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Coneccao com o banco de dados estabelecidad com sucesso.');
+  })
+  .catch(err => {
+    console.error('erro na coneccao com o banco de dados:', err);
+  });
 
 
 const cadastro = sequelize.define('cadastro', {
