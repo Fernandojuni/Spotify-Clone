@@ -5,8 +5,39 @@ const bodyParser = require('body-parser');
 const session = require('express-session')
 const path = require('path');
 const { parse } = require('path');
+const fs = require('fs');
 const cloudinary = require('cloudinary').v2
 
+
+//-------------Banco de dados--------------
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    ssl: true,
+    dialectOptions: {
+        ssl: {
+            rejectUnauthorized: false
+        }
+    },
+})
+
+
+const cadastro = sequelize.define('cadastros', {
+    id:{
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
+    email: {
+        type: Sequelize.STRING,
+        require: true
+    },
+    senha: {
+        type: Sequelize.STRING,
+        require: true
+    }
+},{
+    timestamps: false
+});
 
 
 //------------Configs--------------
@@ -48,6 +79,31 @@ app.post('/alth',(req,res)=>{
     }
 })
 
+app.post('/althCadastro',(req,res)=>{
+
+    cadastro.findOne({
+        where:{
+            email: req.body.login
+        }
+    }).then((cadastrado)=>{
+        if (cadastrado) {
+            res.redirect('/login')
+        }else{
+            cadastro.create({
+                email: req.body.login,
+                senha: req.body.password
+            }).then(function(){
+                console.log('cadastrado');
+                res.redirect('/login')
+            }).catch(function(erro){
+                console.log('erro'+ erro);
+            })
+        }
+    }).catch((err)=>{
+        console.log('erro:'+ err);
+    })
+})
+
 
 app.post('/addMusica',(req,res)=>{
     //corrigir isso para pegar oque o cliente selecionar
@@ -68,10 +124,20 @@ app.get("/",(req,res)=>{
 })
 
 app.get('/login',(req,res)=>{
-    res.render('login')
+    if (req.session.login) {
+        res.redirect('/inicio')
+    }else{
+        res.render('login')
+    }
+    
 })
 app.get('/cadastro',(req,res)=>{
-    res.render('cadastro')
+    if (req.session.login) {
+        res.redirect('/inicio')
+    }else{
+        res.render('cadastro')
+    }
+    
 
 })
 app.get('/administrador',(req,res)=>{
