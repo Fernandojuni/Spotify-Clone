@@ -20,7 +20,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
 })
 
 
-const cadastro = sequelize.define('cadastros', {
+const cadastro = sequelize.define('cadastro', {
     id:{
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -34,8 +34,6 @@ const cadastro = sequelize.define('cadastros', {
         type: Sequelize.STRING,
         require: true
     }
-},{
-    timestamps: false
 });
 
 
