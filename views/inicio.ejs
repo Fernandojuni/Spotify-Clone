@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/inicio.css">
+
+    <!--fonts/icon-->
+    <!-- Outlined -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
+ 
+    <!-- Filled -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Rounded -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet">
+    
+    <!-- Sharp -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet">
+    
+    <!-- Two tone -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone" rel="stylesheet">
+    <!--fonts/icon-->
+    
+    <title id="tituloDaPagina">Spotify</title>
+
+
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-wraper">
+            <div class="sidebar-logo">
+                <a href="/inicio"><img src="img/logo.jpeg" alt=""></a>
+            </div>
+            <div class="sidebar-menu">
+                <a class="sidebar-menu-selecionado" href="/inicio"><span class="fas fa-home"></span>Inicio</a>
+                <a href="#"><span class="fas fa-search"></span>Buscar</a>
+                <a id="addMusica" style="display:  inline;" onclick="adicionarMusica()" href="#"><span class="fas fa-database"></span>Adicionar musica</a>
+            </div>
+            <div class="sidebar-menu">
+                <p class="sidebar-menu-title">Playlists</p>
+                <div onclick="criarPlay()" class="sidebar-menu-item">
+                    <div class="sidebar-menu-item-componente"> + </div>
+                    <span>Criar Playlist</span>
+                </div>
+                <div class="sidebar-menu-item">
+                    <img src="img/musicas-curtidas.jpeg" alt="">
+                    <span>Musicas Curtidas</span>
+                </div>
+            </div>
+            
+            <div class="sidebar-playlists">
+                
+                
+                
+            </div>
+        </div>
+    </div>
+    <div id="popup_criar_play" style="display: none;">
+        <form action="/telaPrincipal/playlistCriar" method="post">
+            <input type="text" name="NomePlay" id="nomePlay" placeholder=" Nome da Playlist" required> <br>
+            <button onclick="PlayCriar()" id="btnEnviarARQ">ENVIAR</button>
+        </form>
+    </div>
+    <div id="popup_add_musica" style="display: none;" >
+        <form action="/telaPrincipal/ADDmusica" method="POST">
+            <p id="mensagem">Os arquivos de audio e imagem devem <br> esta em suas respectivas pastas para funcionar</p>
+            <input type="text" name="NomeADD" id="NomeADD" placeholder=" Nome da Musica" required> <br>
+            <input type="text" name="BandaADD" id="BandaADD" placeholder=" Nome da Banda" required><br>
+                <p >selecione o arquivo de imagem</p>
+                <input name="imgADD" type="file" id="imgADD" required><br>
+                <p>selecione o arquivo da musica</p>
+                <input name="audioADD" type="file" id="audioADD" required><br>
+            <button id="btnEnviarARQ">ENVIAR</button>
+            
+        </form>
+    </div>
+
+    <div id="main" style="display: inline;">
+        <div class="main-wraper">
+            <div class="main-row">
+                <div class="main-row-title"><h2>Musicas</h2></div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="player">
+        <div class="player-artist">
+        </div>
+
+        <div class="player-control">
+            <div class="player-control-buttons">
+                <a id="aleario" onclick="alearioAtv()" href="#"><span class="material-icons-outlined">shuffle</span></a>
+                <a id="voltar" onclick="voltar()" href="#" ><span class="material-icons-outlined">skip_previous</span></i></a>
+                <a style="display: none;" id="pausebtn" href=""><span class="material-icons-outlined">pause_circle_filled</span></a>
+                <a id="playbtn"  href="#"><span class="material-icons-outlined">play_circle_filled</span></i></a>
+                <a id="avancar" onclick="avancar()" href="#"><span class="material-icons-outlined">skip_next</span></a>
+                <a id="loop" onclick="loopAtv()" href="#"><span class="material-icons-outlined">loop</span></a>
+            </div>
+            <div id="player-control-progress">
+                <span id="tempo_atual">00:00</span>
+                <span id="tempo_total">00:00</span>
+                <div id="player-control-progress-2">
+
+                </div>
+            </div>
+            
+            
+        </div>
+        <a onclick="ADDplaylis()" id="ADDplaylist" href="#"><span class="material-icons-outlined">playlist_add</span></a>
+        <div id="popupAddPlaylist" style="display:none;">
+            
+        </div>
+
+        <div class="player-control-volume">
+
+            <a id="volume-maximo" onclick="mutar()" style="display: inline;" href="#"><span class="fas fa-volume-up"></span></a>
+            <a id="volume-mutado" onclick="desmutar()" style="display: none;" href="#"><span class="fas fa-volume-mute"></span></a>
+            <a id="volume-baixo" style="display: none;" href="#"><span class="fas fa-volume-down"></span></a>
+            <input type="range" id="volume" min="0" value="100" max="1" step="0.1" onchange="document.getElementById('audioplayer').volume=this.value">
+        </div>
+    </div>
+
+        
+        
+    <audio id="audioplayer" style="position: absolute;left: 0; top: 0; z-index: -999; opacity: 0;" controls="controls" src=""></audio>
+
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="js/all.min.js"></script>
+    <script src="js/inicio.js"></script>
+    
+</body>
+</html>
