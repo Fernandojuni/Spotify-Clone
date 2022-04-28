@@ -10,15 +10,17 @@ const cloudinary = require('cloudinary').v2
 
 //-------------Banco de dados--------------
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize(process.env.DATABASE_URL,{
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: 'postgres',
+    protocol: 'postgres',
     dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
+        ssl: {
+            require: true,
+            rejectUnauthorized: false, // very important
+        }
+
     }
-  }
-);
+});
 sequelize
   .authenticate()
   .then(() => {
