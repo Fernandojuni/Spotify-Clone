@@ -8,6 +8,35 @@ const { parse } = require('path');
 const cloudinary = require('cloudinary').v2
 
 
+
+//------------Configs--------------
+const app = express();
+
+require('dotenv').config()
+
+cloudinary.config({ 
+    cloud_name: process.env.cloud_name, 
+    api_key: process.env.api_key, 
+    api_secret: process.env.api_secret
+});
+
+
+app.use(session({
+  secret: 'dawdwadawdwa',
+  resave: false,
+  saveUninitialized: true,
+}))
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json())
+app.use(express.static('views'));
+app.use(express.static('public'));
+app.use('/public', express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, '/views'))
+app.set('view engine', 'ejs');
+
+
+
 //-------------Banco de dados--------------
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
@@ -47,34 +76,6 @@ const cadastros = sequelize.define('cadastros', {
         require: true
     }
 });
-
-
-//------------Configs--------------
-const app = express();
-
-require('dotenv').config()
-
-cloudinary.config({ 
-    cloud_name: process.env.cloud_name, 
-    api_key: process.env.api_key, 
-    api_secret: process.env.api_secret
-});
-
-
-app.use(session({
-  secret: 'dawdwadawdwa',
-  resave: false,
-  saveUninitialized: true,
-}))
-
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json())
-app.use(express.static('views'));
-app.use(express.static('public'));
-app.use('/public', express.static(path.join(__dirname, 'public')));
-app.set('views', path.join(__dirname, '/views'))
-app.set('view engine', 'ejs');
-
 
 
 //------------------POST-----------------
