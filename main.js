@@ -29,7 +29,7 @@ sequelize
   });
 
 
-const cadastro = sequelize.define('cadastro', {
+const cadastros = sequelize.define('cadastros', {
     id:{
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -87,7 +87,7 @@ app.post('/alth',(req,res)=>{
 
 app.post('/althCadastro',(req,res)=>{
 
-    cadastro.findOne({
+    cadastros.findOne({
         where:{
             email: req.body.login
         }
@@ -95,7 +95,7 @@ app.post('/althCadastro',(req,res)=>{
         if (cadastrado) {
             res.redirect('/login')
         }else{
-            cadastro.create({
+            cadastros.create({
                 email: req.body.login,
                 senha: req.body.password
             }).then(function(){
