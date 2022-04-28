@@ -77,6 +77,11 @@ const cadastros = sequelize.define('cadastros', {
     }
 });
 
+//cria a tabela caso ela nao exista
+const init = async ()=>{
+    await cadastros.sync();
+}
+init()
 
 //------------------POST-----------------
 
