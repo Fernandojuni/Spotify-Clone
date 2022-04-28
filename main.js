@@ -20,12 +20,11 @@ cloudinary.config({
     api_secret: process.env.api_secret
 });
 
-app.set('trust proxy', 1)
+
 app.use(session({
-  secret: '21421512512542d2*@&*T!T$*!@@($!132154215452dawdaw',
+  secret: 'dawdwadawdwa',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true }
 }))
 
 app.use(bodyParser.urlencoded({extended: true}));
