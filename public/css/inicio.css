@@ -1,0 +1,583 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;1,100&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
+}
+*::-webkit-scrollbar {
+    width: 8px;
+    background-color: black;
+} 
+  
+*::-webkit-scrollbar-thumb {   
+    background-color: rgb(60, 60, 60); 
+    border-radius: 50px;
+}
+*::-webkit-scrollbar-thumb:hover{
+    background-color: rgb(104, 104, 104);
+}
+html,body{
+    height: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+
+#popupPlaylistVazia{
+    position: relative;
+    top: 115px;
+    left: -3.5%;
+    width: 120px;
+    height: 300px;
+    text-align: center;
+    overflow-y: scroll;
+    background-color: #818181;
+}
+#popupPlaylistVazia input[type=button]{
+    margin-top: 4px;
+    width: 100%;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+}
+#popupPlaylistVazia input[type=button]:hover{
+    color: white;
+    background-color: rgb(80, 79, 79);
+}
+.sidebar{
+    float: left;
+    width: 250px;
+    padding: 10px 10px;
+    height: 100%;
+    overflow-y: auto;
+    background-color: black;
+}
+
+.sidebar-menu{
+    margin: 20px 0;
+    color: rgb(190, 190, 190)
+}
+.sidebar-logo img{
+    max-width: 150px;
+    width: 100%;
+}
+.sidebar-menu a{
+    color: rgb(190, 190, 190);
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+
+}
+.sidebar-menu svg{
+    margin: 0 20px;
+}
+.sidebar-menu a.sidebar-menu-selecionado{
+    color: white;
+    background-color: rgb(80, 80, 80);
+    border-radius: 5px;
+}
+.sidebar-menu-item{
+    margin-top: 12px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+.sidebar-menu p.sidebar-menu-title{
+    color: white;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+.sidebar-menu-item-componente{
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    display: inline-block;
+    color: black;
+    font-weight: bold;
+    background-color: white;
+    border-radius: 2px;
+} 
+.sidebar-wraper{
+    padding-bottom: 200px;
+    overflow-y: hidden;
+}
+.main-wraper{
+    padding-bottom: 200px;
+    overflow-y: hidden;
+}
+.sidebar-menu-item span{
+    font-weight: bold;
+    font-size: 14px;
+    padding: 0 10px;
+}
+.sidebar-menu-item img{
+    width: 32px;
+    height: 30px;
+    vertical-align: middle;
+    display: inline-block;
+}
+.sidebar-playlists{
+    padding: 20px 0;
+    border-top: 1px solid rgb(40, 40, 40);
+}
+.sidebar-playlists a{
+    margin: 10px 0;
+    display: block;
+    color: rgb(190, 190, 190);
+    text-decoration: none;
+    
+}
+
+.sidebar-playlists a:hover{
+    color: white;
+}
+
+#main{
+    width: calc(100% - 250px);
+    background-color: rgb(30, 30, 30);
+    height: 100%;
+    float: left;
+    padding: 15px 50px;
+    overflow-y: scroll;
+}
+.main-row{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    
+}
+.main-row-title{
+    width: 100%;
+    
+
+}
+.main-row-title h2{
+    color: white;
+    
+}
+
+.main-col img{
+    max-width: 120px;
+    width: 100%;
+    max-height: 118px;
+    height: 100%;
+    margin-top:10%;
+    border-radius: 3px;
+}
+.main-col{
+    cursor: pointer;
+    width: 15%;
+    min-width: 140px;
+    margin-right: 1%;
+    margin-top: 20px;
+    background-color: #282828;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.main-col h3{
+    color: white;
+    margin: 8px 0;
+}
+
+.main-col p{
+    color: rgb(100, 100, 100);
+    margin: 8px 10px;
+    font-size: 13px;
+    text-align: left;
+}
+.player{
+    width: 100%;
+    padding: 20px;
+    height: 100px;
+    position: fixed;    
+    left: 0;
+    bottom: 0;
+    display: flex;
+    background-color: rgb(60, 60, 60);
+}
+
+.player-artist{
+    width: 21%;
+
+}
+.player-artist img{
+    max-width: 70px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.player-artist h3{
+    display: inline-block;
+    color: white;
+    font-weight: normal;
+    font-size: 20px;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+.player-artist h3 > span{
+    color: rgb(200, 200, 200);
+    font-size: 13px;
+}
+.player-control{
+    width: 55%;
+    text-align: center;
+
+}
+.player-control-buttons a{
+    color: white;
+    margin: 8px 15px;
+    font-size: 18px;
+}
+#player-control-progress{
+    width: 100%;
+    max-width: 600px;
+    height: 7px;
+    margin-top: 20px;
+    position: relative;
+    border-radius: 8px;
+    display: inline-block;
+    background-color: rgb(130, 130, 130);
+}
+
+#player-control-progress-2{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 7px;
+    border-radius: 8px;
+    background-color: #00ff37;
+
+    transition: all 0.5s;
+}
+#player-control-progress-2::after{
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: -4px;
+    width: 15px;
+    height: 15px;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+}
+#volume{
+    -webkit-appearance: none;
+    appearance: none;
+    display: inline-block;
+    max-width: 100px;
+    width: 100%;
+    max-height: 5px;
+    height: 100%;
+    position: relative;
+    border-radius: 5px;
+    background-color: #00ff37;
+    outline: none;
+    cursor: pointer;
+}
+#volume-maximo, #volume-mutado, #volume-baixo{
+    color: rgb(189, 189, 189);
+    position: relative;
+    top: 4px;
+    margin-right: 2px;
+}
+#volume-maximo:hover, #volume-mutado:hover, #volume-baixo:hover{
+    color: rgb(255, 255, 255);
+}
+
+
+#volume::-webkit-slider-thumb{
+    
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgb(255, 255, 255);
+    
+}
+
+.player-control-volume{
+    float: right;
+    position: relative;
+    left: 9%;
+    top: 30%;
+}
+
+
+#aleario{
+    position: absolute;
+    left: 38.5%;
+    top: 12%;
+    color: rgb(180, 179, 179);
+}
+#loop{
+    position: absolute;
+    right: 42%;
+    top: 12%;
+    color: rgb(180, 179, 179);
+}
+#aleario:hover{
+    color: white;
+}
+#loop:hover{
+    color: white;
+}
+#playbtn{
+    color: rgb(180, 179, 179);
+}
+#playbtn:hover{
+    color: white;
+}
+#pausebtn{
+    color: rgb(180, 179, 179);
+}
+#pausebtn:hover{
+    color: white;
+}
+
+#avancar{
+    color: rgb(180, 179, 179);
+}
+#avancar:hover{
+    color: rgb(255, 255, 255);
+}
+#voltar{
+    color: rgb(180, 179, 179);
+}
+#voltar:hover{
+    color: rgb(255, 255, 255);
+}
+#tempo_atual{
+    color: rgb(199, 194, 194);
+    position: relative;
+    left: -52%;
+    top: -100%;
+}
+#tempo_total{
+    color: rgb(199, 194, 194);
+    position: relative;
+    left: 51%;
+    top: -100%;
+}
+
+#ADDplaylist{
+    color:rgb(189, 189, 189) ;
+    position: relative;
+    left: 8.5%;
+    top: 32%;
+}
+#ADDplaylist:hover{
+    color: rgb(255, 255, 255);
+}
+
+
+
+
+.main-col-playlist{
+    background-color: rgb(44, 44, 44);
+    width: 100%;
+    height: 90px;
+    border-bottom: 1.5px solid rgb(116, 115, 115);
+    cursor: pointer;
+}
+.main-col-playlist img{
+    position: relative;
+    max-width: 90px;
+    max-height: 65px;
+    height: 100%;
+    width: 100%;
+    margin-top: 1.2%;
+}
+.main-col-playlist span{
+    position: relative;
+    top: -23%;
+    text-decoration: none;
+    color: white;
+}
+.main-col-playlist:hover{
+    background-color: rgb(88, 88, 88);
+}
+
+
+#main-playlist{
+    width: calc(100% - 250px);
+    background-color: rgb(44, 44, 44);
+    height: 90%;
+    float: left;
+    padding: 0 10px;
+    overflow-y: auto;
+    padding-bottom: 47px;
+}
+.main-row-playlist{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+.musica-playlist{
+    font-size: 20px;
+    position: relative;
+    color: white;
+    top: -72%;
+    left: 13%;
+}
+.banda-playlist{
+    font-size: 15px;
+    position: relative;
+    color: white;
+    top: -63%;
+    left: 13%; 
+}
+.top-playlist{
+    text-align: center;
+    height: 60px;
+    background-color: black;
+    padding-top: 10px;
+    color: white;
+}
+#popup_add_musica{
+    position: absolute;
+    top: 13%;
+    left: 17%;
+    color: rgb(0, 0, 0);
+    background-color: rgb(139, 139, 143);
+}
+#popup_add_musica input[type=text]{
+    width: 240px;
+    height: 25px;
+    border-radius: 4px;
+    border: none;
+    margin: 10px;
+}
+#arq{
+    text-align: center;
+    margin: 10px;
+}
+#arq p{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#btnEnviarARQ{
+    position: relative;
+    left: 40%;
+    width: 70px;
+    height: 30px;
+    border: none;
+    color: rgb(0, 0, 0);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 15px;
+    background-color: #208034;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+#playlistVazia{
+    position: relative;
+    top: 40px;
+    left: 25%;
+    color: white;
+    text-align: center;
+}
+#playlistVazia input{
+    margin-top: 10px;
+    width: 150px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    background-color: #00ff37;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+#popupPlaylistVazia{
+    position: relative;
+    top: 115px;
+    left: -3.5%;
+    width: 120px;
+    height: 300px;
+    text-align: center;
+    overflow-y: scroll;
+    background-color: #818181;
+}
+#popupAddPlaylist{
+    position: absolute;
+    top: -180%;
+    left: 79.5%;
+    width: 120px;
+    height: 200px;
+    text-align: center;
+    overflow-y: scroll;
+    background-color: #818181;
+}
+#popupAddPlaylist input[type=button]{
+    width: 100%;
+    border: none;
+    cursor: pointer;
+}
+#popupAddPlaylist input[type=button]:hover{
+    color: white;
+    background-color: rgb(80, 79, 79);
+}
+.playADDMusica:hover{
+    background-color: rgb(80, 79, 79);
+}
+
+
+#removerMusicaPlay{
+    color: white;
+    position: relative;
+    color: rgb(177, 177, 177);
+    top: 30%;
+    left: 8%;
+}
+#removerMusicaPlay:hover{
+    color: white;
+}
+
+
+#popup_criar_play{
+    position: absolute;
+    top: 35%;
+    left: 15%;
+    color: rgb(0, 0, 0);
+    background-color: rgb(139, 139, 143);
+}
+#popup_criar_play input[type=text]{
+    width: 240px;
+    height: 25px;
+    border-radius: 4px;
+    border: none;
+    margin: 10px;
+}
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 1700px) {
+    .main-col{
+        width: 15%;
+    }
+}
+@media screen and (max-width:768px) {
+    .main-col{
+        width: 50%;
+    }
+}
+
+
+
+

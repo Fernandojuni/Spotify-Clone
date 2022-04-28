@@ -20,6 +20,13 @@ cloudinary.config({
     api_secret: process.env.api_secret
 });
 
+app.set('trust proxy', 1)
+app.use(session({
+  secret: '21421512512542d2*@&*T!T$*!@@($!132154215452dawdaw',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
@@ -32,6 +39,16 @@ app.set('view engine', 'ejs');
 
 
 //------------------POST-----------------
+
+app.post('/alth',(req,res)=>{
+    let login = req.body.email
+    let senha = req.body.password
+    if (login == "adm" && senha == "adm") {
+        req.session.login = login
+        res.redirect('/inicio')
+    }
+})
+
 
 app.post('/addMusica',(req,res)=>{
     //corrigir isso para pegar oque o cliente selecionar
@@ -64,6 +81,13 @@ app.get('/administrador',(req,res)=>{
 })
 
 
+
+app.get('/inicio',(req,res)=>{
+    if (req.session.login) {
+        res.render('inicio')
+    }
+
+})
 
 
 
