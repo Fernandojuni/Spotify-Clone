@@ -1,48 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/dgcnfudya/image/upload/v1647908941/favicon.png" />
+    <link rel="stylesheet" href="css/login.css">
+    <title>Cadastro</title>
+</head>
+<body>
+    <div class="top">
+        <img src="https://res.cloudinary.com/dgcnfudya/image/upload/logo_preta.png" alt="">
+    </div>
+    <div class="logins">
+        <h4 style="font-size: 16px;">Inscreva-se grátis e comece a curtir.</h4>
+        <div class="apps-login">
+            <button id="facebook"><span style="position: relative;font-size: 16px; left: -20px;" class="square-icons fa fa-facebook"></span>CONTINUAR COM O FACEBOOK</button><br>
+            <button id="google"><span style="position: relative;color: black; font-size: 16px; left: -20px;" class="square-icons fa fa-google"></span>CONTINUAR COM O GOOGLE</button><br>
+        </div>
+    </div>
+    <div class="ou">
+        <hr id="hr1">
+        <span>OU</span>
+        <hr id="hr2">
+    </div>
     
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/dgcnfudya/image/upload/v1647908941/favicon.png" />
-        <link rel="stylesheet" href="css/login.css">
-        <title>Cadastro</title>
-    </head>
-    <body>
-        <div class="top">
-            <img src="https://res.cloudinary.com/dgcnfudya/image/upload/logo_preta.png" alt="">
-        </div>
-        <div class="logins">
-            <h4 style="font-size: 16px;">Inscreva-se grátis e comece a curtir.</h4>
-            <div class="apps-login">
-                <button id="facebook"><span style="position: relative;font-size: 16px; left: -20px;" class="square-icons fa fa-facebook"></span>CONTINUAR COM O FACEBOOK</button><br>
-                <button id="google"><span style="position: relative;color: black; font-size: 16px; left: -20px;" class="square-icons fa fa-google"></span>CONTINUAR COM O GOOGLE</button><br>
-            </div>
-        </div>
-        <div class="ou">
-            <hr id="hr1">
-            <span>OU</span>
-            <hr id="hr2">
-        </div>
-        
-        <div class="login-container">
-            <% if (mensage) { %>
-                <p style="position: relative; top: -20px; color: red;"><%= mensage %> </p>
-            <% } %>
-            <form action="/althCadastro" method="POST" >
-                <p id="emailP">Endereço de e-mail ou nome de usuário</p>
-                <input type="email" id="email" name="login" placeholder="Endereço de e-mail ou nome de usuário" required><br>
-                <p id="senhaP">Senha</p>
-                <input type="password" id="senha" name="password" placeholder="Senha" required><br>
-                <a><input type="submit" name="cadastrar" id="cadastrar" value="Inscrever-se"></a>
-            </form>
-        </div>
-        <hr style="width: 35%;"> <br><br><br>
-        <footer>
-            <h3 id="criarconta">Já tem uma conta? <a href="/login"><button id="irparalogin">Faça login.</button></a></h3>
-        </footer>
-    </body>
-    </html>
-    
-   
+    <div class="login-container">
+        <% if (mensage) { %>
+            <p style="position: relative; top: -20px; color: red;"><%= mensage %> </p>
+        <% } %>
+        <form action="/althCadastro" method="POST" >
+            <p id="emailP">Endereço de e-mail ou nome de usuário</p>
+            <input type="email" id="email" name="login" placeholder="Endereço de e-mail ou nome de usuário" required><br>
+            <p id="senhaP">Senha</p>
+            <input type="password" id="senha" name="password" placeholder="Senha" required><br>
+            <a><input type="submit" name="cadastrar" id="cadastrar" value="Inscrever-se"></a>
+        </form>
+    </div>
+    <hr style="width: 35%;"> <br><br><br>
+    <footer>
+        <h3 id="criarconta">Já tem uma conta? <a href="/login"><button id="irparalogin">Faça login.</button></a></h3>
+    </footer>
+</body>
+</html>
+

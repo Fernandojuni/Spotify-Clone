@@ -102,7 +102,6 @@ init()
 
 //------------------POST-----------------
 
-
 app.post('/alth',(req,res)=>{
     let login = req.body.email
     let senha2 = req.body.password
@@ -149,15 +148,13 @@ app.post('/althCadastro',(req,res)=>{
 })
 
 
+
 app.post('/addMusica',(req,res)=>{
     //corrigir isso para pegar oque o cliente selecionar
     let nomeMusica = req.body.nomeMusica
     let nomeBanda = req.body.nomeBanda
-    let poster = req.body.poster
+    let poster = (req.body.poster)
     let audio = req.body.audio
-    cloudinary.uploader.upload(poster,
-        { public_id: nomeMusica }, 
-    function(error, result) {console.log(result); if(error)console.log(error); });
 
     res.redirect('/login')
 })
@@ -193,10 +190,7 @@ app.get('/cadastro',(req,res)=>{
     
 
 })
-app.get('/administrador',(req,res)=>{
-    res.render('administrador')
 
-})
 
 
 
