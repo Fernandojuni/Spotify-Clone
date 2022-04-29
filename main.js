@@ -76,22 +76,22 @@ const cadastros = sequelize.define('cadastros', {
         type: Sequelize.STRING,
         require: true
     },
-    nome_usuario:{
-        type: Sequelize.STRING,
-        require: true
-    },
-    data_aniversario:{
-        type: Sequelize.DATE,
-        require: true
-    },
-    genero:{
-        type: Sequelize.STRING,
-        require: true
-    },
-    premium:{
-        type: Sequelize.BOOLEAN,
-        require: true
-    }
+    // nome_usuario:{
+    //     type: Sequelize.STRING,
+    //     require: true
+    // },
+    // data_aniversario:{
+    //     type: Sequelize.DATE,
+    //     require: true
+    // },
+    // genero:{
+    //     type: Sequelize.STRING,
+    //     require: true
+    // },
+    // premium:{
+    //     type: Sequelize.BOOLEAN,
+    //     require: true
+    // }
 });
 
 //cria a tabela caso ela nao exista
@@ -131,7 +131,7 @@ app.post('/althCadastro',(req,res)=>{
         }
     }).then((cadastrado)=>{
         if (cadastrado) {
-            res.redirect('/login')
+            res.redirect('/cadastro?cadastrado=false')
         }else{
             cadastros.create({
                 email: req.body.login,
@@ -184,7 +184,11 @@ app.get('/cadastro',(req,res)=>{
     if (req.session.login) {
         res.redirect('/inicio')
     }else{
-        res.render('cadastro')
+        if (req.query.cadastrado == "false") {
+            res.render('cadastro',{mensage: "O email ja foi cadastrado"})
+        }else{
+            res.render('cadastro',{mensage:null})
+        }
     }
     
 

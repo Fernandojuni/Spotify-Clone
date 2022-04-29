@@ -27,6 +27,9 @@
         </div>
         
         <div class="login-container">
+            <% if (mensage) { %>
+                <p style="position: relative; top: -20px; color: red;"><%= mensage %> </p>
+            <% } %>
             <form action="/althCadastro" method="POST" >
                 <p id="emailP">Endereço de e-mail ou nome de usuário</p>
                 <input type="email" id="email" name="login" placeholder="Endereço de e-mail ou nome de usuário" required><br>
