@@ -40,13 +40,6 @@ const cadastros = sequelize.define('cadastros',{
         type: Sequelize.BOOLEAN,
         require: true
     },
-    id_playlists:{
-        type: Sequelize.INTEGER,
-        references: {
-            model: 'playlists',
-            key: 'id'
-        }
-    },
     
 
 })
