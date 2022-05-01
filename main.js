@@ -38,69 +38,7 @@ app.set('view engine', 'ejs');
 
 
 //-------------Banco de dados--------------
-const Sequelize = require('sequelize');
-const { where } = require('sequelize');
-const { getMaxListeners } = require('process');
-const req = require('express/lib/request');
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect: 'postgres',
-    protocol: 'postgres',
-    ssl: true,
-    dialectOptions: {
-        ssl: {
-            require: true,
-            rejectUnauthorized: false,
-        }
-
-    }
-});
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('\u001b[34m Coneccao com o banco de dados estabelecidad com sucesso.');
-  })
-  .catch(err => {
-    console.error('\u001b[31m erro na coneccao com o banco de dados:', err);
-  });
-
-
-const cadastros = sequelize.define('cadastros', {
-    id:{
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    },
-    email: {
-        type: Sequelize.STRING,
-        require: true
-    },
-    senha: {
-        type: Sequelize.STRING,
-        require: true
-    },
-    // nome_usuario:{
-    //     type: Sequelize.STRING,
-    //     require: true
-    // },
-    // data_aniversario:{
-    //     type: Sequelize.DATE,
-    //     require: true
-    // },
-    // genero:{
-    //     type: Sequelize.STRING,
-    //     require: true
-    // },
-    // premium:{
-    //     type: Sequelize.BOOLEAN,
-    //     require: true
-    // }
-});
-
-//cria a tabela caso ela nao exista
-const init = async ()=>{
-    await cadastros.sync();
-}
-init()
+const cadastros = require('./DataBase/models/cadastros')
 
 //------------------POST-----------------
 
@@ -143,7 +81,13 @@ app.post('/althCadastro',(req,res)=>{
         }else{
             cadastros.create({
                 email: req.body.login,
-                senha: req.body.password
+                senha: req.body.password,
+                nome_usuario: req.body.nome,
+                data_aniversario_dia:req.body.dia,
+                data_aniversario_mes:req.body.mes,
+                data_aniversario_ano:req.body.ano,
+                genero: undefined,
+                premium: false
             }).then(function(){
                 console.log('cadastrado');
                 res.redirect('/login')
@@ -158,27 +102,7 @@ app.post('/althCadastro',(req,res)=>{
 
 
 
-app.post('/addMusica',(req,res)=>{
-    //corrigir isso para pegar oque o cliente selecionar
-    let nomeMusica = req.body.nomeMusica
-    let nomeBanda = req.body.nomeBanda
-    let poster = (req.body.poster)
-    let audio = req.body.audio
 
-    res.redirect('/login')
-})
-
-
-app.get('/logout',(req,res)=>{
-    const sessionID = req.session.id;
-    req.sessionStore.destroy(sessionID, (err) => {
-    if(err){
-        return console.error(err)
-    }
-    console.log("A session foi destruida!")
-    res.redirect("/login")
-})
-})
 
 //-----------------GET--------------------
 app.get("/",(req,res)=>{
@@ -243,6 +167,17 @@ app.get('/inicio',(req,res)=>{
     }
     
 
+})
+
+app.get('/logout',(req,res)=>{
+    const sessionID = req.session.id;
+    req.sessionStore.destroy(sessionID, (err) => {
+    if(err){
+        return console.error(err)
+    }
+    console.log("A session foi destruida!")
+    res.redirect("/login")
+})
 })
 
 
