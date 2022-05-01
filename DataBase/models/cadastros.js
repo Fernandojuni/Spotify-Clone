@@ -20,6 +20,9 @@ const cadastros = sequelize.define('cadastros',{
         type: Sequelize.STRING,
         require: true
     },
+    // foto_perfil:{
+    //     type: Sequelize.BLOB,
+    // },
     data_aniversario_dia:{
         type: Sequelize.STRING,
         require: true

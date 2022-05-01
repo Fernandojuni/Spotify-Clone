@@ -18,7 +18,6 @@ const playlists = sequelize.define('playlists',{
     musicas:{
         type: Sequelize.JSON
     }
-
 })
 
 const init = async () =>{

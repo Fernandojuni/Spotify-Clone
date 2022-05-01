@@ -6,7 +6,8 @@ const session = require('express-session')
 const path = require('path');
 const { parse } = require('path');
 const cloudinary = require('cloudinary').v2
-
+const multer = require('multer');
+const upload = multer();
 
 
 //------------Configs--------------
@@ -34,8 +35,6 @@ app.use(express.static('public'));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, '/views'))
 app.set('view engine', 'ejs');
-
-
 
 //-------------Banco de dados--------------
 const cadastros = require('./DataBase/models/cadastros')
@@ -70,7 +69,7 @@ app.post('/alth',(req,res)=>{
 })
 
 app.post('/althCadastro',(req,res)=>{
-
+    
     cadastros.findOne({
         where:{
             email: req.body.login
@@ -82,7 +81,7 @@ app.post('/althCadastro',(req,res)=>{
             cadastros.create({
                 email: req.body.login,
                 senha: req.body.password,
-                nome_usuario: req.body.nome,
+                nome_usuario: req.body.nome_usuario,
                 data_aniversario_dia:req.body.dia,
                 data_aniversario_mes:req.body.mes,
                 data_aniversario_ano:req.body.ano,
@@ -99,9 +98,6 @@ app.post('/althCadastro',(req,res)=>{
         console.log('erro:'+ err);
     })
 })
-
-
-
 
 
 //-----------------GET--------------------
@@ -151,22 +147,28 @@ app.get('/cadastro',(req,res)=>{
 
 
 
-
 app.get('/inicio',(req,res)=>{
     if (req.session.adm || req.session.login ) {
         if (req.session.adm) {
             res.render('inicio',{usuario:"adm"})
-    
         }else{
             if (req.session.login) {
-                res.render('inicio',{usuario:""})
+                cadastros.findOne({
+                    where:{
+                        email: req.session.login
+                    }
+                }).then((result)=>{
+                    res.render('inicio',{usuario:result.nome_usuario})
+                }).catch((err)=>{
+                    console.log('erro:'+ err);
+                })
+                
             }
         }
+
     }else{
         res.redirect('/login?logado=false')
     }
-    
-
 })
 
 app.get('/logout',(req,res)=>{
@@ -184,14 +186,22 @@ app.get('/logout',(req,res)=>{
 
 
 //-----------------temp----------
-
-app.get("/test",(req,res)=>{
-    res.render("inicio")
-})
-
-
+// const test = require('./DataBase/models/test')
+// app.get("/test2",(req,res)=>{
+//     res.render("test")
+// })
 
 
+// app.post("/testalth", upload.single('image'),(req,res)=>{   
+//     console.log(req.file);
+//     test.create({
+//         image: req.file.buffer
+//     })
+// })
+
+// test.findAll().then((result)=>{
+//     console.log(result);
+// })
 
 
 
