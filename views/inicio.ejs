@@ -80,7 +80,7 @@
     
                 <div id="perfil" onclick="abrirPopupPerfil()">
                     <img src="img/perfil-vazio.jpg" alt="">
-                    <span id="Nomeusuario" style="text-transform:<%= usuario == "adm" ? "uppercase" : "lowercase" %>; color: <%= usuario == "adm" ? "red" : "white" %>; font-weight: <%= usuario == "adm" ? "bold" : "normal" %>;"><%= usuario %> </span>
+                    <span id="Nomeusuario" style="color: <%= usuario == "adm" ? "red" : "white" %>; font-weight: <%= usuario == "adm" ? "bold" : "normal" %>;"><%= usuario %> </span>
                     <span id="abrirPerfil" style="display: block; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_down</span>
                     <span id="fecharPerfil" style="display: none; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_up</span>
                 </div>
@@ -88,7 +88,7 @@
                     <ul style="list-style: none;">
                         <a href=""><li>Conta</li><img style="width: 20px; height: 20px; position: relative; left: 69%; margin-top: 8px; " src="img/open_in_new.png" alt=""></a>
                         <a href=""><li>Perfil</li></a>
-                        <a href=""><li>Faça upgrade para o Premium</li><img style="width: 20px; height: 20px; margin-left: 15px; margin-top: 8px; " src="img/open_in_new.png" alt=""></a>
+                        <a href=""><li style="white-space: nowrap;">Faça upgrade para o Premium</li><img style="width: 20px; height: 20px; margin-left: 7px; margin-top: 8px; " src="img/open_in_new.png" alt=""></a>
                         <a href="/logout"><li>Sair</li></a>
                     </ul>
                     <br>

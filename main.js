@@ -158,7 +158,8 @@ app.get('/inicio',(req,res)=>{
                         email: req.session.login
                     }
                 }).then((result)=>{
-                    res.render('inicio',{usuario:result.nome_usuario})
+                    var usuario = result.nome_usuario   
+                    res.render('inicio',{usuario})
                 }).catch((err)=>{
                     console.log('erro:'+ err);
                 })
