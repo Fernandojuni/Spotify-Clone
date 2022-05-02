@@ -37,6 +37,7 @@ app.set('views', path.join(__dirname, '/views'))
 app.set('view engine', 'ejs');
 
 //-------------Banco de dados--------------
+
 const cadastros = require('./DataBase/models/cadastros')
 
 //------------------POST-----------------
@@ -186,23 +187,22 @@ app.get('/logout',(req,res)=>{
 
 
 
-//-----------------temp----------
-// const test = require('./DataBase/models/test')
-// app.get("/test2",(req,res)=>{
-//     res.render("test")
-// })
 
 
-// app.post("/testalth", upload.single('image'),(req,res)=>{   
-//     console.log(req.file);
-//     test.create({
-//         image: req.file.buffer
-//     })
-// })
 
-// test.findAll().then((result)=>{
-//     console.log(result);
-// })
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
