@@ -80,7 +80,12 @@
     
                 <div id="perfil" onclick="abrirPopupPerfil()">
                     <img src="img/perfil-vazio.jpg" alt="">
-                    <span id="Nomeusuario" style="color: <%= usuario == "adm" ? "red" : "white" %>; font-weight: <%= usuario == "adm" ? "bold" : "normal" %>;"><%= usuario %> </span>
+                    <% if (usuario == "adm") { %>
+                        <span id="Nomeusuario" style="color:red; font-weight: bold; text-transform: uppercase;"><%= usuario %> </span>
+                    <% }else{%>
+                        <span id="Nomeusuario" style="color:white; font-weight: normal;"><%= usuario %> </span>
+                    <% } %>
+                   
                     <span id="abrirPerfil" style="display: block; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_down</span>
                     <span id="fecharPerfil" style="display: none; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_up</span>
                 </div>
