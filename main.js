@@ -68,6 +68,8 @@ app.post('/alth',(req,res)=>{
         }
     })
 })
+var test = "tatadaw"
+console.log(test);
 
 app.post('/althCadastro',(req,res)=>{
     
@@ -189,7 +191,10 @@ app.get('/logout',(req,res)=>{
 
 
 
-
+//temp
+app.get('/test', (req,res)=>{
+    res.render('user',{usuario:"test"})
+})
 
 
 

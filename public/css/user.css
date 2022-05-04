@@ -1,0 +1,118 @@
+@font-face {
+    font-family: circular;
+    src: url(../font/Circular/CircularStd-Black.otf);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    font-family: circular;
+}
+*::-webkit-scrollbar {
+    width: 8px;
+    background-color: black;
+} 
+  
+*::-webkit-scrollbar-thumb {   
+    background-color: rgb(60, 60, 60); 
+    border-radius: 50px;
+}
+*::-webkit-scrollbar-thumb:hover{
+    background-color: rgb(104, 104, 104);
+}
+html,body{
+    height: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.sidebar{
+    float: left;
+    width: 250px;
+    padding: 10px 10px;
+    height: 100%;
+    overflow-y: auto;
+    background-color: black;
+}
+
+.sidebar-menu{
+    margin: 20px 0;
+    color: rgb(190, 190, 190)
+}
+.sidebar-logo img{
+    max-width: 150px;
+    width: 100%;
+    margin-left: 10%;
+}
+.sidebar-menu a{
+    color: rgb(190, 190, 190);
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+
+}
+.sidebar-menu svg{
+    margin: 0 20px;
+}
+.sidebar-menu a.sidebar-menu-selecionado{
+    color: white;
+    background-color: rgb(80, 80, 80);
+    border-radius: 5px;
+}
+.sidebar-menu-item{
+    margin-top: 12px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+.sidebar-menu p.sidebar-menu-title{
+    color: white;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+.sidebar-menu-item-componente{
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    display: inline-block;
+    color: black;
+    font-weight: bold;
+    background-color: white;
+    border-radius: 2px;
+} 
+.sidebar-wraper{
+    padding-bottom: 200px;
+    overflow-y: hidden;
+}
+.main-wraper{
+    padding-bottom: 200px;
+    overflow-y: hidden;
+}
+.sidebar-menu-item span{
+    font-weight: bold;
+    font-size: 14px;
+    padding: 0 10px;
+}
+.sidebar-menu-item img{
+    width: 32px;
+    height: 30px;
+    vertical-align: middle;
+    display: inline-block;
+}
+.sidebar-playlists{
+    padding: 20px 0;
+    border-top: 1px solid rgb(40, 40, 40);
+}
+.sidebar-playlists a{
+    margin: 10px 0;
+    display: block;
+    color: rgb(190, 190, 190);
+    text-decoration: none;
+    
+}
+
+.sidebar-playlists a:hover{
+    color: white;
+}
