@@ -186,7 +186,7 @@ app.get('/logout',(req,res)=>{
 })
 })
 
-app.get('/inicio/user',(req,res)=>{
+app.get('/user',(req,res)=>{
     if (req.session.adm || req.session.login ) {
         cadastros.findOne({
             where:{
