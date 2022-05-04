@@ -42,6 +42,7 @@ var main_top = document.getElementById('main-top')
 var popup_perfil = document.getElementById("popup-perfil")
 
 //controle do scroll e estilos
+//(temporario)
 
 main.addEventListener('scroll', ()=>{
     if (main.scrollTop > 1) {
