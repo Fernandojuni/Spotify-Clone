@@ -30,129 +30,96 @@
 
 </head>
 <body>
-    <div class="sidebar">
-        <div class="sidebar-wraper">
-            <div class="sidebar-logo">
-                <a href="/inicio"><img src="img/logo_2.png" alt=""></a>
+<div class="sidebar">
+    <div class="sidebar-wraper">
+        <div class="sidebar-logo">
+            <a href="/inicio"><img src="img/logo_2.png" alt=""></a>
+        </div>
+        <div class="sidebar-menu">
+            <a class="sidebar-menu-selecionado" href="/inicio"><span class="fas fa-home"></span>Inicio</a>
+            <a href="#"><span class="fas fa-search"></span>Buscar</a>
+            <a id="addMusica" style="display:  inline;" onclick="adicionarMusica()" href="#"><span class="fas fa-database"></span>Adicionar musica</a>
+        </div>
+        <div style="margin-left: 30px;" class="sidebar-menu">
+            <p class="sidebar-menu-title">Playlists</p>
+            <div onclick="criarPlay()" class="sidebar-menu-item">
+                <div class="sidebar-menu-item-componente"> + </div>
+                <span>Criar Playlist</span>
             </div>
-            <div class="sidebar-menu">
-                <a class="sidebar-menu-selecionado" href="/inicio"><span class="fas fa-home"></span>Inicio</a>
-                <a href="#"><span class="fas fa-search"></span>Buscar</a>
-                <a id="addMusica" style="display:  inline;" onclick="adicionarMusica()" href="#"><span class="fas fa-database"></span>Adicionar musica</a>
-            </div>
-            <div style="margin-left: 30px;" class="sidebar-menu">
-                <p class="sidebar-menu-title">Playlists</p>
-                <div onclick="criarPlay()" class="sidebar-menu-item">
-                    <div class="sidebar-menu-item-componente"> + </div>
-                    <span>Criar Playlist</span>
-                </div>
-                <div class="sidebar-menu-item">
-                    <img src="img/musicas-curtidas.jpeg" alt="">
-                    <span>Musicas Curtidas</span>
-                </div>
-            </div>
-            
-            <div class="sidebar-playlists">
-                
-                
-                
+            <div class="sidebar-menu-item">
+                <img src="img/musicas-curtidas.jpeg" alt="">
+                <span>Musicas Curtidas</span>
             </div>
         </div>
-    </div>
-    <div id="popup_criar_play" style="display: none;">
-        <form action="/telaPrincipal/playlistCriar" method="post">
-            <input type="text" name="NomePlay" id="nomePlay" placeholder=" Nome da Playlist" required> <br>
-            <button onclick="PlayCriar()" id="btnEnviarARQ">ENVIAR</button>
-        </form>
-    </div>
-
-
-    <div id="main">
-        <div id="main-top">
-            <div id="main-top-col">
-                <div id="avancarVoltar">
-                    <a href=""><span id="voltarPag" class="material-symbols-outlined">chevron_left</span></a>
-                    <a href=""><span id="avancarPag" class="material-symbols-outlined">navigate_next</span></a>
-                    
-                </div>
-    
-                <a href="#" style="position: relative; left: 42%;"><input id="facaUpgrade" type="submit" value="Faça upgrade"></a>
-    
-                <div id="perfil" onclick="abrirPopupPerfil()">
-                    <img src="img/perfil-vazio.jpg" alt="">
-                    <% if (usuario == "adm") { %>
-                        <span id="Nomeusuario" style="color:red; font-weight: bold; text-transform: uppercase;"><%= usuario %> </span>
-                    <% }else{%>
-                        <span id="Nomeusuario" style="color:white; font-weight: normal;"><%= usuario %> </span>
-                    <% } %>
-                   
-                    <span id="abrirPerfil" style="display: block; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_down</span>
-                    <span id="fecharPerfil" style="display: none; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_up</span>
-                </div>
-                <div id="popup-perfil">
-                    <ul style="list-style: none;">
-                        <a href=""><li>Conta</li><img style="width: 20px; height: 20px; position: relative; left: 69%; margin-top: 8px; " src="img/open_in_new.png" alt=""></a>
-                        <a href=""><li>Perfil</li></a>
-                        <a href=""><li style="white-space: nowrap;">Faça upgrade para o Premium</li><img style="width: 20px; height: 20px; margin-left: 7px; margin-top: 8px; " src="img/open_in_new.png" alt=""></a>
-                        <a href="/logout"><li>Sair</li></a>
-                    </ul>
-                    <br>
-                    
-                </div>
-            </div>
-        </div>
-        <div class="main-wraper">
-            
-            <div class="main-row">
-                <div class="main-row-title"><h2>Musicas</h2></div>
-                
-            </div>
-        </div>
-    </div>
-    <div class="player">
-        <div class="player-artist">
-        </div>
-
-        <div class="player-control">
-            <div class="player-control-buttons">
-                <a id="aleario" onclick="alearioAtv()" href="#"><span class="material-icons-outlined">shuffle</span></a>
-                <a id="voltar" onclick="voltar()" href="#" ><span class="material-icons-outlined">skip_previous</span></i></a>
-                <a style="display: none;" id="pausebtn" href=""><span class="material-icons-outlined">pause_circle_filled</span></a>
-                <a id="playbtn"  href="#"><span class="material-icons-outlined">play_circle_filled</span></i></a>
-                <a id="avancar" onclick="avancar()" href="#"><span class="material-icons-outlined">skip_next</span></a>
-                <a id="loop" onclick="loopAtv()" href="#"><span class="material-icons-outlined">loop</span></a>
-            </div>
-            <div id="player-control-progress">
-                <span id="tempo_atual">00:00</span>
-                <span id="tempo_total">00:00</span>
-                <div id="player-control-progress-2">
-
-                </div>
-            </div>
-            
-            
-        </div>
-        <a onclick="ADDplaylis()" id="ADDplaylist" href="#"><span class="material-icons-outlined">playlist_add</span></a>
-        <div id="popupAddPlaylist" style="display:none;">
-            
-        </div>
-
-        <div class="player-control-volume">
-
-            <a id="volume-maximo" onclick="mutar()" style="display: inline;" href="#"><span class="fas fa-volume-up"></span></a>
-            <a id="volume-mutado" onclick="desmutar()" style="display: none;" href="#"><span class="fas fa-volume-mute"></span></a>
-            <a id="volume-baixo" style="display: none;" href="#"><span class="fas fa-volume-down"></span></a>
-            <input type="range" id="volume" min="0" value="100" max="1" step="0.1" onchange="document.getElementById('audioplayer').volume=this.value">
-        </div>
-    </div>
-
         
+        <div class="sidebar-playlists">
+            
+            
+            
+        </div>
+    </div>
+</div>
+<div id="popup_criar_play" style="display: none;">
+    <form action="/telaPrincipal/playlistCriar" method="post">
+        <input type="text" name="NomePlay" id="nomePlay" placeholder=" Nome da Playlist" required> <br>
+        <button onclick="PlayCriar()" id="btnEnviarARQ">ENVIAR</button>
+    </form>
+</div>
+
+
+<div id="main">
+    <div id="main-top">
+        <div id="main-top-col">
+            <div id="avancarVoltar">
+                <a href=""><span id="voltarPag" class="material-symbols-outlined">chevron_left</span></a>
+                <a href=""><span id="avancarPag" class="material-symbols-outlined">navigate_next</span></a>
+                
+            </div>
+
+            <a href="#" style="position: relative; left: 42%;"><input id="facaUpgrade" type="submit" value="Faça upgrade"></a>
+
+            <div id="perfil" onclick="abrirPopupPerfil()">
+                <img src="img/perfil-vazio.jpg" alt="">
+                <% if (usuario == "adm") { %>
+                    <span id="Nomeusuario" style="color:red; font-weight: bold; text-transform: uppercase;"><%= usuario %> </span>
+                <% }else{%>
+                    <span id="Nomeusuario" style="color:white; font-weight: normal;"><%= usuario %> </span>
+                <% } %>
+                
+                <span id="abrirPerfil" style="display: block; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_down</span>
+                <span id="fecharPerfil" style="display: none; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_up</span>
+            </div>
+            <div id="popup-perfil">
+                <ul style="list-style: none;">
+                    <a href=""><li>Conta</li><img style="width: 20px; height: 20px; position: relative; left: 69%; margin-top: 8px; " src="img/open_in_new.png" alt=""></a>
+                    <a href="/inicio/user"><li>Perfil</li></a>
+                    <a href=""><li style="white-space: nowrap;">Faça upgrade para o Premium</li><img style="width: 20px; height: 20px; margin-left: 7px; margin-top: 8px; " src="img/open_in_new.png" alt=""></a>
+                    <a href="/logout"><li>Sair</li></a>
+                </ul>
+                <br>
+                
+            </div>
+        </div>
+    </div>
+    <div class="main-wraper">
         
-    <audio id="audioplayer" style="position: absolute;left: 0; top: 0; z-index: -999; opacity: 0;" controls="controls" src=""></audio>
+        <div class="main-row">
+            <div class="main-row-title"><h2>Musicas</h2></div>
+            
+        </div>
+    </div>
+</div>
 
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script src="js/all.min.js"></script>
-    <script src="js/inicio.js"></script>
+<%- include("reusable/player.ejs") %> 
+
+    
+    
+<audio id="audioplayer" style="position: absolute;left: 0; top: 0; z-index: -999; opacity: 0;" controls="controls" src=""></audio>
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="js/all.min.js"></script>
+<script src="js/inicio.js"></script>
 </body>
 </html>

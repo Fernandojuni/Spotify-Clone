@@ -1,0 +1,249 @@
+<link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
+
+<!-- Filled -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+
+<!-- Rounded -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet">
+
+<!-- Sharp -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet">
+
+<!-- Two tone -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone" rel="stylesheet">
+
+<link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<!--fonts/icon-->   
+<style>
+    .player{
+    width: 100%;
+    padding: 20px;
+    height: 100px;
+    position: fixed;    
+    left: 0;
+    bottom: 0;
+    display: flex;
+    background-color: rgb(60, 60, 60);
+}
+
+.player-artist{
+    width: 21%;
+
+}
+.player-artist img{
+    max-width: 70px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.player-artist h3{
+    display: inline-block;
+    color: white;
+    font-weight: normal;
+    font-size: 20px;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+.player-artist h3 > span{
+    color: rgb(200, 200, 200);
+    font-size: 13px;
+}
+.player-control{
+    width: 55%;
+    text-align: center;
+
+}
+.player-control-buttons a{
+    color: white;
+    margin: 8px 15px;
+    font-size: 18px;
+}
+#player-control-progress{
+    width: 100%;
+    max-width: 600px;
+    height: 7px;
+    margin-top: 20px;
+    position: relative;
+    border-radius: 8px;
+    display: inline-block;
+    background-color: rgb(130, 130, 130);
+}
+
+#player-control-progress-2{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 7px;
+    border-radius: 8px;
+    background-color: #00ff37;
+
+    transition: all 0.5s;
+}
+#player-control-progress-2::after{
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: -4px;
+    width: 15px;
+    height: 15px;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+}
+#volume{
+    -webkit-appearance: none;
+    appearance: none;
+    display: inline-block;
+    max-width: 100px;
+    width: 100%;
+    max-height: 5px;
+    height: 100%;
+    position: relative;
+    border-radius: 5px;
+    background-color: #00ff37;
+    outline: none;
+    cursor: pointer;
+}
+#volume-maximo, #volume-mutado, #volume-baixo{
+    color: rgb(189, 189, 189);
+    position: relative;
+    top: 4px;
+    margin-right: 2px;
+}
+#volume-maximo:hover, #volume-mutado:hover, #volume-baixo:hover{
+    color: rgb(255, 255, 255);
+}
+
+
+#volume::-webkit-slider-thumb{
+    
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgb(255, 255, 255);
+    
+}
+
+.player-control-volume{
+    float: right;
+    position: relative;
+    left: 9%;
+    top: 30%;
+}
+
+
+#aleario{
+    position: absolute;
+    left: 38.5%;
+    top: 12%;
+    color: rgb(180, 179, 179);
+}
+#loop{
+    position: absolute;
+    right: 42%;
+    top: 12%;
+    color: rgb(180, 179, 179);
+}
+#aleario:hover{
+    color: white;
+}
+#loop:hover{
+    color: white;
+}
+#playbtn{
+    color: rgb(180, 179, 179);
+}
+#playbtn:hover{
+    color: white;
+}
+#pausebtn{
+    color: rgb(180, 179, 179);
+}
+#pausebtn:hover{
+    color: white;
+}
+
+#avancar{
+    color: rgb(180, 179, 179);
+
+}
+#avancar:hover{
+    color: rgb(255, 255, 255);
+
+}
+#voltar{
+    color: rgb(180, 179, 179);
+
+}
+#voltar:hover{
+    color: rgb(255, 255, 255);
+}
+#tempo_atual{
+    color: rgb(199, 194, 194);
+    position: relative;
+    left: -52%;
+    top: -100%;
+}
+#tempo_total{
+    color: rgb(199, 194, 194);
+    position: relative;
+    left: 51%;
+    top: -100%;
+}
+
+#ADDplaylist{
+    color:rgb(189, 189, 189) ;
+    position: relative;
+    left: 8.5%;
+    top: 32%;
+}
+#ADDplaylist:hover{
+    color: rgb(255, 255, 255);
+}
+
+
+</style>
+
+<div class="player">
+    <div class="player-artist">
+    </div>
+
+    <div class="player-control">
+        <div class="player-control-buttons">
+            <a id="aleario" onclick="alearioAtv()" href="#"><span class="material-icons-outlined">shuffle</span></a>
+            <a id="voltar" onclick="voltar()" href="#" ><span class="material-icons-outlined">skip_previous</span></i></a>
+            <a style="display: none;" id="pausebtn" href=""><span class="material-icons-outlined">pause_circle_filled</span></a>
+            <a id="playbtn"  href="#"><span class="material-icons-outlined">play_circle_filled</span></i></a>
+            <a id="avancar" onclick="avancar()" href="#"><span class="material-icons-outlined">skip_next</span></a>
+            <a id="loop" onclick="loopAtv()" href="#"><span class="material-icons-outlined">loop</span></a>
+        </div>
+        <div id="player-control-progress">
+            <span id="tempo_atual">00:00</span>
+            <span id="tempo_total">00:00</span>
+            <div id="player-control-progress-2">
+
+            </div>
+        </div>
+        
+        
+    </div>
+    <a onclick="ADDplaylis()" id="ADDplaylist" href="#"><span class="material-icons-outlined">playlist_add</span></a>
+    <div id="popupAddPlaylist" style="display:none;">
+        
+    </div>
+
+    <div class="player-control-volume">
+
+        <a id="volume-maximo" onclick="mutar()" style="display: inline;" href="#"><span class="fas fa-volume-up"></span></a>
+        <a id="volume-mutado" onclick="desmutar()" style="display: none;" href="#"><span class="fas fa-volume-mute"></span></a>
+        <a id="volume-baixo" style="display: none;" href="#"><span class="fas fa-volume-down"></span></a>
+        <input type="range" id="volume" min="0" value="100" max="1" step="0.1" onchange="document.getElementById('audioplayer').volume=this.value">
+    </div>
+</div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="../../public/js/all.min.js"></script>
+<script src="../../public/js/inicio.js"></script>

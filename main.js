@@ -186,7 +186,21 @@ app.get('/logout',(req,res)=>{
 })
 })
 
-
+app.get('/inicio/user',(req,res)=>{
+    if (req.session.adm || req.session.login ) {
+        cadastros.findOne({
+            where:{
+                email: req.session.login
+            }
+        }).then((result)=>{
+            res.render('user',{usuario:result})
+        }).catch((err)=>{
+            console.log('erro:'+ err);
+        })
+    }else{
+        res.redirect('/login?logado=false')
+    }
+})
 
 
 
