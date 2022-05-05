@@ -27,80 +27,81 @@
     <title>Spotify - <%= usuario.nome_usuario %></title>
 </head>
 <body>
-    <div class="sidebar">
-        <div class="sidebar-wraper">
-            <div class="sidebar-logo">
-                <a href="/inicio"><img src="../public/img/logo_2.png" alt=""></a>
+<div class="sidebar">
+    <div class="sidebar-wraper">
+        <div class="sidebar-logo">
+            <a href="/inicio"><img src="../public/img/logo_2.png" alt=""></a>
+        </div>
+        <div class="sidebar-menu">
+            <a href="/inicio"><span class="fas fa-home"></span>Inicio</a>
+            <a href="#"><span class="fas fa-search"></span>Buscar</a>
+            <a id="addMusica" style="display:  inline;" onclick="adicionarMusica()" href="#"><span class="fas fa-database"></span>Adicionar musica</a>
+        </div>
+        <div style="margin-left: 10px;" class="sidebar-menu">
+            <p class="sidebar-menu-title">Playlists</p>
+            <div onclick="criarPlay()" class="sidebar-menu-item">
+                <div class="sidebar-menu-item-componente"> + </div>
+                <span>Criar Playlist</span>
             </div>
-            <div class="sidebar-menu">
-                <a href="/inicio"><span class="fas fa-home"></span>Inicio</a>
-                <a href="#"><span class="fas fa-search"></span>Buscar</a>
-                <a id="addMusica" style="display:  inline;" onclick="adicionarMusica()" href="#"><span class="fas fa-database"></span>Adicionar musica</a>
+            <div class="sidebar-menu-item">
+                <img src="../public/img/musicas-curtidas.jpeg" alt="">
+                <span>Musicas Curtidas</span>
             </div>
-            <div style="margin-left: 10px;" class="sidebar-menu">
-                <p class="sidebar-menu-title">Playlists</p>
-                <div onclick="criarPlay()" class="sidebar-menu-item">
-                    <div class="sidebar-menu-item-componente"> + </div>
-                    <span>Criar Playlist</span>
-                </div>
-                <div class="sidebar-menu-item">
-                    <img src="../public/img/musicas-curtidas.jpeg" alt="">
-                    <span>Musicas Curtidas</span>
-                </div>
-            </div>
-            <div class="sidebar-playlists">
-            </div>
+        </div>
+        <div class="sidebar-playlists">
         </div>
     </div>
-    <div id="main">
-        <div id="main-top">
-            <div id="main-top-col">
-                <div id="avancarVoltar">
-                    <a href=""><span id="voltarPag" class="material-symbols-outlined">chevron_left</span></a>
-                    <a href=""><span id="avancarPag" class="material-symbols-outlined">navigate_next</span></a>
-                </div>
-    
-                <a href="#" style="position: relative; left: 42%;"><input id="facaUpgrade" type="submit" value="Faça upgrade"></a>
-    
-                <div id="perfil" onclick="abrirPopupPerfil()">
-                    <img src="../public/img/perfil-vazio.jpg" alt="">
-                    <% if (usuario.nome_usuario == "adm") { %>
-                        <span id="Nomeusuario" style="color:red; font-weight: bold; text-transform: uppercase;"><%= usuario.nome_usuario  %> </span>
-                    <% }else{%>
-                        <span id="Nomeusuario" style="color:white; font-weight: normal;"><%= usuario.nome_usuario  %> </span>
-                    <% } %>
-                   
-                    <span id="abrirPerfil" style="display: block; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_down</span>
-                    <span id="fecharPerfil" style="display: none; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_up</span>
-                </div>
-                <div id="popup-perfil">
-                    <ul style="list-style: none;">
-                        <a href=""><li>Conta</li><img style="width: 20px; height: 20px; position: relative; left: 69%; margin-top: 8px; " src="img/open_in_new.png" alt=""></a>
-                        <a href="/inicio/user"><li>Perfil</li></a>
-                        <a href=""><li style="white-space: nowrap;">Faça upgrade para o Premium</li><img style="width: 20px; height: 20px; margin-left: 7px; margin-top: 8px; " src="img/open_in_new.png" alt=""></a>
-                        <a href="/logout"><li>Sair</li></a>
-                    </ul>
-                    <br>
-                    
-                </div>
+</div>
+<div id="main">
+    <div id="main-top">
+        <div id="main-top-col">
+            <div id="avancarVoltar">
+                <a href=""><span id="voltarPag" class="material-symbols-outlined">chevron_left</span></a>
+                <a href=""><span id="avancarPag" class="material-symbols-outlined">navigate_next</span></a>
             </div>
-        </div>
-        <div id="main-content">
-            <div id="content-top">
-                <img src="../public/img/perfil-vazio.jpg" alt="">
-                <div>
-                    <span>PERFIL</span>
-                    <h1><%= usuario.nome_usuario %> </h1>
-                    <span>3 listas de reprodução públicas</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <%- include("reusable/player.ejs") %> 
-        
-        
-    <audio id="audioplayer" style="position: absolute;left: 0; top: 0; z-index: -999; opacity: 0;" controls="controls" src=""></audio>
 
+            <a href="#" style="position: relative; left: 42%;"><input id="facaUpgrade" type="submit" value="Faça upgrade"></a>
+
+            <div id="perfil" onclick="abrirPopupPerfil()">
+                <img src="../public/img/perfil-vazio.jpg" alt="">
+                <% if (usuario.nome_usuario == "adm") { %>
+                    <span id="Nomeusuario" style="color:red; font-weight: bold; text-transform: uppercase;"><%= usuario.nome_usuario  %> </span>
+                <% }else{%>
+                    <span id="Nomeusuario" style="color:white; font-weight: normal;"><%= usuario.nome_usuario  %> </span>
+                <% } %>
+                
+                <span id="abrirPerfil" style="display: block; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_down</span>
+                <span id="fecharPerfil" style="display: none; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_up</span>
+            </div>
+            <div id="popup-perfil">
+                <ul style="list-style: none;">
+                    <a href=""><li>Conta</li><img style="width: 20px; height: 20px; position: relative; left: 69%; margin-top: 8px; " src="img/open_in_new.png" alt=""></a>
+                    <a href="/inicio/user"><li>Perfil</li></a>
+                    <a href=""><li style="white-space: nowrap;">Faça upgrade para o Premium</li><img style="width: 20px; height: 20px; margin-left: 7px; margin-top: 8px; " src="img/open_in_new.png" alt=""></a>
+                    <a href="/logout"><li>Sair</li></a>
+                </ul>
+                <br>
+                
+            </div>
+        </div>
+    </div>
+    <div id="main-content">
+        <div id="content-top">
+            <img src="../public/img/perfil-vazio.jpg" alt="">
+            <div>
+                <span>PERFIL</span>
+                <h1><%= usuario.nome_usuario %> </h1>
+                <span>3 listas de reprodução públicas</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("reusable/player.ejs") %> 
+    
+    
+<audio id="audioplayer" style="position: absolute;left: 0; top: 0; z-index: -999; opacity: 0;" controls="controls" src=""></audio>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="js/all.min.js"></script>
 </body>
 </html>

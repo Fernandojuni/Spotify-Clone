@@ -5,21 +5,13 @@ const bodyParser = require('body-parser');
 const session = require('express-session')
 const path = require('path');
 
-// const cloudinary = require('cloudinary').v2
-// const multer = require('multer');
-// const upload = multer();
 
 
 //------------Configs--------------
 const app = express();
 
-require('dotenv').config()
 
-// cloudinary.config({ 
-//     cloud_name: process.env.cloud_name, 
-//     api_key: process.env.api_key, 
-//     api_secret: process.env.api_secret
-// });
+require('dotenv').config()
 
 
 app.use(session({
@@ -27,6 +19,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
 }))
+
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
@@ -36,11 +29,20 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, '/views'))
 app.set('view engine', 'ejs');
 
+
+
+
 //-------------Banco de dados--------------
+
+
 
 const cadastros = require('./DataBase/models/cadastros')
 
+
+
+
 //------------------POST-----------------
+
 
 app.post('/alth',(req,res)=>{
     let login = req.body.email
