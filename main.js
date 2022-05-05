@@ -4,10 +4,10 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const session = require('express-session')
 const path = require('path');
-const { parse } = require('path');
-const cloudinary = require('cloudinary').v2
-const multer = require('multer');
-const upload = multer();
+
+// const cloudinary = require('cloudinary').v2
+// const multer = require('multer');
+// const upload = multer();
 
 
 //------------Configs--------------
@@ -15,11 +15,11 @@ const app = express();
 
 require('dotenv').config()
 
-cloudinary.config({ 
-    cloud_name: process.env.cloud_name, 
-    api_key: process.env.api_key, 
-    api_secret: process.env.api_secret
-});
+// cloudinary.config({ 
+//     cloud_name: process.env.cloud_name, 
+//     api_key: process.env.api_key, 
+//     api_secret: process.env.api_secret
+// });
 
 
 app.use(session({
@@ -68,8 +68,6 @@ app.post('/alth',(req,res)=>{
         }
     })
 })
-var test = "tatadaw"
-console.log(test);
 
 app.post('/althCadastro',(req,res)=>{
     
@@ -110,10 +108,10 @@ app.get("/",(req,res)=>{
 
 app.get('/login',(req,res)=>{
     if (req.session.adm) {
-        res.redirect('/inicio',{usuario:"adm"})
+        res.redirect('/inicio')
     }else{
         if (req.session.login) {
-            res.redirect('/inicio',{usuario:""})
+            res.redirect('/inicio')
         }else{
             if (req.query.logado == "false") {
                 res.render("login",{mensage:"Faça login para continuar"})
@@ -131,10 +129,10 @@ app.get('/login',(req,res)=>{
 })
 app.get('/cadastro',(req,res)=>{
     if (req.session.adm) {
-        res.redirect('/inicio',{usuario:"adm"})
+        res.redirect('/inicio')
     }else{
         if (req.session.login) {
-            res.redirect('/inicio',{usuario:""})
+            res.redirect('/inicio')
         }else{
             if (req.query.cadastrado == "false") {
                 res.render('cadastro',{mensage: "O email ja foi cadastrado"})
@@ -143,9 +141,6 @@ app.get('/cadastro',(req,res)=>{
             }
         }
     }
-
-    
-
 })
 
 
@@ -202,13 +197,6 @@ app.get('/user',(req,res)=>{
     }
 })
 
-
-
-
-//temp
-app.get('/test', (req,res)=>{
-    res.render('user',{usuario:"test"})
-})
 
 
 
