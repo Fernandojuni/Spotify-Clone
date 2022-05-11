@@ -14,13 +14,13 @@
 
         </div>
         <div id="group_adicionarMusica">
-            <form action="/addMusica" method="post">
+            <form action="/addMusica" enctype="multipart/form-data" method="post">
                 <p style="font-size: 14px;">Nome da Musica</p>
                 <input class="input" type="text" name="nomeMusica" required>
                 <p style="font-size: 14px;">Nome da Banda</p>
                 <input class="input" type="text" name="nomeBanda" required>
                 <input style="display: none;"  id="file" type="file" accept="image/*" onchange="loadFile(event)" required/><br><br><br>
-                <input type="text" style="display: none;" name="poster" id="URLMusica">
+                <input type="text" style="display: none;"  name="poster" id="URLMusica">
                 <label onclick="selecionar()" for="selecao-arquivo">Selecione o poster</label><br><br>
                 <img src="img/imagem-vazia.jpg" onclick="selecionar()" alt="Selecioanr uma imagem" id="output"/>
                 <input style="display: none;" onchange="adicionarAdudio()" type="file"  accept=".mp3" id="audio" required><br><br>

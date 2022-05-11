@@ -9,11 +9,12 @@ var pausebtn = document.getElementById('pausebtn')
 
 var range = document.getElementById('volume')
 
-
+var main = document.getElementById("main")
 
 //index da musica atual
 var songIndex = 0
 
+//o event.preventDefault() e para que ele nao envie o formulario para o backend
 
 
 //clicks
@@ -24,6 +25,7 @@ var clicksADDplaylis = 0
 var clicksADDmusica = 0;
 var clicksCriarPlay = 0
 var contadorPlaylist = 0
+var clicksPerfil = 0
 
 
 
@@ -35,6 +37,23 @@ var ADDplaylist = document.getElementById('ADDplaylist')
 
 var nomePlay = document.getElementById('nomePlay')
 
+var main_top = document.getElementById('main-top')
+
+
+var popup_perfil = document.getElementById("popup-perfil")
+
+//controle do scroll e estilos
+//(temporario)
+
+main.addEventListener('scroll', ()=>{
+    if (main.scrollTop > 1) {
+        main_top.style.backgroundColor = "black"
+        return
+    }
+    if (main.scrollTop < 1) {
+        main_top.style.backgroundColor = "transparent"
+    }
+})
 
 //abertura e fechamento de popups
 function criarPlay(){
@@ -70,21 +89,37 @@ function adicionarMusica(){
 }
 
 function ADDplaylis(){
-    clicksADDplaylis++
-    if (clicksADDplaylis == 0) {
+    clicksPerfil++
+    if (clicksPerfil == 0) {
         popupAddPlaylist .style.display = 'none'
     }
-    if (clicksADDplaylis == 1) {
-        popupAddPlaylist .style.display = 'inline'
+    if (clicksPerfil == 1) {
+        popupAddPlaylist .style.display = 'block'
     }
-    if (clicksADDplaylis  == 2) {
+    if (clicksPerfil  == 2) {
         popupAddPlaylist .style.display = 'none'
     }
-    if (clicksADDplaylis  == 2) {
-        clicksADDplaylis  = 0
+    if (clicksPerfil  == 2) {
+        clicksPerfil  = 0
     }
 }
 
+
+function abrirPopupPerfil(){
+    clicksCriarPlay++
+    if (clicksCriarPlay == 0) {
+        popup_perfil.style.display = 'none'
+    }
+    if (clicksCriarPlay == 1) {
+        popup_perfil.style.display = 'inline'
+    }
+    if (clicksCriarPlay == 2) {
+        popup_perfil.style.display = 'none'
+    }
+    if (clicksCriarPlay == 2) {
+        clicksCriarPlay = 0
+    }
+}
 
 //-------------Controle de musica----------
 //iniciar musica

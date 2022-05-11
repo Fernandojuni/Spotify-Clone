@@ -1,98 +1,115 @@
- * {
-     box-sizing: border-box;
-     padding: 0px;
-     margin: auto;
-    }
- 
+/* FONTE DO SPOTIFY */
+@font-face {
+    font-family: circular;
+    src: url(../font/Circular/CircularStd-Black.otf);
+}
 
-body {
-    font-family: 'Roboto', sans-serif;
- }
- /* Utility Classes */
- .btn-primary {
-     background: #D83519;;
-     color: white;
-     text-transform: uppercase;
-     padding: 10px 80px;
-     border: none;
-     border-radius: 30px;
-     height: 55px;
-     cursor: pointer;
-     margin-top: 30px;
-     margin-bottom: 30px;
-     font-weight: bold;
-     font-size: 14px;
-     white-space: nowrap;
+* {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: auto;
+    /* DECLARANDO FONT DO SPOTIFY */
+    font-family: circular;
+}
 
- }
- .btn-primary:hover{
-     height: 60px;
-     width: 400px;
-     font-size:15px ;
+/* Utility Classes */
+.btn-primary {
+    background: #D83519;;
+    color: white;
+    text-transform: uppercase;
+    padding: 10px 80px;
+    border: none;
+    border-radius: 30px;
+    height: 55px;
+    cursor: pointer;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-weight: bold;
+    font-size: 14px;
+    white-space: nowrap;
 
- }
- /* Navbar */
- #navbar {
-  display: flex ; 
-  background-color: black; 
-  color: white;
-  height: 80px;
- }
- #navbar .navbar-container {
-     display: flex;
-     padding: 50px 0;
-     width: 60%    
- }
- #navbar .navbar-container .logo{
-     height: 40px;
-     width: auto;
-     
- }
- .navbar-container{
-     display: flex;
- }
- #navbar .navbar-container ul{
-     display: flex;
-     list-style: none;
-     font-weight: bold;
-     justify-content: right;
-     position: relative;
-     /* letras da navbar */
-     top: -30px;
-     right: -35%;
-     
-
-     
- }
- #navbar .navbar-container ul li a{
-     text-decoration: none;
-     color: white;
- }
- #navbar .navbar-container ul li a:hover{
+}
+.btn-primary:hover{
+    height: 60px;
+    width: 400px;
+    font-size:15px ;
+}
+.btn-webplayer{
+    background: #1ed760;;
+    color: #020c91;
+    text-transform: uppercase;
+    padding: 10px 80px;
+    border: none;
+    border-radius: 30px;
+    height: 50px;
+    cursor: pointer;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-weight: bold;
+    font-size: 14px;
+    white-space: nowrap;
+}
+.btn-webplayer:hover{
+    height: 60px;
+    width: 350px;
+}
+/* Navbar */
+#navbar {
+    display: flex ; 
+    background-color: black; 
+    color: white;
+    height: 80px;
+}
+#navbar .navbar-container {
+    display: flex;
+    padding: 50px 0;
+    width: 60%    
+}
+#navbar .navbar-container .logo{
+    height: 40px;
+    width: auto;
+}
+.navbar-container{
+    display: flex;
+}
+#navbar .navbar-container ul{
+    display: flex;
+    list-style: none;
+    font-weight: bold;
+    justify-content: right;
+    position: relative;
+    /* letras da navbar */
+    top: -30px;
+    right: -35%;
+}
+#navbar .navbar-container ul li a{
+    text-decoration: none;
+    color: white;
+}
+#navbar .navbar-container ul li a:hover{
     text-decoration: none;
     color: #1ed760;
 }
- #navbar .navbar-container ul li{
-     padding: 0 20px;
-     cursor: pointer;
-     
- }
- #navbar .navbar-container ul li:hover{
+#navbar .navbar-container ul li{
+    padding: 0 20px;
+    cursor: pointer;
+    
+}
+#navbar .navbar-container ul li:hover{
     color: #1ed760;
 }
- #navbar .navbar-container ul li:nth-child(3){
-     border-left: 1px solid white;
- }
- .logo{
-     /* lugar da logo */
+#navbar .navbar-container ul li:nth-child(3){
+    border-left: 1px solid white;
+}
+.logo{
+    /* lugar da logo */
     position: relative;
     left: -27%; 
     top: -30px;
+}
 
- }
- 
- /* Showcase */
- #showcase{
+/* Showcase  */
+#showcase{
     height: 100vh;
     display: flex;
     justify-content:center;
@@ -109,7 +126,6 @@ body {
 #showcase .showcase-container h2,
 #showcase .showcase-container p{
     color: #D83519;
-
 }
 
 #showcase .showcase-container{
@@ -121,4 +137,29 @@ body {
 #showcase .showcase-container p{
     margin: 20px 0;
     font-size: 10px;
+}
+/* Webplayer */
+#webplayer {
+    background: #020c91; 
+    color:#1ed760;
+    border: none;
+    height: 450px;
+    font-weight: bold;
+    font-size: 14px;
+}
+#webplayer2{
+    position: relative;
+    top: 80px;
+    margin-left: 70px;
+}
+
+#webplayer2 p{
+    color: #1ed760;
+    font-size: 20px;
+    margin-top: 40px;
+    margin-bottom: 25px;
+}
+#webplayer2 h1{
+    font-size: 50px;
+    text-align: left;
 }

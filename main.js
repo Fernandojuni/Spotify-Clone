@@ -4,29 +4,24 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const session = require('express-session')
 const path = require('path');
-const { parse } = require('path');
-const cloudinary = require('cloudinary').v2
-
+var Router = require('router')
 
 
 //------------Configs--------------
 const app = express();
+const router = Router()
+
+
 
 require('dotenv').config()
 
-cloudinary.config({ 
-    cloud_name: process.env.cloud_name, 
-    api_key: process.env.api_key, 
-    api_secret: process.env.api_secret
-});
 
-app.set('trust proxy', 1)
 app.use(session({
-  secret: '21421512512542d2*@&*T!T$*!@@($!132154215452dawdaw',
+  secret: 'dawdwadawdwa',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true }
 }))
+
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
@@ -38,30 +33,77 @@ app.set('view engine', 'ejs');
 
 
 
+
+//-------------Banco de dados--------------
+
+
+
+const cadastros = require('./DataBase/models/cadastros')
+
+
+
+
 //------------------POST-----------------
+
 
 app.post('/alth',(req,res)=>{
     let login = req.body.email
-    let senha = req.body.password
-    if (login == "adm" && senha == "adm") {
-        req.session.login = login
-        res.redirect('/inicio')
-    }
+    let senha2 = req.body.password
+    cadastros.findOne({
+        where:{
+            email: req.body.email,
+            senha: req.body.password
+        }
+    }).then((result)=>{
+        if (result) {           
+            if (login == result.email && senha2 == result.senha) {
+                if (result.email == "adm@gmail.com" && result.senha == "adm") {
+                    req.session.adm = login
+                    console.log(req.session.id);
+                    res.redirect('/inicio')
+                }else{
+                    req.session.login = login
+                    console.log(req.session.id);
+                    res.redirect('/inicio')
+                }
+            }
+        }else{
+            res.redirect("/login?senha=false")
+        }
+    })
 })
 
-
-app.post('/addMusica',(req,res)=>{
-    //corrigir isso para pegar oque o cliente selecionar
-    let nomeMusica = req.body.nomeMusica
-    let nomeBanda = req.body.nomeBanda
-    let poster = req.body.poster
-    let audio = req.body.audio
-    cloudinary.uploader.upload(poster,
-        { public_id: nomeMusica }, 
-    function(error, result) {console.log(result); if(error)console.log(error); });
-
-    res.redirect('/login')
+app.post('/althCadastro',(req,res)=>{
+    
+    cadastros.findOne({
+        where:{
+            email: req.body.login
+        }
+    }).then((cadastrado)=>{
+        if (cadastrado) {
+            res.redirect('/cadastro?cadastrado=false')
+        }else{
+            cadastros.create({
+                email: req.body.login,
+                senha: req.body.password,
+                nome_usuario: req.body.nome_usuario,
+                data_aniversario_dia:req.body.dia,
+                data_aniversario_mes:req.body.mes,
+                data_aniversario_ano:req.body.ano,
+                genero: undefined,
+                premium: false
+            }).then(function(){
+                console.log('cadastrado');
+                res.redirect('/login')
+            }).catch(function(erro){
+                console.log('erro:'+ erro);
+            })
+        }
+    }).catch((err)=>{
+        console.log('erro:'+ err);
+    })
 })
+
 
 //-----------------GET--------------------
 app.get("/",(req,res)=>{
@@ -69,26 +111,105 @@ app.get("/",(req,res)=>{
 })
 
 app.get('/login',(req,res)=>{
-    res.render('login')
+    if (req.session.adm) {
+        res.redirect('/inicio')
+    }else{
+        if (req.session.login) {
+            res.redirect('/inicio')
+        }else{
+            if (req.query.logado == "false") {
+                res.render("login",{mensage:"Faça login para continuar"})
+            }else{
+                if (req.query.senha == "false") {
+                
+                    res.render("login",{mensage:"Senha ou email incorretos"})
+                }else{
+                    res.render("login",{mensage:null})
+                }
+            }
+        }
+    }
+    
 })
 app.get('/cadastro',(req,res)=>{
-    res.render('cadastro')
-
-})
-app.get('/administrador',(req,res)=>{
-    res.render('administrador')
-
+    if (req.session.adm) {
+        res.redirect('/inicio')
+    }else{
+        if (req.session.login) {
+            res.redirect('/inicio')
+        }else{
+            if (req.query.cadastrado == "false") {
+                res.render('cadastro',{mensage: "O email ja foi cadastrado"})
+            }else{
+                res.render('cadastro',{mensage:null})
+            }
+        }
+    }
 })
 
 
 
 app.get('/inicio',(req,res)=>{
-    if (req.session.login) {
-        res.render('inicio')
-    }
+    if (req.session.adm || req.session.login ) {
+        if (req.session.adm) {
+            res.render('inicio',{usuario:"adm"})
+        }else{
+            if (req.session.login) {
+                cadastros.findOne({
+                    where:{
+                        email: req.session.login
+                    }
+                }).then((result)=>{
+                    var usuario = result.nome_usuario   
+                    res.render('inicio',{usuario})
+                }).catch((err)=>{
+                    console.log('erro:'+ err);
+                })
+                
+            }
+        }
 
+    }else{
+        res.redirect('/login?logado=false')
+    }
 })
 
+app.get('/logout',(req,res)=>{
+    const sessionID = req.session.id;
+    req.sessionStore.destroy(sessionID, (err) => {
+    if(err){
+        return console.error(err)
+    }
+    console.log("A session foi destruida!")
+    res.redirect("/login")
+})
+})
+
+app.get('/user',(req,res)=>{
+    if (req.session.adm || req.session.login ) {
+        cadastros.findOne({
+            where:{
+                email: req.session.login
+            }
+        }).then((result)=>{
+            res.render('user',{usuario:result})
+        }).catch((err)=>{
+            console.log('erro:'+ err);
+        })
+    }else{
+        res.redirect('/login?logado=false')
+    }
+})
+
+
+
+//---------temp-------------
+//criar nova url
+// function generateCode() {
+//   let text = '';
+//   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+//   for (let i = 0; i < 5; i++)
+//     text += possible
 
 
 
@@ -103,5 +224,5 @@ app.get('/inicio',(req,res)=>{
 
 const port = parseInt(process.env.PORT) || 80
 app.listen(port,()=>{
-    console.log(`Servidor rodando na porta ${port}`);
+    console.log(`\u001b[32m Servidor rodando na porta ${port}` );
 });

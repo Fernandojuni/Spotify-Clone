@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/login.css">
-        <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/dgcnfudya/image/upload/v1647908941/favicon.png" />
+        <link rel="shortcut icon" type="image/png" href="../public/img/favicon.png" />
         <title>Login</title>
     </head>
     <body>
@@ -28,15 +28,21 @@
             <hr id="hr2">
         </div>
         <div class="login-container">
+            <% if (mensage) { %>
+                <p style="position: relative; top: -20px; color: red;"><%= mensage %> </p>
+            <% } %>
             <form action="/alth" method="POST">
+
                 <p id="emailP">Endereço de e-mail ou nome de usuário</p>
                 <input type="text" id="email" name="email" placeholder="Endereço de e-mail ou nome de usuário" required><br>
                 <p id="senhaP">Senha</p>
                 <input type="password" id="senha" name="password" placeholder="Senha"required><br>
                 <a href="#">Esqueceu sua senha?</a> <br>
-                <input type="checkbox" style="position: relative; top: 25px;width: 30px; left: -16.7%;"><p style="font-size: 14px; color: rgba(0, 0, 0, 0.9); position: relative;left: -11%; top: 7px;">Lembrar de mim</p>
+                <input type="checkbox" style=" position: relative; top: 25px;width: 30px; left: -16.7%;"><p style="font-size: 14px; color: rgba(0, 0, 0, 0.9); position: relative;left: 34%; top: 7px; width: 120px;">Lembrar de mim</p>
                 <input type="submit" name="entrar" id="entrar" value="ENTRAR">
+                
             </form>
+
         </div>
         <hr style="width: 35%;"> <br><br>
         
@@ -44,6 +50,7 @@
                 <h3>Não tem uma conta?</h3> <br>
                 <a href="/cadastro"><button  id="inscreverse">INSCREVER-SE NO SPOTIFY</button></a>
         </footer>
+        
     </body>
     </html>
     

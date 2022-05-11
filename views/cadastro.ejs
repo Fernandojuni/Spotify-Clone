@@ -1,45 +1,95 @@
-    
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/dgcnfudya/image/upload/v1647908941/favicon.png" />
-        <link rel="stylesheet" href="css/login.css">
-        <title>Cadastro</title>
-    </head>
-    <body>
-        <div class="top">
-            <img src="https://res.cloudinary.com/dgcnfudya/image/upload/logo_preta.png" alt="">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="../public/img/favicon.png" />
+    <link rel="stylesheet" href="css/cadastro.css">
+    <title>Inscrever-se - Spotify</title>
+</head>
+<body>
+    <div class="top">
+        <img src="../public/img/logo.png" alt="">
+    </div>
+    <div class="logins">
+        <h4 style="font-size: 32px; font-weight: bold;">Inscreva-se grátis e comece a <br> curtir.</h4>
+        <div class="apps-login">
+            <button id="facebook"><span style="position: relative;font-size: 16px; left: -20px;" class="square-icons fa fa-facebook"></span>CONTINUAR COM O FACEBOOK</button><br>
+            <button id="google"><span style="position: relative;color: black; font-size: 16px; left: -20px;" class="square-icons fa fa-google"></span>CONTINUAR COM O GOOGLE</button><br>
         </div>
-        <div class="logins">
-            <h4 style="font-size: 16px;">Inscreva-se grátis e comece a curtir.</h4>
-            <div class="apps-login">
-                <button id="facebook"><span style="position: relative;font-size: 16px; left: -20px;" class="square-icons fa fa-facebook"></span>CONTINUAR COM O FACEBOOK</button><br>
-                <button id="google"><span style="position: relative;color: black; font-size: 16px; left: -20px;" class="square-icons fa fa-google"></span>CONTINUAR COM O GOOGLE</button><br>
+    </div>
+    <div class="ou">
+        <hr id="hr1">
+        <span>OU</span>
+        <hr id="hr2">
+    </div>
+    
+    <div id="cadastro-container">
+        <% if (mensage) { %>
+            <p style="position: relative; top: -20px; color: red;"><%= mensage %> </p>
+        <% } %>
+        <form action="/althCadastro" method="POST" >
+            <p >Qual é o seu e-mail?</p>
+            <input style="margin-top: 10px; margin-bottom: 5px;" type="email" id="email" name="login" placeholder="Insira seu e-mail" required><br>
+            <a style="text-decoration-color: #209b4b; color: #209b4b;" href="#">Usar número de telefone.</a><br>
+            <p style="margin-top: 25px;">Confirme seu e-mail</p>
+            <input style="margin-top: 10px;" type="email" id="email"  placeholder="Insira o e-mail novamente." required><br>
+            <p style="margin-top: 25px;">Crie uma senha</p>
+            <input style="margin-top: 10px;" type="password" id="senha" name="password" placeholder="Crie uma senha." required><br>
+            <p style="margin-top: 25px;">Como devemos chamar você?</p>
+            <input style="margin-top: 10px;" type="text" name="nome_usuario"  id="nome" placeholder="Insira um nome de perfil" required><br>
+            <p style="color: rgb(126, 126, 126); font-size: 12px; font-weight: normal;">Isso será exibido no seu perfil.</p>
+            <p style="margin-top: 25px;">Qual a sua data de nascimento?</p>
+            <div id="Nascimento">
+                <div id="nascimentoText">
+                    <p>Dia</p>
+                    <p style="margin-left: 101px;">Mês</p>
+                    <p style="margin-left: 190px;">Ano</p>
+                </div>
+                <div id="dataNascimento">
+                    <input id="dia" name="dia" type="text" maxlength="2" placeholder="DD" required>
+                    <select name="mes" id="mes">
+                        <option selected disabled value style="color: #777777;">Mês</option>
+                        <option value="01">janeiro</option>
+                        <option value="02">fevereiro</option>
+                        <option value="03">março</option>
+                        <option value="04">abril</option>
+                        <option value="05">maio</option>
+                        <option value="06">junho</option>
+                        <option value="07">julho</option>
+                        <option value="08">agosto</option>
+                        <option value="09">setembro</option>
+                        <option value="10">outubro</option>
+                        <option value="11">novembro</option>
+                        <option value="12">dezembro</option>
+                    </select>
+                    <input id="ano" name="ano" maxlength="4" type="text" placeholder="AAAA" required>
+                </div>
+
+            
+            
             </div>
-        </div>
-        <div class="ou">
-            <hr id="hr1">
-            <span>OU</span>
-            <hr id="hr2">
-        </div>
-        
-        <div class="login-container">
-            <form action="/login" method="POST" >
-                <p id="emailP">Endereço de e-mail ou nome de usuário</p>
-                <input type="text" id="email" name="login" placeholder="Endereço de e-mail ou nome de usuário" required><br>
-                <p id="senhaP">Senha</p>
-                <input type="password" id="senha" name="password" placeholder="Senha" required><br>
-                <a><input type="submit" name="cadastrar" id="cadastrar" value="Inscrever-se"></a>
-            </form>
-        </div>
-        <hr style="width: 35%;"> <br><br><br>
-        <footer>
-            <h3 id="criarconta">Já tem uma conta? <a href="/login"><button id="irparalogin">Faça login.</button></a></h3>
-        </footer>
-    </body>
-    </html>
-    
-   
+            <p style="margin-top: 25px;">Qual é o seu gênero?</p>
+            <div style="margin-top: 10px;" id="genero">
+                <input type="radio" value="homem"><p>Masculino</p>
+                <input type="radio" style="margin-left: 20px;" value="mulher"><p>Feminino</p>
+                <input type="radio" style="margin-left: 20px;" value="outros"><p>Não binário</p>
+            </div>
+            <div id="checks">
+                <input type="checkbox" id=""><span>Não quero receber mensagens de marketing do Spotify</span> <br>
+                <input type="checkbox" id=""><span>Compartilhar meus dados cadastrais com os provedores de conteúdo do Spotify para fins de marketing.</span><br>
+                <input type="checkbox" id="" required><span>Eu concordo com os Termos e Condições de Uso do Spotify.</span>
+            </div>
+            <p style="text-align: center; font-size: 12px; margin-top: 30px;" >Para saber mais sobre como o Spotify coleta, utiliza, compartilha e protege seus dados pessoais, leia a Política de Privacidade do Spotify.</p>
+            <div id="button">
+                <input type="submit" name="cadastrar" id="cadastrar" value="Inscrever-se">
+            </div>
+        </form>
+    </div>
+    <footer style="padding-bottom: 200px; margin-top: 30px;">
+        <h3 style="font-weight: normal;">Já tem uma conta? <a href="/login"><button id="irparalogin">Faça login.</button></a></h3>
+    </footer>
+</body>
+</html>
+

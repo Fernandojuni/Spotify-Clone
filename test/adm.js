@@ -4,6 +4,8 @@ var file = document.getElementById('file')
 var text = document.getElementById('nome')
 var audio = document.getElementById('audio')
 
+var URLMusica = document.getElementById('URLMusica')
+
 
 
 function adicionarAdudio(){
@@ -17,10 +19,10 @@ function selecionarAudio(){
 }
 
 
-
 function selecionar(){
     file.click()
 }
 var loadFile = function(event) {
+    URLMusica.value = URL.createObjectURL(event.target.files[0])
     output.src = URL.createObjectURL(event.target.files[0]);
 };

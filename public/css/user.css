@@ -109,10 +109,7 @@ html,body{
     padding-bottom: 200px;
     overflow-y: hidden;
 }
-.main-wraper{
-    padding-bottom: 200px;
-    overflow-y: hidden;
-}
+
 .sidebar-menu-item span{
     font-weight: bold;
     font-size: 14px;
@@ -148,23 +145,7 @@ html,body{
     
     overflow-y: scroll;
 }
-.main-row{
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    margin-top: 70px;
-    margin-bottom: 40px;
-    
-}
-.main-row-title{
-    width: 100%;
-    
 
-}
-.main-row-title h2{
-    color: white;
-    
-}
 
 .main-col img{
     max-width: 120px;
@@ -199,195 +180,6 @@ html,body{
 .main-wraper{
     padding: 15px 50px;
 }
-.player{
-    width: 100%;
-    padding: 20px;
-    height: 100px;
-    position: fixed;    
-    left: 0;
-    bottom: 0;
-    display: flex;
-    background-color: rgb(60, 60, 60);
-}
-
-.player-artist{
-    width: 21%;
-
-}
-.player-artist img{
-    max-width: 70px;
-    display: inline-block;
-    vertical-align: middle;
-}
-.player-artist h3{
-    display: inline-block;
-    color: white;
-    font-weight: normal;
-    font-size: 20px;
-    vertical-align: middle;
-    margin-left: 10px;
-}
-.player-artist h3 > span{
-    color: rgb(200, 200, 200);
-    font-size: 13px;
-}
-.player-control{
-    width: 55%;
-    text-align: center;
-
-}
-.player-control-buttons a{
-    color: white;
-    margin: 8px 15px;
-    font-size: 18px;
-}
-#player-control-progress{
-    width: 100%;
-    max-width: 600px;
-    height: 7px;
-    margin-top: 20px;
-    position: relative;
-    border-radius: 8px;
-    display: inline-block;
-    background-color: rgb(130, 130, 130);
-}
-
-#player-control-progress-2{
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 0;
-    height: 7px;
-    border-radius: 8px;
-    background-color: #00ff37;
-
-    transition: all 0.5s;
-}
-#player-control-progress-2::after{
-    content: '';
-    position: absolute;
-    right: -10px;
-    top: -4px;
-    width: 15px;
-    height: 15px;
-    border-radius: 10px;
-    background-color: rgb(255, 255, 255);
-}
-#volume{
-    -webkit-appearance: none;
-    appearance: none;
-    display: inline-block;
-    max-width: 100px;
-    width: 100%;
-    max-height: 5px;
-    height: 100%;
-    position: relative;
-    border-radius: 5px;
-    background-color: #00ff37;
-    outline: none;
-    cursor: pointer;
-}
-#volume-maximo, #volume-mutado, #volume-baixo{
-    color: rgb(189, 189, 189);
-    position: relative;
-    top: 4px;
-    margin-right: 2px;
-}
-#volume-maximo:hover, #volume-mutado:hover, #volume-baixo:hover{
-    color: rgb(255, 255, 255);
-}
-
-
-#volume::-webkit-slider-thumb{
-    
-    -webkit-appearance: none;
-    appearance: none;
-    border: none;
-    cursor: pointer;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: rgb(255, 255, 255);
-    
-}
-
-.player-control-volume{
-    float: right;
-    position: relative;
-    left: 9%;
-    top: 30%;
-}
-
-
-#aleario{
-    position: absolute;
-    left: 38.5%;
-    top: 12%;
-    color: rgb(180, 179, 179);
-}
-#loop{
-    position: absolute;
-    right: 42%;
-    top: 12%;
-    color: rgb(180, 179, 179);
-}
-#aleario:hover{
-    color: white;
-}
-#loop:hover{
-    color: white;
-}
-#playbtn{
-    color: rgb(180, 179, 179);
-}
-#playbtn:hover{
-    color: white;
-}
-#pausebtn{
-    color: rgb(180, 179, 179);
-}
-#pausebtn:hover{
-    color: white;
-}
-
-#avancar{
-    color: rgb(180, 179, 179);
-
-}
-#avancar:hover{
-    color: rgb(255, 255, 255);
-
-}
-#voltar{
-    color: rgb(180, 179, 179);
-
-}
-#voltar:hover{
-    color: rgb(255, 255, 255);
-}
-#tempo_atual{
-    color: rgb(199, 194, 194);
-    position: relative;
-    left: -52%;
-    top: -100%;
-}
-#tempo_total{
-    color: rgb(199, 194, 194);
-    position: relative;
-    left: 51%;
-    top: -100%;
-}
-
-#ADDplaylist{
-    color:rgb(189, 189, 189) ;
-    position: relative;
-    left: 8.5%;
-    top: 32%;
-}
-#ADDplaylist:hover{
-    color: rgb(255, 255, 255);
-}
-
 
 
 
@@ -695,23 +487,33 @@ html,body{
 
 
 
-
-
-
-
-
-
-
-@media screen and (max-width: 1700px) {
-    .main-col{
-        width: 15%;
-    }
+#content-top{
+    margin-top: 90px;
+    display: flex;
+    margin-left: 30px;
+    
 }
-@media screen and (max-width:768px) {
-    .main-col{
-        width: 50%;
-    }
+#content-top div{
+    margin-left: 20px;
+    position: relative;
+    top: 80px;
+    color: white;
 }
+#content-top h1{
+    font-size: 58px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+#content-top img{
+    width: 240px;
+    height: 240px;
+    border-radius: 150px;
+}
+
+
+
+
+
 
 
 
