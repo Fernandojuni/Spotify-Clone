@@ -14,6 +14,7 @@ var main = document.getElementById("main")
 //index da musica atual
 var songIndex = 0
 
+//o event.preventDefault() e para que ele nao envie o formulario para o backend
 
 
 //clicks

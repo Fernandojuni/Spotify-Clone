@@ -4,11 +4,13 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const session = require('express-session')
 const path = require('path');
-
+var Router = require('router')
 
 
 //------------Configs--------------
 const app = express();
+const router = Router()
+
 
 
 require('dotenv').config()
@@ -201,8 +203,13 @@ app.get('/user',(req,res)=>{
 
 
 
-
-
+//---------temp-------------
+//criar nova url
+// function generateCode() {
+//   let text = '';
+//   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+//   for (let i = 0; i < 5; i++)
+//     text += possible
 
 
 
