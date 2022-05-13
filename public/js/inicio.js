@@ -11,8 +11,8 @@ var range = document.getElementById('volume')
 
 var main = document.getElementById("main")
 
-//index da musica atual
-var songIndex = 0
+//index da  atual
+var songIndexmusica = 0
 
 //o event.preventDefault() e para que ele nao envie o formulario para o backend
 
