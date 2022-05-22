@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session')
 const path = require('path');
 var Router = require('router')
-
+const multer = require('multer')
 
 //------------Configs--------------
 const app = express();
@@ -34,6 +34,37 @@ app.set('view engine', 'ejs');
 
 
 
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/')
+    },
+    filename: function (req, file, cb) {
+        const novoNomeArquivo = file.originalname
+
+        //---------------------------
+        //caso queira encripitar o nome usa essa funcao: 
+        //const extensaoArquivo = file.originalname.split('.')[1];
+
+        // Cria um código randômico que será o nome do arquivo
+        //const novoNomeArquivo = require('crypto')
+        //.randomBytes(64)
+        //.toString('hex');
+        //--------------------------
+
+
+        
+        // Indica o novo nome do arquivo:
+        cb(null, `${novoNomeArquivo}`)
+    }
+});
+
+const upload = multer({ storage });
+
+
+
+
+
+
 //-------------Banco de dados--------------
 
 
@@ -44,7 +75,6 @@ const cadastros = require('./DataBase/models/cadastros')
 
 
 //------------------POST-----------------
-
 
 app.post('/alth',(req,res)=>{
     let login = req.body.email
@@ -59,11 +89,11 @@ app.post('/alth',(req,res)=>{
             if (login == result.email && senha2 == result.senha) {
                 if (result.email == "adm@gmail.com" && result.senha == "adm") {
                     req.session.adm = login
-                    console.log(req.session.id);
+                    
                     res.redirect('/inicio')
                 }else{
                     req.session.login = login
-                    console.log(req.session.id);
+                    
                     res.redirect('/inicio')
                 }
             }
@@ -83,17 +113,18 @@ app.post('/althCadastro',(req,res)=>{
         if (cadastrado) {
             res.redirect('/cadastro?cadastrado=false')
         }else{
+            
             cadastros.create({
                 email: req.body.login,
                 senha: req.body.password,
                 nome_usuario: req.body.nome_usuario,
+                foto_perfil: null,
                 data_aniversario_dia:req.body.dia,
                 data_aniversario_mes:req.body.mes,
                 data_aniversario_ano:req.body.ano,
                 genero: undefined,
                 premium: false
             }).then(function(){
-                console.log('cadastrado');
                 res.redirect('/login')
             }).catch(function(erro){
                 console.log('erro:'+ erro);
@@ -103,6 +134,21 @@ app.post('/althCadastro',(req,res)=>{
         console.log('erro:'+ err);
     })
 })
+
+app.post('/foto/:nome', upload.single('file'), (req,res)=>{
+    var imageBase64 = fs.readFileSync(__dirname + "/uploads/"+ req.body.output, 'base64');
+    fs.unlink(__dirname + "/uploads/"+ req.body.output, function (err){
+        if (err) throw err;
+        console.log('Arquivo deletado!');
+    })
+    var imgSrc = "data:" + req.body.mimetype +";base64," + imageBase64
+    cadastros.update({foto_perfil: imgSrc},{where:{nome_usuario: req.params.nome}})
+    
+    res.redirect('/user/'+ req.params.nome)
+})
+
+
+
 
 
 //-----------------GET--------------------
@@ -160,15 +206,12 @@ app.get('/inicio',(req,res)=>{
                         email: req.session.login
                     }
                 }).then((result)=>{
-                    var usuario = result.nome_usuario   
-                    res.render('inicio',{usuario})
+                    res.render('inicio',{result:result})
                 }).catch((err)=>{
                     console.log('erro:'+ err);
                 })
-                
             }
         }
-
     }else{
         res.redirect('/login?logado=false')
     }
@@ -180,19 +223,21 @@ app.get('/logout',(req,res)=>{
     if(err){
         return console.error(err)
     }
-    console.log("A session foi destruida!")
     res.redirect("/login")
 })
 })
-
-app.get('/user',(req,res)=>{
+app.get('/user/:nome' ,(req,res)=>{
     if (req.session.adm || req.session.login ) {
         cadastros.findOne({
             where:{
-                email: req.session.login
+                nome_usuario: req.params.nome
             }
         }).then((result)=>{
-            res.render('user',{usuario:result})
+            if (result) {
+                res.render('user',{usuario:result})
+            }else{
+                res.redirect('/inicio')
+            }
         }).catch((err)=>{
             console.log('erro:'+ err);
         })
@@ -202,6 +247,33 @@ app.get('/user',(req,res)=>{
 })
 
 
+//-----------temp---------------
+
+
+const test = require('./DataBase/models/test')
+
+
+app.post('/file', upload.single('file'), (req,res)=>{
+    
+    var imageBase64 = fs.readFileSync(__dirname + "/uploads/"+ req.body.output, 'base64');
+    fs.unlink(__dirname + "/uploads/"+ req.body.output, function (err){
+        if (err) throw err;
+        console.log('Arquivo deletado!');
+    })
+    var imgSrc = "data:" + req.body.mimetype +";base64," + imageBase64
+
+    test.create({
+        fileName:imgSrc
+    })
+    test.findAll().then((result)=>{
+        res.render('tt', {result:result})
+    })
+    
+})
+
+app.get('/test', (req,res)=>{
+    res.render('test.ejs')
+})
 
 
 
@@ -214,5 +286,5 @@ app.get('/user',(req,res)=>{
 
 const port = parseInt(process.env.PORT) || 80
 app.listen(port,()=>{
-    console.log(`\u001b[32m Servidor rodando na porta ${port}` );
+    console.log(`Servidor rodando na porta ${port}` );
 });
