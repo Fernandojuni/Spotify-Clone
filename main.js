@@ -43,15 +43,10 @@ const storage = multer.diskStorage({
 
         //---------------------------
         //caso queira encripitar o nome usa essa funcao: 
-        //const extensaoArquivo = file.originalname.split('.')[1];
-
-        // Cria um código randômico que será o nome do arquivo
         //const novoNomeArquivo = require('crypto')
         //.randomBytes(64)
         //.toString('hex');
-        //--------------------------
-
-
+        //---------------------------
         
         // Indica o novo nome do arquivo:
         cb(null, `${novoNomeArquivo}`)
@@ -177,6 +172,7 @@ app.get('/login',(req,res)=>{
     }
     
 })
+
 app.get('/cadastro',(req,res)=>{
     if (req.session.adm) {
         res.redirect('/inicio')
@@ -226,6 +222,7 @@ app.get('/logout',(req,res)=>{
     res.redirect("/login")
 })
 })
+
 app.get('/user/:nome' ,(req,res)=>{
     if (req.session.adm || req.session.login ) {
         cadastros.findOne({
@@ -247,33 +244,23 @@ app.get('/user/:nome' ,(req,res)=>{
 })
 
 
-//-----------temp---------------
+
+// //temp
+// var imageBase64 = fs.readFileSync(__dirname + "/uploads/"+ req.body.output, 'base64');
+//     fs.unlink(__dirname + "/uploads/"+ req.body.output, function (err){
+//         if (err) throw err;
+//         console.log('Arquivo deletado!');
+//     })
+//     var imgSrc = "data:" + req.body.mimetype +";base64," + imageBase64
 
 
-const test = require('./DataBase/models/test')
 
 
-app.post('/file', upload.single('file'), (req,res)=>{
-    
-    var imageBase64 = fs.readFileSync(__dirname + "/uploads/"+ req.body.output, 'base64');
-    fs.unlink(__dirname + "/uploads/"+ req.body.output, function (err){
-        if (err) throw err;
-        console.log('Arquivo deletado!');
-    })
-    var imgSrc = "data:" + req.body.mimetype +";base64," + imageBase64
 
-    test.create({
-        fileName:imgSrc
-    })
-    test.findAll().then((result)=>{
-        res.render('tt', {result:result})
-    })
-    
-})
 
-app.get('/test', (req,res)=>{
-    res.render('test.ejs')
-})
+
+
+
 
 
 
