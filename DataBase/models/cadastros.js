@@ -22,7 +22,6 @@ const cadastros = sequelize.define('cadastros',{
     },
     foto_perfil:{
         type: Sequelize.TEXT
-        
     },
     data_aniversario_dia:{
         type: Sequelize.STRING,
@@ -44,8 +43,10 @@ const cadastros = sequelize.define('cadastros',{
         type: Sequelize.BOOLEAN,
         require: true
     },
-    
-
+    ADM:{
+        type: Sequelize.BOOLEAN,
+        require: true
+    }
 })
 
 const init = async () =>{

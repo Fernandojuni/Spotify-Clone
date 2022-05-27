@@ -1,0 +1,58 @@
+
+body{
+    margin: 0px;
+}
+#container{
+    width: 100vw;
+    height: 100vh;
+    background: #6C7A89;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+#group_adicionarMusica{
+    width: 300px;
+    height: 450px;
+    background: #fff;
+    text-align: center;
+}
+label {
+    background-color: #3498db;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    margin: 10px;
+    padding: 6px 20px
+  }
+label:hover{
+    background-color: #246b9b;
+    border: 1px solid black;
+}
+#output {
+    border: solid 1px rgb(110, 110, 110);
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+}
+.input{
+    border-radius: 3px;
+    border: 1px solid;
+    outline: none;
+    height: 20px;
+}
+#enviar{
+    border: none;
+    background-color: #1ed760;
+    width: 120px;
+    height: 45px;
+    font-size: 16px;
+    border-radius: 30px;
+    position: relative;
+    cursor: pointer;
+    margin-top: 8px;
+}
+#enviar:hover{
+    background-color: #16a046;
+    border: 1px solid black;
+}

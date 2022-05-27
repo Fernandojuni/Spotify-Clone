@@ -17,6 +17,8 @@ var songIndexmusica = 0
 //o event.preventDefault() e para que ele nao envie o formulario para o backend
 
 
+
+
 //clicks
 var clicks = 0
 var clicks2 = 0

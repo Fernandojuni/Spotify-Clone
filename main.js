@@ -27,6 +27,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
 app.use(express.static('views'));
 app.use(express.static('public'));
+app.use(express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, '/views'))
 app.set('view engine', 'ejs');
@@ -59,14 +61,11 @@ const upload = multer({ storage });
 
 
 
-
 //-------------Banco de dados--------------
 
 
-
 const cadastros = require('./DataBase/models/cadastros')
-
-
+const musicas = require('./DataBase/models/musicas')
 
 
 //------------------POST-----------------
@@ -82,13 +81,11 @@ app.post('/alth',(req,res)=>{
     }).then((result)=>{
         if (result) {           
             if (login == result.email && senha2 == result.senha) {
-                if (result.email == "adm@gmail.com" && result.senha == "adm") {
+                if (result.ADM == true) {
                     req.session.adm = login
-                    
                     res.redirect('/inicio')
                 }else{
                     req.session.login = login
-                    
                     res.redirect('/inicio')
                 }
             }
@@ -118,7 +115,8 @@ app.post('/althCadastro',(req,res)=>{
                 data_aniversario_mes:req.body.mes,
                 data_aniversario_ano:req.body.ano,
                 genero: undefined,
-                premium: false
+                premium: false,
+                ADM: true
             }).then(function(){
                 res.redirect('/login')
             }).catch(function(erro){
@@ -143,8 +141,21 @@ app.post('/foto/:nome', upload.single('file'), (req,res)=>{
 })
 
 
-
-
+app.post('/addMusica', upload.fields([{name: 'audio', maxCount: 1},{name: 'poster', maxCount: 1}]),(req,res)=>{
+    fs.copyFileSync('C:/xmlpath/file.xml', 'C:/test/file.xml');
+    musicas.create({
+        nomeMusica: req.body.nomeMusica,
+        nomeBanda:req.body.nomeBanda,
+        tags: null,
+        posterPath: '../uploads/'+ req.body.nomeimg,
+        audioPath: '../uploads/'+ req.body.nomeAudio,
+    }).then(function(){
+        
+        res.redirect('/ADM')
+    }).catch(function(erro){
+        console.log('erro:'+ erro);
+    })
+})
 
 //-----------------GET--------------------
 app.get("/",(req,res)=>{
@@ -194,19 +205,29 @@ app.get('/cadastro',(req,res)=>{
 app.get('/inicio',(req,res)=>{
     if (req.session.adm || req.session.login ) {
         if (req.session.adm) {
-            res.render('inicio',{usuario:"adm"})
-        }else{
-            if (req.session.login) {
-                cadastros.findOne({
-                    where:{
-                        email: req.session.login
-                    }
-                }).then((result)=>{
-                    res.render('inicio',{result:result})
-                }).catch((err)=>{
-                    console.log('erro:'+ err);
+            cadastros.findOne({
+                where:{
+                    email: req.session.adm
+                }
+            }).then((result)=>{
+                musicas.findAll().then((musica)=>{
+                    res.render('inicio',{result:result, musica:musica})
+                }).catch(function(erro){
+                    console.log('erro:'+ erro);
                 })
-            }
+            }).catch((err)=>{
+                console.log('erro:'+ err);
+            })
+        }else{
+            cadastros.findOne({
+                where:{
+                    email: req.session.login
+                }
+            }).then((result)=>{
+                res.render('inicio',{result:result}) 
+            }).catch((err)=>{
+                console.log('erro:'+ err);
+            })
         }
     }else{
         res.redirect('/login?logado=false')
@@ -244,15 +265,13 @@ app.get('/user/:nome' ,(req,res)=>{
 })
 
 
-
-// //temp
-// var imageBase64 = fs.readFileSync(__dirname + "/uploads/"+ req.body.output, 'base64');
-//     fs.unlink(__dirname + "/uploads/"+ req.body.output, function (err){
-//         if (err) throw err;
-//         console.log('Arquivo deletado!');
-//     })
-//     var imgSrc = "data:" + req.body.mimetype +";base64," + imageBase64
-
+app.get('/ADM',(req,res)=>{
+    if (req.session.adm) {
+        res.render('administrador')
+    }else{
+        res.redirect('/inicio')
+    }
+})
 
 
 
@@ -261,7 +280,7 @@ app.get('/user/:nome' ,(req,res)=>{
 
 
 
-
+//-------------temp---------------
 
 
 
@@ -271,7 +290,15 @@ app.get('/user/:nome' ,(req,res)=>{
 
 
 
-const port = parseInt(process.env.PORT) || 80
+
+
+
+
+
+
+
+
+const port = 80
 app.listen(port,()=>{
     console.log(`Servidor rodando na porta ${port}` );
 });

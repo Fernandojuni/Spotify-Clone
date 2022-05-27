@@ -66,7 +66,6 @@
     </form>
 </div>
 
-
 <div id="main">
     <div id="main-top">
         <div id="main-top-col">
@@ -84,11 +83,8 @@
                 <% }else{ %>
                     <img src="<%= result.foto_perfil %> " alt="">
                 <% } %>
-                <% if (result.nome_usuario == "adm") { %>
-                    <span id="Nomeusuario" style="color:red; font-weight: bold; text-transform: uppercase;"><%= result.nome_usuario  %> </span>
-                <% }else{%>
-                    <span id="Nomeusuario" style="color:white; font-weight: normal;"><%= result.nome_usuario  %> </span>
-                <% } %>
+                <span id="Nomeusuario" style="color:white; font-weight: normal;"><%= result.nome_usuario  %> </span>
+                
                 
                 <span translate="no" id="abrirPerfil" style="display: block; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_down</span>
                 <span translate="no" id="fecharPerfil" style="display: none; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_up</span>
@@ -109,18 +105,28 @@
     <div  class="main-wraper">
         
         <div class="main-row">
-            <div style="margin-top: 700px;" class="main-row-title"><h2>Musicas</h2></div>
-            
+            <div class="main-row-title"><h2>Musicas</h2></div>
+            <% musica.forEach((musica,index) => { %>
+                <div data-id="<%= musica.id %>" class="main-col">
+                    <img src="<%= musica.posterPath %> ">
+                    <h3><%= musica.nomeBanda %> </h3>
+                    <p><%= musica.nomeMusica %> </p>
+                </div>
+            <% }) %>
         </div>
+
     </div>
 </div>
 
 
+
 <%- include("reusable/player.ejs") %> 
 
-    
-    
-<audio id="audioplayer" style="position: absolute;left: 0; top: 0; z-index: -999; opacity: 0;" controls="controls" src=""></audio>
+
+
+
+
+<audio id="audioplayer" style="position: absolute;left: 0; top: 0; z-index: -999; opacity: 0;" controls="controls" src="<%#= musica.filter((value)=>{value.id == }) %> "></audio>
 
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
