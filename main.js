@@ -298,7 +298,7 @@ app.get('/ADM',(req,res)=>{
 
 
 
-const port = 80
+const port = process.env.PORT || 80
 app.listen(port,()=>{
     console.log(`Servidor rodando na porta ${port}` );
 });
