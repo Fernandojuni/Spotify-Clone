@@ -33,9 +33,9 @@
             <a href="/inicio"><img src="../public/img/logo_2.png" alt=""></a>
         </div>
         <div class="sidebar-menu">
-            <a class="sidebar-menu-selecionado" href="/inicio"><span class="fas fa-home"></span>Inicio</a>
+            <a href="/inicio"><span class="fas fa-home"></span>Inicio</a>
             <a href="#"><span class="fas fa-search"></span>Buscar</a>
-            <a id="addMusica" style="display:  inline;" onclick="adicionarMusica()" href="#"><span class="fas fa-database"></span>Adicionar musica</a>
+            <a id="addMusica" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;" onclick="adicionarMusica()" href="#"><span class="fas fa-database"></span>Adicionar musica</a>
         </div>
         <div style="margin-left: 30px;" class="sidebar-menu">
             <p translate="no" class="sidebar-menu-title">Playlists</p>
@@ -44,7 +44,7 @@
                 <span>Criar<span style="margin-left: -6px;" translate="no">Playlist</span></span>
             </div>
             <div class="sidebar-menu-item">
-                <img src="../public/img/musicas-curtidas.jpeg" alt="">
+                <img src="../public/img/musicas-curtidas.jpeg">
                 <span>Musicas Curtidas</span>
             </div>
         </div>
@@ -68,13 +68,14 @@
             <a href="#" style="position: relative; left: 42%;"><input translate="no" id="facaUpgrade" type="submit" value="Faça upgrade"></a>
 
             <div id="perfil" onclick="abrirPopupPerfil()">
-                <img src="../public/img/perfil-vazio.jpg">
-                
-                <% if (usuario.nome_usuario == "adm") { %>
-                    <span id="Nomeusuario" translate="no" style="color:red; font-weight: bold; text-transform: uppercase;"><%= usuario.nome_usuario  %> </span>
-                <% }else{%>
-                    <span id="Nomeusuario" translate="no" style="color:white; font-weight: normal;"><%= usuario.nome_usuario  %> </span>
+                <% if (userAtual.foto_perfil == null) { %>
+                    <img src="../public/img/perfil-vazio.jpg" alt="">
+                <% }else{ %>
+                    <img src="<%= userAtual.foto_perfil %> " alt="">
                 <% } %>
+    
+                <span id="Nomeusuario" translate="no" style="color:white; font-weight: normal;"><%= userAtual.nome_usuario  %> </span>
+                
                 
                 <span id="abrirPerfil" translate="no" style="display: block; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_down</span>
                 <span id="fecharPerfil" translate="no" style="display: none; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_up</span>

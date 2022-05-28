@@ -41,17 +41,15 @@ const storage = multer.diskStorage({
         cb(null, __dirname +'/uploads/')
     },
     filename: function (req, file, cb) {
-        const novoNomeArquivo = file.originalname
-
+        const nomeArquivo = file.originalname
+        
         //---------------------------
         //caso queira encripitar o nome usa essa funcao: 
-        //const novoNomeArquivo = require('crypto')
-        //.randomBytes(64)
-        //.toString('hex');
+        //const novoNomeArquivo = require('crypto').randomBytes(64).toString('hex');
         //---------------------------
         
         // Indica o novo nome do arquivo:
-        cb(null, `${novoNomeArquivo}`)
+        cb(null, `${nomeArquivo}`)
     }
 });
 
@@ -66,7 +64,7 @@ const upload = multer({ storage });
 
 const cadastros = require('./DataBase/models/cadastros')
 const musicas = require('./DataBase/models/musicas')
-
+const playlists = require('./DataBase/models/playlists')
 
 //------------------POST-----------------
 
@@ -132,7 +130,6 @@ app.post('/foto/:nome', upload.single('file'), (req,res)=>{
     var imageBase64 = fs.readFileSync(__dirname + "/uploads/"+ req.body.output, 'base64');
     fs.unlink(__dirname + "/uploads/"+ req.body.output, function (err){
         if (err) throw err;
-        console.log('Arquivo deletado!');
     })
     var imgSrc = "data:" + req.body.mimetype +";base64," + imageBase64
     cadastros.update({foto_perfil: imgSrc},{where:{nome_usuario: req.params.nome}})
@@ -140,15 +137,31 @@ app.post('/foto/:nome', upload.single('file'), (req,res)=>{
     res.redirect('/user/'+ req.params.nome)
 })
 
-
 app.post('/addMusica', upload.fields([{name: 'audio', maxCount: 1},{name: 'poster', maxCount: 1}]),(req,res)=>{
-    // fs.copyFileSync('C:/xmlpath/file.xml', 'C:/test/file.xml');
+    const codigoImg = require('crypto').randomBytes(64).toString('hex');
+    const extensaoImg = "." + req.body.nomeimg.split('.')[1];
+    const nomeImgCode = codigoImg + extensaoImg
+
+
+    const codigoAudio = require('crypto').randomBytes(64).toString('hex');
+    const extensaoAudio = "." + req.body.nomeAudio.split('.')[1];
+    const nomeAudioCode = codigoAudio + extensaoAudio
+
+    fs.copyFileSync(__dirname + '/uploads/' + req.body.nomeimg, __dirname + '/public/musicas/img/' + nomeImgCode);
+    fs.copyFileSync(__dirname + '/uploads/' + req.body.nomeAudio, __dirname + '/public/musicas/audio/' + nomeAudioCode);
+
+    fs.unlink(__dirname + "/uploads/"+ req.body.nomeimg, function (err){
+        if (err) throw err;
+    })
+    fs.unlink(__dirname + "/uploads/"+ req.body.nomeAudio, function (err){
+        if (err) throw err;
+    })
     musicas.create({
         nomeMusica: req.body.nomeMusica,
         nomeBanda:req.body.nomeBanda,
         tags: null,
-        posterPath: '../uploads/'+ req.body.nomeimg,
-        audioPath: '../uploads/'+ req.body.nomeAudio,
+        posterPath: '../public/musicas/img/'+ nomeImgCode,
+        audioPath: '../public/musicas/audio/'+ nomeAudioCode,
     }).then(function(){
         
         res.redirect('/ADM')
@@ -156,7 +169,35 @@ app.post('/addMusica', upload.fields([{name: 'audio', maxCount: 1},{name: 'poste
         console.log('erro:'+ erro);
     })
 })
-musicas.findAll().then((ee)=>{console.log(ee);})
+
+
+
+app.post('/criarPlay',(req,res)=>{
+    const codigo = require('crypto').randomBytes(22).toString('hex');
+
+    if (req.session.adm) {
+        cadastros.findOne({where:{email:req.session.adm}}).then((result)=>{
+            playlists.create({
+                nome_play: req.body.playlistName,
+                codigo_play: codigo,
+                id_usuario: result.id,
+                musicas:null
+            })
+        })
+        res.redirect('/inicio')
+    }else{
+        cadastros.findOne({where:{email:req.session.login}}).then((result)=>{
+            playlists.create({
+                nome_play: req.body.playlistName,
+                codigo_play: codigo,
+                id_usuario: result.id,
+                musicas:null
+            })
+        })
+        res.redirect('/inicio')
+    }
+})
+
 //-----------------GET--------------------
 app.get("/",(req,res)=>{
     res.render("index")
@@ -211,17 +252,23 @@ app.get('/inicio',(req,res)=>{
                         email: req.session.adm
                     }
                 }).then((result)=>{ 
-                    res.render('inicio',{result:result, musica:musica})
+                    playlists.findAll({where:{id_usuario:result.id}}).then((playlist)=>{
+                        res.render('inicio',{result:result, musica:musica, playlist:playlist})
+                    })
                 }).catch((err)=>{
                     console.log('erro:'+ err);
                 })
+                
+                
             }else{
                 cadastros.findOne({
                     where:{
                         email: req.session.login
                     }
                 }).then((result)=>{
-                    res.render('inicio',{result:result,musica:musica}) 
+                    playlists.findAll({where:{id:result.id}}).then((playlist)=>{
+                        res.render('inicio',{result:result, musica:musica, playlist:playlist})
+                    }) 
                 }).catch((err)=>{
                     console.log('erro:'+ err);
                 })
@@ -252,7 +299,25 @@ app.get('/user/:nome' ,(req,res)=>{
             }
         }).then((result)=>{
             if (result) {
-                res.render('user',{usuario:result})
+                if (result.email == req.session.login || result.email == req.session.adm) {
+                    res.render('user',{usuario:result, userAtual:result})
+                }else{
+                    if (req.session.adm) {
+                        cadastros.findOne({
+                            where:{
+                                email:req.session.adm
+                        }}).then((userAtual)=>{
+                            res.render('Visualizar_User',{usuario:result, userAtual:userAtual})
+                        })
+                    }else{
+                        cadastros.findOne({
+                            where:{
+                                email:req.session.login
+                        }}).then((userAtual)=>{
+                            res.render('Visualizar_User',{usuario:result, userAtual:userAtual})
+                        })
+                    }
+                }
             }else{
                 res.redirect('/inicio')
             }
