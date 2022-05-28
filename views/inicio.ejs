@@ -30,41 +30,8 @@
 
 </head>
 <body>
-<div class="sidebar">
-    <div class="sidebar-wraper">
-        <div class="sidebar-logo">
-            <a href="/inicio"><img src="img/logo_2.png" alt=""></a>
-        </div>
-        <div class="sidebar-menu">
-            <a class="sidebar-menu-selecionado" href="/inicio"><span class="fas fa-home"></span>Inicio</a>
-            <a href="#"><span class="fas fa-search"></span>Buscar</a>
-            <a id="addMusica" style="display:  inline;" onclick="adicionarMusica()" href="#"><span class="fas fa-database"></span>Adicionar musica</a>
-        </div>
-        <div style="margin-left: 30px;" class="sidebar-menu">
-            <p translate="no" class="sidebar-menu-title">Playlists</p>
-            <div onclick="criarPlay()" class="sidebar-menu-item">
-                <div class="sidebar-menu-item-componente"> + </div>
-                <span>Criar<span style="margin-left: -6px;" translate="no">Playlist</span></span>
-            </div>
-            <div class="sidebar-menu-item">
-                <img src="img/musicas-curtidas.jpeg" alt="">
-                <span>Musicas Curtidas</span>
-            </div>
-        </div>
-        
-        <div class="sidebar-playlists">
-            
-            
-            
-        </div>
-    </div>
-</div>
-<div id="popup_criar_play" style="display: none;">
-    <form action="/telaPrincipal/playlistCriar" method="post">
-        <input type="text" name="NomePlay" id="nomePlay" placeholder=" Nome da Playlist" required> <br>
-        <button onclick="PlayCriar()" id="btnEnviarARQ">ENVIAR</button>
-    </form>
-</div>
+
+<%- include('reusable/sideBar.ejs')  %> 
 
 <div id="main">
     <div id="main-top">
@@ -107,7 +74,7 @@
         <div class="main-row">
             <div class="main-row-title"><h2>Musicas</h2></div>
             <% musica.forEach((musica,index) => { %>
-                <div data-id="<%= musica.id %>" class="main-col">
+                <div data-id="<%= index %>" class="main-col">
                     <img src="<%= musica.posterPath %> ">
                     <h3><%= musica.nomeBanda %> </h3>
                     <p><%= musica.nomeMusica %> </p>
@@ -125,12 +92,119 @@
 
 
 
-
 <audio id="audioplayer" style="position: absolute;left: 0; top: 0; z-index: -999; opacity: 0;" controls="controls" src="<%#= musica.filter((value)=>{value.id == }) %> "></audio>
 
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="js/all.min.js"></script>
 <script src="js/inicio.js"></script>
+<script>
+    var audioplayer = document.getElementById('audioplayer')
+
+    var volumeMaximo = document.getElementById('volume-maximo')
+    var volumeMutado = document.getElementById('volume-mutado')
+    var volumeBaixo = document.getElementById('volume-baixo')
+
+    var playbtn = document.getElementById('playbtn')
+    var pausebtn = document.getElementById('pausebtn')
+
+    var range = document.getElementById('volume')
+
+    var main = document.getElementById("main")
+    var playerArtistComponent = document.getElementsByClassName('player-artist')
+
+    var popup_criar_play = document.getElementById('popup_criar_play')
+
+
+
+    var main_top = document.getElementById('main-top')
+
+
+    var popup_perfil = document.getElementById("popup-perfil")
+
+    var songIndex = 0
+
+    var songList = JSON.parse('<%- JSON.stringify(musica)%>')
+
+
+    audioplayer.onended = ()=>{
+        if (songIndex >= songList.length -1) {
+            songIndex = 0
+            iniciarMusica()
+            return
+        }
+        songIndex++
+        iniciarMusica()
+    }
+
+
+    document.querySelectorAll('.main-col').forEach(item =>{
+    item.addEventListener('click', event=>{
+        let id = item.getAttribute('data-id')
+        songIndex = id
+        iniciarMusica()
+        })
+    })
+
+    function zerarplayer(){
+        playerArtistComponent[0].innerHTML = ""
+        audioplayer.src = ""
+        progress2.style.width = 0
+        tempo_total.innerHTML = "00:00"
+    }
+
+    function voltar() {
+        if (songIndex == 0) {
+            songIndex = songList.length-1
+            iniciarMusica()
+            return
+        }
+        songIndex--
+        iniciarMusica()
+    }
+
+    function avancar() {
+        if (songIndex >= songList.length -1) {
+            songIndex = 0
+            iniciarMusica()
+            return
+        }
+        songIndex++
+        iniciarMusica()
+    }
+    function alearioAtv() {
+        clicks2++
+        if (clicks == 2 || clicks == 0) {
+            console.log(clicks2);
+            if (clicks2 == 1) {
+                document.getElementById('aleario').style.color = "#00ff37"
+            }
+            if (clicks2 == 2) {
+                document.getElementById('aleario').style.color = "rgb(180, 179, 179)"
+                clicks2 = 0
+            }
+        }
+    }
+    //funcao de iniciar musica
+    function iniciarMusica(){
+        console.log(songIndex);
+        audioplayer.src = songList[songIndex].audioPath
+    
+        playerArtistComponent[0].innerHTML = `<img src="`+songList[songIndex].posterPath+`"/> <h3>`+songList[songIndex].nomeBanda+`<br/><span>`+songList[songIndex].nomeMusica+`</span></h3>`
+            
+        if (songIndex > songList.length) {
+            songIndex = 0
+        }
+        audioplayer.play()
+        audioplayer.onloadeddata = function() {
+            var data = new Date(null);
+            data.setSeconds(audioplayer.duration);
+            var duracao = data.toISOString().substr(14, 5);
+            tempo_total.innerHTML = duracao
+        };
+        playbtn.style.display = "none"
+        pausebtn.style.display = "inline"
+    }
+</script>
 </body>
 </html>

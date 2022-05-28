@@ -142,7 +142,7 @@ app.post('/foto/:nome', upload.single('file'), (req,res)=>{
 
 
 app.post('/addMusica', upload.fields([{name: 'audio', maxCount: 1},{name: 'poster', maxCount: 1}]),(req,res)=>{
-    fs.copyFileSync('C:/xmlpath/file.xml', 'C:/test/file.xml');
+    // fs.copyFileSync('C:/xmlpath/file.xml', 'C:/test/file.xml');
     musicas.create({
         nomeMusica: req.body.nomeMusica,
         nomeBanda:req.body.nomeBanda,
@@ -156,7 +156,7 @@ app.post('/addMusica', upload.fields([{name: 'audio', maxCount: 1},{name: 'poste
         console.log('erro:'+ erro);
     })
 })
-
+musicas.findAll().then((ee)=>{console.log(ee);})
 //-----------------GET--------------------
 app.get("/",(req,res)=>{
     res.render("index")
@@ -201,34 +201,34 @@ app.get('/cadastro',(req,res)=>{
 })
 
 
-
+//
 app.get('/inicio',(req,res)=>{
     if (req.session.adm || req.session.login ) {
-        if (req.session.adm) {
-            cadastros.findOne({
-                where:{
-                    email: req.session.adm
-                }
-            }).then((result)=>{
-                musicas.findAll().then((musica)=>{
+        musicas.findAll().then((musica)=>{
+            if (req.session.adm) {
+                cadastros.findOne({
+                    where:{
+                        email: req.session.adm
+                    }
+                }).then((result)=>{ 
                     res.render('inicio',{result:result, musica:musica})
-                }).catch(function(erro){
-                    console.log('erro:'+ erro);
+                }).catch((err)=>{
+                    console.log('erro:'+ err);
                 })
-            }).catch((err)=>{
-                console.log('erro:'+ err);
-            })
-        }else{
-            cadastros.findOne({
-                where:{
-                    email: req.session.login
-                }
-            }).then((result)=>{
-                res.render('inicio',{result:result}) 
-            }).catch((err)=>{
-                console.log('erro:'+ err);
-            })
-        }
+            }else{
+                cadastros.findOne({
+                    where:{
+                        email: req.session.login
+                    }
+                }).then((result)=>{
+                    res.render('inicio',{result:result,musica:musica}) 
+                }).catch((err)=>{
+                    console.log('erro:'+ err);
+                })
+            }
+        }).catch(function(erro){
+            console.log('erro:'+ erro);
+        })
     }else{
         res.redirect('/login?logado=false')
     }

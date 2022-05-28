@@ -11,12 +11,6 @@ var range = document.getElementById('volume')
 
 var main = document.getElementById("main")
 
-//index da  atual
-var songIndexmusica = 0
-
-//o event.preventDefault() e para que ele nao envie o formulario para o backend
-
-
 
 
 //clicks
@@ -35,9 +29,7 @@ var playerArtistComponent = document.getElementsByClassName('player-artist')
 
 var popup_criar_play = document.getElementById('popup_criar_play')
 
-var ADDplaylist = document.getElementById('ADDplaylist')
 
-var nomePlay = document.getElementById('nomePlay')
 
 var main_top = document.getElementById('main-top')
 
@@ -45,7 +37,6 @@ var main_top = document.getElementById('main-top')
 var popup_perfil = document.getElementById("popup-perfil")
 
 //controle do scroll e estilos
-//(temporario)
 
 main.addEventListener('scroll', ()=>{
     if (main.scrollTop > 1) {
@@ -58,53 +49,6 @@ main.addEventListener('scroll', ()=>{
 })
 
 //abertura e fechamento de popups
-function criarPlay(){
-    clicksCriarPlay++
-    if (clicksCriarPlay == 0) {
-        popup_criar_play.style.display = 'none'
-    }
-    if (clicksCriarPlay == 1) {
-        popup_criar_play.style.display = 'inline'
-    }
-    if (clicksCriarPlay == 2) {
-        popup_criar_play.style.display = 'none'
-    }
-    if (clicksCriarPlay == 2) {
-        clicksCriarPlay = 0
-    }
-}
-
-function adicionarMusica(){
-    clicksADDmusica++
-    if (clicksADDmusica == 0) {
-        popup_add_musica.style.display = 'none'
-    }
-    if (clicksADDmusica == 1) {
-        popup_add_musica.style.display = 'inline'
-    }
-    if (clicksADDmusica == 2) {
-        popup_add_musica.style.display = 'none'
-    }
-    if (clicksADDmusica == 2) {
-        clicksADDmusica = 0
-    }
-}
-
-function ADDplaylis(){
-    clicksPerfil++
-    if (clicksPerfil == 0) {
-        popupAddPlaylist .style.display = 'none'
-    }
-    if (clicksPerfil == 1) {
-        popupAddPlaylist .style.display = 'block'
-    }
-    if (clicksPerfil  == 2) {
-        popupAddPlaylist .style.display = 'none'
-    }
-    if (clicksPerfil  == 2) {
-        clicksPerfil  = 0
-    }
-}
 
 
 function abrirPopupPerfil(){
@@ -125,30 +69,7 @@ function abrirPopupPerfil(){
 
 //-------------Controle de musica----------
 //iniciar musica
-document.querySelectorAll('.main-col').forEach(item =>{
-    item.addEventListener('click', event=>{
-        let id = item.getAttribute('data-id')
-        songIndex = id
-        iniciarMusica()
-    })
-})
 
-function zerarplayer(){
-    playerArtistComponent[0].innerHTML = ""
-    audioplayer.src = ""
-    progress2.style.width = 0
-    tempo_total.innerHTML = "00:00"
-}
-
-function voltar() {
-    songIndex--
-    iniciarMusica()
-}
-
-function avancar() {
-    songIndex++
-    iniciarMusica()
-}
 
 function loopAtv() {
     clicks++
@@ -166,38 +87,8 @@ function loopAtv() {
     }
 }
 
-function alearioAtv() {
-    clicks2++
-    if (clicks == 2 || clicks == 0) {
-        console.log(clicks2);
-        if (clicks2 == 1) {
-            document.getElementById('aleario').style.color = "#00ff37"
-        }
-        if (clicks2 == 2) {
-            document.getElementById('aleario').style.color = "rgb(180, 179, 179)"
-            clicks2 = 0
-        }
-    }
-}
 
-//funcao de iniciar musica
-function iniciarMusica(){
-    audioplayer.src = 'audio/'+ songList[songIndex].audio
-    playerArtistComponent[0].innerHTML = `<img src="img/`+songList[songIndex].imagem+`" /> <h3>`+songList[songIndex].banda+`<br/><span>`+songList[songIndex].nome+`</span></h3>`
-        
-    if (songIndex > songList.length) {
-        songIndex = 0
-    }
-    audioplayer.play()
-    audioplayer.onloadeddata = function() {
-        var data = new Date(null);
-        data.setSeconds(audioplayer.duration);
-        var duracao = data.toISOString().substr(14, 5);
-        tempo_total.innerHTML = duracao
-    };
-    playbtn.style.display = "none"
-    pausebtn.style.display = "inline"
-}
+
 
 //pausar e dar play
 pausebtn.addEventListener('click', (e)=>{
