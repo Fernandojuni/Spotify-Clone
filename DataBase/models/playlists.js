@@ -22,7 +22,10 @@ const playlists = sequelize.define('playlists',{
     },
     musicas:{
         type: Sequelize.JSON
-    }
+    },
+    // publica:{
+    //     type: Sequelize.BOOLEAN
+    // }
 })
 
 const init = async () =>{

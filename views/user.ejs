@@ -27,35 +27,7 @@
     <title>Spotify - <%= usuario.nome_usuario %></title>
 </head>
 <body>
-<div class="sidebar">
-    <div class="sidebar-wraper">
-        <div class="sidebar-logo">
-            <a href="/inicio"><img src="../public/img/logo_2.png" alt=""></a>
-        </div>
-        <div class="sidebar-menu">
-            <a href="/inicio"><span class="fas fa-home"></span>Inicio</a>
-            <a href="#"><span class="fas fa-search"></span>Buscar</a>
-            <a id="addMusica" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;" onclick="adicionarMusica()" href="#"><span class="fas fa-database"></span>Adicionar musica</a>
-        </div>
-        <div style="margin-left: 30px;" class="sidebar-menu">
-            <p translate="no" class="sidebar-menu-title">Playlists</p>
-            <div onclick="criarPlay()" class="sidebar-menu-item">
-                <div class="sidebar-menu-item-componente"> + </div>
-                <span>Criar<span style="margin-left: -6px;" translate="no">Playlist</span></span>
-            </div>
-            <div class="sidebar-menu-item">
-                <img src="../public/img/musicas-curtidas.jpeg">
-                <span>Musicas Curtidas</span>
-            </div>
-        </div>
-        
-        <div class="sidebar-playlists">
-            
-            
-            
-        </div>
-    </div>
-</div>
+    <%- include("reusable/sideBar.ejs",{inicio:false}) %> 
 
 <div id="main">
     <div id="main-top">
@@ -82,9 +54,9 @@
             </div>
             <div id="popup-perfil">
                 <ul style="list-style: none;">
-                    <a href=""><li>Conta</li><img style="width: 20px; height: 20px; position: relative; left: 69%; margin-top: 8px; " src="../public/img/open_in_new.png" alt=""></a>
-                    <a href="/inicio/user"><li>Perfil</li></a>
-                    <a href=""><li style="white-space: nowrap;">Faça upgrade para o Premium</li><img style="width: 20px; height: 20px; margin-left: 7px; margin-top: 8px; " src="../public/img/open_in_new.png" alt=""></a>
+                    <a href="#"><li>Conta</li><img style="width: 20px; height: 20px; position: relative; left: 69%; margin-top: 8px; " src="../public/img/open_in_new.png" alt=""></a>
+                    <a href="#"><li>Perfil</li></a>
+                    <a href="#"><li style="white-space: nowrap;">Faça upgrade para o Premium</li><img style="width: 20px; height: 20px; margin-left: 7px; margin-top: 8px; " src="../public/img/open_in_new.png" alt=""></a>
                     <a href="/logout"><li>Sair</li></a>
                 </ul>
                 <br>
@@ -108,7 +80,7 @@
             <div>
                 <span>PERFIL</span>
                 <h1><%= usuario.nome_usuario %> </h1>
-                <span>3 listas de reprodução públicas</span>
+                <span><%= playlist.length %>  listas de reprodução públicas</span>
             </div>
         </div>
     </div>

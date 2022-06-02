@@ -12,3 +12,21 @@ var loadFile = function(event) {
 
     entrar.click()
 };
+
+var abrirPerfil = 0
+var popup_perfil = document.getElementById("popup-perfil")
+function abrirPopupPerfil(){
+    abrirPerfil++
+    if (abrirPerfil == 0) {
+        popup_perfil.style.display = 'none'
+    }
+    if (abrirPerfil == 1) {
+        popup_perfil.style.display = 'inline'
+    }
+    if (abrirPerfil == 2) {
+        popup_perfil.style.display = 'none'
+    }
+    if (abrirPerfil == 2) {
+        abrirPerfil = 0
+    }
+}

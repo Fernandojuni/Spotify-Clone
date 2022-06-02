@@ -300,21 +300,29 @@ app.get('/user/:nome' ,(req,res)=>{
         }).then((result)=>{
             if (result) {
                 if (result.email == req.session.login || result.email == req.session.adm) {
-                    res.render('user',{usuario:result, userAtual:result})
+                    playlists.findAll({where:{id_usuario:result.id}}).then((playlist)=>{
+                        res.render('user',{usuario:result, userAtual:result,playlist:playlist})
+                    })
+                    
                 }else{
                     if (req.session.adm) {
                         cadastros.findOne({
                             where:{
                                 email:req.session.adm
                         }}).then((userAtual)=>{
-                            res.render('Visualizar_User',{usuario:result, userAtual:userAtual})
+                            playlists.findAll({where:{id_usuario:userAtual.id}}).then((playlist)=>{
+                                res.render('Visualizar_User',{usuario:result, userAtual:userAtual,playlist:playlist})
+                            })
+                           
                         })
                     }else{
                         cadastros.findOne({
                             where:{
                                 email:req.session.login
                         }}).then((userAtual)=>{
-                            res.render('Visualizar_User',{usuario:result, userAtual:userAtual})
+                            playlists.findAll({where:{id_usuario:userAtual.id}}).then((playlist)=>{
+                                res.render('Visualizar_User',{usuario:result, userAtual:userAtual, playlist:playlist})
+                            })
                         })
                     }
                 }
