@@ -181,7 +181,9 @@ app.post('/criarPlay',(req,res)=>{
                 nome_play: req.body.playlistName,
                 codigo_play: codigo,
                 id_usuario: result.id,
-                musicas:null
+                musicas:null,
+                publica: true,
+                foto_play:null
             })
         })
         res.redirect('/inicio')
@@ -197,6 +199,19 @@ app.post('/criarPlay',(req,res)=>{
         res.redirect('/inicio')
     }
 })
+
+app.post("/playlist/:codigo",upload.single('file'),(req,res)=>{
+    var imageBase64 = fs.readFileSync(__dirname + "/uploads/"+ req.body.output, 'base64');
+    fs.unlink(__dirname + "/uploads/"+ req.body.output, function (err){
+        if (err) throw err;
+    })
+    var imgSrc = "data:" + req.body.mimetype +";base64," + imageBase64
+
+    playlists.update({foto_play: imgSrc},{where:{codigo_play: req.params.codigo}})
+
+    res.redirect('/playlist/'+ req.params.codigo)
+})
+
 
 //-----------------GET--------------------
 app.get("/",(req,res)=>{
@@ -347,7 +362,35 @@ app.get('/ADM',(req,res)=>{
 })
 
 
-
+app.get("/playlist/:codigo",(req,res)=>{
+    if (req.session.adm || req.session.login ) {
+        if (req.session.adm) {
+            cadastros.findOne({
+                where:{
+                    email:req.session.adm
+            }}).then((usuario)=>{
+                playlists.findOne({where:{codigo_play: req.params.codigo}}).then((result)=>{
+                    playlists.findAll({where:{id_usuario:result.id}}).then((playlist)=>{
+                        res.render('playlist',{usuario,result,playlist})
+                    })
+                })
+            })
+        }else{
+            cadastros.findOne({
+                where:{
+                    email:req.session.login
+            }}).then((usuario)=>{
+                playlists.findOne({where:{codigo_play: req.params.codigo}}).then((result)=>{
+                    playlists.findAll({where:{id_usuario:result.id}}).then((playlist)=>{
+                        res.render('playlist',{usuario,result,playlist})
+                    })
+                })
+            })
+        }
+    }else{
+        res.redirect('/login?logado=false')
+    }
+})
 
 
 

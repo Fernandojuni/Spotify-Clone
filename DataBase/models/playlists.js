@@ -20,12 +20,15 @@ const playlists = sequelize.define('playlists',{
         type: Sequelize.INTEGER,
         require:true
     },
+    foto_play:{
+        type: Sequelize.TEXT
+    },
     musicas:{
         type: Sequelize.JSON
     },
-    // publica:{
-    //     type: Sequelize.BOOLEAN
-    // }
+    publica:{
+        type: Sequelize.BOOLEAN
+    }
 })
 
 const init = async () =>{
