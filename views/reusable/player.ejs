@@ -204,7 +204,9 @@
     color: rgb(255, 255, 255);
 }
 
-
+a{
+    cursor: pointer;
+}
 </style>
 
 <div class="player">
@@ -213,12 +215,12 @@
 
     <div class="player-control">
         <div class="player-control-buttons">
-            <a id="aleario" onclick="alearioAtv()" href="#"><span  translate="no"class="material-icons-outlined">shuffle</span></a>
-            <a id="voltar" onclick="voltar()" href="#" ><span translate="no" class="material-icons-outlined">skip_previous</span></i></a>
-            <a style="display: none;" id="pausebtn" href=""><span translate="no" class="material-icons-outlined">pause_circle_filled</span></a>
-            <a id="playbtn"  href="#"><span translate="no" class="material-icons-outlined">play_circle_filled</span></i></a>
-            <a id="avancar" onclick="avancar()" href="#"><span translate="no" class="material-icons-outlined">skip_next</span></a>
-            <a id="loop" onclick="loopAtv()" href="#"><span translate="no" class="material-icons-outlined">loop</span></a>
+            <a id="aleario" onclick="alearioAtv()" ><span  translate="no"class="material-icons-outlined">shuffle</span></a>
+            <a id="voltar" onclick="voltar()"><span translate="no" class="material-icons-outlined">skip_previous</span></i></a>
+            <a style="display: none;" id="pausebtn"><span translate="no" class="material-icons-outlined">pause_circle_filled</span></a>
+            <a id="playbtn"><span translate="no" class="material-icons-outlined">play_circle_filled</span></i></a>
+            <a id="avancar" onclick="avancar()"><span translate="no" class="material-icons-outlined">skip_next</span></a>
+            <a id="loop" onclick="loopAtv()"><span translate="no" class="material-icons-outlined">loop</span></a>
         </div>
         <div id="player-control-progress">
             <span id="tempo_atual">00:00</span>
@@ -230,9 +232,16 @@
         
         
     </div>
-    <a onclick="ADDplaylis()" id="ADDplaylist" href="#"><span translate="no" class="material-icons-outlined">playlist_add</span></a>
+    <a onclick="ADDplaylis()" id="ADDplaylist"><span translate="no" class="material-icons-outlined">playlist_add</span></a>
     <div id="popupAddPlaylist" style="display:none;">
-        
+        <% playlist.forEach(element => { %>
+            <form action="/AddPlay" method="post">
+                <input type="text" name="playlist"  value="<%= element.codigo_play %>" hidden>
+                <input type="text" id="musicaAtual" name="musicaAtual" hidden>
+                <button type="submit"><%= element.nome_play %></button>
+                <hr>
+            </form>
+        <% }) %> 
     </div>
 
     <div class="player-control-volume">
@@ -243,3 +252,4 @@
         <input type="range" id="volume" min="0" value="100" max="1" step="0.1" onchange="document.getElementById('audioplayer').volume=this.value">
     </div>
 </div>
+

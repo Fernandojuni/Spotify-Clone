@@ -8,6 +8,10 @@ const cadastros = sequelize.define('cadastros',{
         autoIncrement: true,
         primaryKey: true
     },
+    codigo_user:{
+        type: Sequelize.STRING,
+        require:true,
+    },
     email: {
         type: Sequelize.STRING,
         require: true

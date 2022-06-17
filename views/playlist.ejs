@@ -43,7 +43,7 @@
                 <% if (usuario.foto_perfil == null) { %>
                     <img src="../public/img/perfil-vazio.jpg" alt="">
                 <% }else{ %>
-                    <img src="<%#= usuario.foto_perfil %> " alt="">
+                    <img src="<%= usuario.foto_perfil %> " alt="">
                 <% } %>
     
                 <span id="Nomeusuario" translate="no" style="color:white; font-weight: normal;"><%= usuario.nome_usuario  %> </span>
@@ -80,19 +80,155 @@
             <div>
                 <span style="text-transform: uppercase;">LISTA DE REPRODUÇÃO</span>
                 <h1><%= result.nome_play %> </h1>
-                <a style="color: white;" href="/user/<%= usuario.nome_usuario %>"><%= usuario.nome_usuario %>  </a>
+                <a style="color: white;" href="/user/<%= usuario.codigo_user %>"><%= usuario.nome_usuario %>  </a>
             </div>
         </div>
     </div>
     <hr style="border-color: black; margin-top: 10px;">
+    <section>
+        <div  class="main-wraper">
+            <div id="playlist-row">
+                
+            </div>
+        </div>
+    </section>
 </div>
 
 <%- include("reusable/player.ejs") %> 
-    
-    
-<audio id="audioplayer" style="position: absolute;left: 0; top: 0; z-index: -999; opacity: 0;" controls="controls" src=""></audio>
+
+
+<audio id="audioplayer" style="position: absolute;left: 0; top: 0; z-index: -999; opacity: 0;" controls="controls" src="<%#= musica.filter((value)=>{value.id == }) %> "></audio>
+
+
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="../public/js/all.min.js"></script>
 <script src="../public/js/playlist.js"></script>
+<script src="../public/js/inicio.js"></script>
+<script>
+    var audioplayer = document.getElementById('audioplayer')
+
+    var volumeMaximo = document.getElementById('volume-maximo')
+    var volumeMutado = document.getElementById('volume-mutado')
+    var volumeBaixo = document.getElementById('volume-baixo')
+
+    var playbtn = document.getElementById('playbtn')
+    var pausebtn = document.getElementById('pausebtn')
+
+    var range = document.getElementById('volume')
+
+    var main = document.getElementById("main")
+    var playerArtistComponent = document.getElementsByClassName('player-artist')
+
+    var popup_criar_play = document.getElementById('popup_criar_play')
+
+
+
+    var main_top = document.getElementById('main-top')
+
+
+    var popup_perfil = document.getElementById("popup-perfil")
+
+
+
+    var musica = JSON.parse('<%-JSON.stringify(musica)%>')
+    var musicaPlay = '<%- musicaPlay%>'
+    musicaPlay = musicaPlay.split(/\s*,\s*/)
+    var songList = []
+    for (let index = 0; index < musicaPlay.length; index++) {
+        let musicasFilter = musica.filter((params)=>{return params.id == musicaPlay[index]})
+        songList.push(musicasFilter)
+    }
+    var playlist_row = document.getElementById('playlist-row')
+    for (let index = 0; index < songList.length; index++) {
+        playlist_row.innerHTML += `<div class="playlist-col" data-id="`+index+`"><img src="`+songList[index][0].posterPath+`"><div><h2>`+songList[index][0].nomeMusica+`</h2><span>`+songList[index][0].nomeBanda+`</span></div></div>`
+        if (index == songList.length - 1) {
+            playlist_row.innerHTML += `<div style="padding-bottom: 150px;"></div>`
+        }
+    }
+
+
+    var songIndex = 0
+
+    audioplayer.onended = ()=>{
+    if (songIndex >= songList.length -1) {
+        songIndex = 0
+        iniciarMusica()
+        return
+    }
+    songIndex++
+    iniciarMusica()
+}
+
+
+document.querySelectorAll('.playlist-col').forEach(item =>{
+item.addEventListener('click', event=>{
+    let id = item.getAttribute('data-id')
+    songIndex = id
+    iniciarMusica()
+    })
+})
+
+function zerarplayer(){
+    playerArtistComponent[0].innerHTML = ""
+    audioplayer.src = ""
+    progress2.style.width = 0
+    tempo_total.innerHTML = "00:00"
+}
+
+function voltar() {
+    if (songIndex == 0) {
+        songIndex = songList.length-1
+        iniciarMusica()
+        return
+    }
+    songIndex--
+    iniciarMusica()
+}
+
+function avancar() {
+    if (songIndex >= songList.length -1) {
+        songIndex = 0
+        iniciarMusica()
+        return
+    }
+    songIndex++
+    iniciarMusica()
+}
+function alearioAtv() {
+    clicks2++
+    if (clicks == 2 || clicks == 0) {
+        console.log(clicks2);
+        if (clicks2 == 1) {
+            document.getElementById('aleario').style.color = "#00ff37"
+        }
+        if (clicks2 == 2) {
+            document.getElementById('aleario').style.color = "rgb(180, 179, 179)"
+            clicks2 = 0
+        }
+    }
+}
+//funcao de iniciar musica
+function iniciarMusica(){
+    audioplayer.src = songList[songIndex][0].audioPath
+    playerArtistComponent[0].innerHTML = `<img src="`+songList[songIndex][0].posterPath+`"/> <h3>`+songList[songIndex][0].nomeBanda+`<br/><span>`+songList[songIndex][0].nomeMusica+`</span></h3>`
+        
+    if (songIndex > songList.length) {
+        songIndex = 0
+    }
+    audioplayer.play()
+    audioplayer.onloadeddata = function() {
+        var data = new Date(null);
+        data.setSeconds(audioplayer.duration);
+        var duracao = data.toISOString().substr(14, 5);
+        tempo_total.innerHTML = duracao
+    };
+    playbtn.style.display = "none"
+    pausebtn.style.display = "inline"
+}
+
+</script>
+
+
+
 </body>
 </html>

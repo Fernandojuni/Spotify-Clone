@@ -49,7 +49,22 @@ main.addEventListener('scroll', ()=>{
 })
 
 //abertura e fechamento de popups
-
+var popupAddPlaylist = document.getElementById('popupAddPlaylist')
+function ADDplaylis(){
+    clicksADDplaylis++
+    if (clicksADDplaylis == 0) {
+        popupAddPlaylist.style.display = 'none'
+    }
+    if (clicksADDplaylis == 1) {
+        popupAddPlaylist.style.display = 'inline'
+    }
+    if (clicksADDplaylis == 2) {
+        popupAddPlaylist.style.display = 'none'
+    }
+    if (clicksADDplaylis == 2) {
+        clicksADDplaylis = 0
+    }
+}
 
 function abrirPopupPerfil(){
     clicksCriarPlay++

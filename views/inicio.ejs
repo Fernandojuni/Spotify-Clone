@@ -59,7 +59,7 @@
             <div id="popup-perfil">
                 <ul style="list-style: none;">
                     <a href=""><li>Conta</li><img style="width: 20px; height: 20px; position: relative; left: 69%; margin-top: 8px; " src="img/open_in_new.png" alt=""></a>
-                    <a href="/user/<%= result.nome_usuario  %>" ><li>Perfil</li></a>
+                    <a href="/user/<%= result.codigo_user  %>" ><li>Perfil</li></a>
                     <a href=""><li style="white-space: nowrap;">Faça upgrade para o Premium</li><img style="width: 20px; height: 20px; margin-left: 7px; margin-top: 8px; " src="img/open_in_new.png" alt=""></a>
                     <a href="/logout"><li>Sair</li></a>
                 </ul>
@@ -73,7 +73,7 @@
         <div class="main-row">
             <div class="main-row-title"><h2>Musicas</h2></div>
             <% musica.forEach((musica,index) => { %>
-                <div data-id="<%= index %>" class="main-col">
+                <div data-id="<%= index %>" data-musica="<%= musica.id %> " class="main-col">
                     <img src="<%= musica.posterPath %> ">
                     <h3 style="text-overflow: ellipsis; font-size: 17px; overflow: hidden; white-space: nowrap; "><%= musica.nomeBanda %> </h3>
                     <p style="text-overflow: ellipsis; font-size: 14px; overflow: hidden; white-space: nowrap; "><%= musica.nomeMusica %> </p>
@@ -86,7 +86,7 @@
 
 
 
-<%- include("reusable/player.ejs") %> 
+<%- include("reusable/player.ejs", {playlist: playlist}) %> 
 
 
 
@@ -123,6 +123,7 @@
     var popup_perfil = document.getElementById("popup-perfil")
 
     var songIndex = 0
+    var songID = 0
 
     var songList = JSON.parse('<%- JSON.stringify(musica)%>')
 
@@ -147,6 +148,8 @@
     document.querySelectorAll('.main-col').forEach(item =>{
     item.addEventListener('click', event=>{
         let id = item.getAttribute('data-id')
+        let idMusica = item.getAttribute('data-musica')
+        songID = idMusica
         songIndex = id
         iniciarMusica()
         })
@@ -194,7 +197,7 @@
     //funcao de iniciar musica
     function iniciarMusica(){
         audioplayer.src = songList[songIndex].audioPath
-    
+        document.getElementById('musicaAtual').value = songID
         playerArtistComponent[0].innerHTML = `<img src="`+songList[songIndex].posterPath+`"/> <h3>`+songList[songIndex].nomeBanda+`<br/><span>`+songList[songIndex].nomeMusica+`</span></h3>`
             
         if (songIndex > songList.length) {

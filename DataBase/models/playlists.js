@@ -24,7 +24,7 @@ const playlists = sequelize.define('playlists',{
         type: Sequelize.TEXT
     },
     musicas:{
-        type: Sequelize.JSON
+        type: Sequelize.STRING
     },
     publica:{
         type: Sequelize.BOOLEAN

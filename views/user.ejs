@@ -41,6 +41,7 @@
 
             <div id="perfil" onclick="abrirPopupPerfil()">
                 <% if (userAtual.foto_perfil == null) { %>
+                    <%  %> 
                     <img src="../public/img/perfil-vazio.jpg" alt="">
                 <% }else{ %>
                     <img src="<%= userAtual.foto_perfil %> " alt="">
@@ -67,11 +68,12 @@
     <div id="main-content">
         <div id="content-top">
             <% if (usuario.foto_perfil == null) { %>
+                <% location.reload %> 
                 <img src="../public/img/perfil-vazio.jpg"  onclick="select()">
             <% }else{ %>
                 <img src="<%= usuario.foto_perfil %> "  onclick="select()">
             <% } %>
-            <form action="/foto/<%= usuario.nome_usuario %>" method="post" enctype="multipart/form-data">
+            <form action="/foto/<%= usuario.codigo_user %>" method="post" enctype="multipart/form-data">
                 <input type="text" name="output" id="output" hidden>
                 <input type="text" name="mimetype" id="mimetype" hidden>
                 <input type="file" name="file" id="file" accept="image/jpg,image/png,image/jpeg,image/webp" onchange="loadFile(event)" hidden>

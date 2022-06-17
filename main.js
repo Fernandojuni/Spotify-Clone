@@ -43,11 +43,6 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
         const nomeArquivo = file.originalname
         
-        //---------------------------
-        //caso queira encripitar o nome usa essa funcao: 
-        //const novoNomeArquivo = require('crypto').randomBytes(64).toString('hex');
-        //---------------------------
-        
         // Indica o novo nome do arquivo:
         cb(null, `${nomeArquivo}`)
     }
@@ -103,10 +98,11 @@ app.post('/althCadastro',(req,res)=>{
         if (cadastrado) {
             res.redirect('/cadastro?cadastrado=false')
         }else{
-            
+            const codigo = require('crypto').randomBytes(22).toString('hex') + "-User";
             cadastros.create({
                 email: req.body.login,
                 senha: req.body.password,
+                codigo_user: codigo,
                 nome_usuario: req.body.nome_usuario,
                 foto_perfil: null,
                 data_aniversario_dia:req.body.dia,
@@ -126,24 +122,24 @@ app.post('/althCadastro',(req,res)=>{
     })
 })
 
-app.post('/foto/:nome', upload.single('file'), (req,res)=>{
+app.post('/foto/:codigo', upload.single('file'), (req,res)=>{
     var imageBase64 = fs.readFileSync(__dirname + "/uploads/"+ req.body.output, 'base64');
     fs.unlink(__dirname + "/uploads/"+ req.body.output, function (err){
         if (err) throw err;
     })
     var imgSrc = "data:" + req.body.mimetype +";base64," + imageBase64
-    cadastros.update({foto_perfil: imgSrc},{where:{nome_usuario: req.params.nome}})
+    cadastros.update({foto_perfil: imgSrc},{where:{codigo_user: req.params.codigo}})
     
-    res.redirect('/user/'+ req.params.nome)
+    res.redirect('/user/'+ req.params.codigo)
 })
 
 app.post('/addMusica', upload.fields([{name: 'audio', maxCount: 1},{name: 'poster', maxCount: 1}]),(req,res)=>{
-    const codigoImg = require('crypto').randomBytes(64).toString('hex');
+    const codigoImg = require('crypto').randomBytes(64).toString('hex') + "-Musica_IMG";
     const extensaoImg = "." + req.body.nomeimg.split('.')[1];
     const nomeImgCode = codigoImg + extensaoImg
 
 
-    const codigoAudio = require('crypto').randomBytes(64).toString('hex');
+    const codigoAudio = require('crypto').randomBytes(64).toString('hex') + "-Musica_Audio";
     const extensaoAudio = "." + req.body.nomeAudio.split('.')[1];
     const nomeAudioCode = codigoAudio + extensaoAudio
 
@@ -170,10 +166,8 @@ app.post('/addMusica', upload.fields([{name: 'audio', maxCount: 1},{name: 'poste
     })
 })
 
-
-
 app.post('/criarPlay',(req,res)=>{
-    const codigo = require('crypto').randomBytes(22).toString('hex');
+    const codigo = require('crypto').randomBytes(22).toString('hex') + "-Playlist";
 
     if (req.session.adm) {
         cadastros.findOne({where:{email:req.session.adm}}).then((result)=>{
@@ -210,6 +204,25 @@ app.post("/playlist/:codigo",upload.single('file'),(req,res)=>{
     playlists.update({foto_play: imgSrc},{where:{codigo_play: req.params.codigo}})
 
     res.redirect('/playlist/'+ req.params.codigo)
+})
+
+app.post('/AddPlay',(req,res)=>{
+    let musicaAtual = req.body.musicaAtual
+    playlists.findOne({
+        where:{
+            codigo_play: req.body.playlist
+        }
+    }).then((result)=>{
+        let musicasPlay = ""
+        if (result.musicas == null || result.musicas == "null") {
+            musicasPlay = musicaAtual
+        }else{
+            musicasPlay = result.musicas + "," + musicaAtual
+        }
+        
+        playlists.update({musicas:musicasPlay},{where:{codigo_play: req.body.playlist}})
+        res.redirect("/inicio")
+    })
 })
 
 
@@ -306,11 +319,11 @@ app.get('/logout',(req,res)=>{
 })
 })
 
-app.get('/user/:nome' ,(req,res)=>{
+app.get('/user/:codigo' ,(req,res)=>{
     if (req.session.adm || req.session.login ) {
         cadastros.findOne({
             where:{
-                nome_usuario: req.params.nome
+                codigo_user: req.params.codigo
             }
         }).then((result)=>{
             if (result) {
@@ -370,8 +383,11 @@ app.get("/playlist/:codigo",(req,res)=>{
                     email:req.session.adm
             }}).then((usuario)=>{
                 playlists.findOne({where:{codigo_play: req.params.codigo}}).then((result)=>{
-                    playlists.findAll({where:{id_usuario:result.id}}).then((playlist)=>{
-                        res.render('playlist',{usuario,result,playlist})
+                    playlists.findAll({where:{id_usuario:usuario.id}}).then((playlist)=>{
+                        let musicaPlay = result.musicas
+                        musicas.findAll().then((musica)=>{
+                            res.render('playlist',{usuario,result,playlist,musicaPlay,musica})
+                        })
                     })
                 })
             })
@@ -381,8 +397,11 @@ app.get("/playlist/:codigo",(req,res)=>{
                     email:req.session.login
             }}).then((usuario)=>{
                 playlists.findOne({where:{codigo_play: req.params.codigo}}).then((result)=>{
-                    playlists.findAll({where:{id_usuario:result.id}}).then((playlist)=>{
-                        res.render('playlist',{usuario,result,playlist})
+                    playlists.findAll({where:{id_usuario:usuario.id}}).then((playlist)=>{
+                        let musicaPlay = result.musicas
+                        musicas.findAll().then((musica)=>{
+                            res.render('playlist',{usuario,result,playlist,musicaPlay,musica})
+                        })
                     })
                 })
             })
@@ -391,6 +410,8 @@ app.get("/playlist/:codigo",(req,res)=>{
         res.redirect('/login?logado=false')
     }
 })
+
+
 
 
 
