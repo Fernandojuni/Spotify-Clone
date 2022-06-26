@@ -30,3 +30,7 @@ function abrirPopupPerfil(){
         abrirPerfil = 0
     }
 }
+
+document.getElementById('blur_edit').addEventListener("click",()=>{
+    document.getElementById('section_editar').style.display = "none"
+})

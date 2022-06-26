@@ -225,6 +225,15 @@ app.post('/AddPlay',(req,res)=>{
     })
 })
 
+app.post("/editPlay/:codigo",(req,res)=>{
+    playlists.update({nome_play:req.body.nome_play},{where:{codigo_play: req.params.codigo}})
+    res.redirect("/playlist/"+req.params.codigo)
+})
+
+app.post("/editUser/:codigo",(req,res)=>{
+    cadastros.update({nome_usuario:req.body.nome_play},{where:{codigo_user: req.params.codigo}})
+    res.redirect("/user/"+req.params.codigo)
+})
 
 //-----------------GET--------------------
 app.get("/",(req,res)=>{

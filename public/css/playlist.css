@@ -299,14 +299,131 @@ html,body{
 }
 .playlist-col{
     display: flex;
-    background-color: #383838;
     width: 98%;
-    padding: 10px;
-    margin: 10px;
+    padding: 15px;
+    margin-left: 10px;
     cursor: pointer;
 }
-
+.playlist-col:hover{
+    background-color: #383838;
+}
 .playlist-col img{
-    width: 80px;
     height: 80px;
+}
+#border{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+#border hr{
+    border-width: 1px;
+    border-color: #383838;
+    border-top: hidden;
+    border-left: hidden;
+    border-right: hidden;
+    width: 95.5%;
+}
+.playlist-col #text{
+    margin-left: 15px;
+    
+}
+.playlist-col div h2{
+    color: white;
+    margin-bottom: 10px;
+}
+.playlist-col div span{
+    color: #acacac;
+    font-size: 14px;
+}
+#blur_edit{
+    background-color: rgba(0, 0, 0, 0.582);
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+}
+#section_editar{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    display: none;
+}
+
+#popup_editar{
+    background-color: #2b2b2b;
+    width: 35%;
+    height: 55%;
+    z-index: 200;
+    color: white;
+    border-radius: 20px;
+    padding: 30px;
+}
+#content_edit {
+    margin-top: 30px;
+    display: flex;
+}
+#img_edit img{
+    width: 160px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+textarea{
+    resize: none
+}
+#input_edit{
+    margin-left: 20px;
+}
+#nome_play{
+    background:  rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius:5px;
+    color: white;
+    width: 100%;
+    height: 35px;
+    padding: 7px;
+}
+#nome_play_label{
+   position: absolute;
+   top: 0;
+   left: 0;
+   display: none;
+}
+ 
+#nome_play:focus{
+
+    background:  rgba(255, 255, 255, 0.041);
+    border: 1px solid #818181;
+}
+#descricao_play{
+    margin-top: 15px;
+    height: 105px;
+    padding: 7px;
+    background:  rgba(255, 255, 255, 0.1);
+    width: 100%;
+    border-radius:5px;
+    color: white;
+    border: none;
+}
+#descricao_play:focus{
+    background:  rgba(255, 255, 255, 0.041);
+    border: 1px solid #818181;
+}
+#guardar{
+    text-align: center;
+    border: none;
+    width: 120px;
+    height: 50px;
+    border-radius: 50px;
+    position: relative;
+    left: 50%;
+    margin-top: 5px;
+}
+
+#msm{
+    font-weight: normal;
+    margin-top: 10px;
+    font-size: 11px;
 }

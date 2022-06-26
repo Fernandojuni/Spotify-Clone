@@ -29,75 +29,104 @@
 <body onload="location.reload">
     <%- include("reusable/sideBar.ejs",{inicio:false}) %> 
 
-<div id="main">
-    <div id="main-top">
-        <div id="main-top-col">
-            <div id="avancarVoltar">
-                <a href=""><span id="voltarPag" translate="no" class="material-symbols-outlined">chevron_left</span></a>
-                <a href=""><span id="avancarPag" translate="no" class="material-symbols-outlined">navigate_next</span></a>
-            </div>
+    <section id="section_editar">
+        <div id="popup_editar">
+            <h1>Editar detalhes</h1>
 
-            <a href="#" style="position: relative; left: 42%;"><input translate="no" id="facaUpgrade" type="submit" value="Faça upgrade"></a>
-
-            <div id="perfil" onclick="abrirPopupPerfil()">
-                <% if (usuario.foto_perfil == null) { %>
-                    <img src="../public/img/perfil-vazio.jpg" alt="">
-                <% }else{ %>
-                    <img src="<%= usuario.foto_perfil %> " alt="">
-                <% } %>
-    
-                <span id="Nomeusuario" translate="no" style="color:white; font-weight: normal;"><%= usuario.nome_usuario  %> </span>
-                
-                
-                <span id="abrirPerfil" translate="no" style="display: block; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_down</span>
-                <span id="fecharPerfil" translate="no" style="display: none; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_up</span>
+            <div id="content_edit">
+                <div id="img_edit">
+                    <% if (result.foto_play == null) { %>
+                        <img src="../public/img/playlist_foto.png"  onclick="select()">
+                    <% }else{ %>
+                        <img src="<%= result.foto_play %> "  onclick="select()">
+                    <% } %>
+                </div>
+                <div id="input_edit"> 
+                    <form action="/editPlay/<%= result.codigo_play %>" method="post" >
+                        <input id="nome_play" name="nome_play" placeholder="Nome" type="text"> 
+                        <textarea name="descricao_play" placeholder="Descrição" id="descricao_play"></textarea>
+                        <input type="submit" id="guardar" value="Guardar">
+                    </form>
+                </div>
             </div>
-            <div id="popup-perfil">
-                <ul style="list-style: none;">
-                    <a href="#"><li>Conta</li><img style="width: 20px; height: 20px; position: relative; left: 69%; margin-top: 8px; " src="../public/img/open_in_new.png" alt=""></a>
-                    <a href="#"><li>Perfil</li></a>
-                    <a href="#"><li style="white-space: nowrap;">Faça upgrade para o Premium</li><img style="width: 20px; height: 20px; margin-left: 7px; margin-top: 8px; " src="../public/img/open_in_new.png" alt=""></a>
-                    <a href="/logout"><li>Sair</li></a>
-                </ul>
-                <br>
-                
-            </div>
+            <div id="msm">
+                Ao prosseguires, concordas em dar ao Spotify acesso à imagem que escolheres carregar. Certifica-te de que tens o direito de carregar a imagem.
+            </div>  
         </div>
-    </div>
-    <div id="main-content">
-        <div id="content-top">
-            <% if (result.foto_play == null) { %>
-                <img src="../public/img/playlist_foto.png"  onclick="select()">
-            <% }else{ %>
-                <img src="<%= result.foto_play %> "  onclick="select()">
-            <% } %>
-            <form action="" method="post" enctype="multipart/form-data">
-                <input type="text" name="output" id="output" hidden>
-                <input type="text" name="mimetype" id="mimetype" hidden>
-                <input type="file" name="file" id="file" accept="image/jpg,image/png,image/jpeg,image/webp" onchange="loadFile(event)" hidden>
-                <button type="submit" id="entrar" hidden></button>
-            </form>
-            <div>
-                <span style="text-transform: uppercase;">LISTA DE REPRODUÇÃO</span>
-                <h1><%= result.nome_play %> </h1>
-                <a style="color: white;" href="/user/<%= usuario.codigo_user %>"><%= usuario.nome_usuario %>  </a>
-            </div>
-        </div>
-    </div>
-    <hr style="border-color: black; margin-top: 10px;">
-    <section>
-        <div  class="main-wraper">
-            <div id="playlist-row">
-                
-            </div>
-        </div>
+        <div id="blur_edit"></div>
     </section>
-</div>
+    
+    <div id="main">
+        <div id="main-top">
+            <div id="main-top-col">
+                <div id="avancarVoltar">
+                    <a href=""><span id="voltarPag" translate="no" class="material-symbols-outlined">chevron_left</span></a>
+                    <a href=""><span id="avancarPag" translate="no" class="material-symbols-outlined">navigate_next</span></a>
+                </div>
 
-<%- include("reusable/player.ejs") %> 
+                <a href="#" style="position: relative; left: 42%;"><input translate="no" id="facaUpgrade" type="submit" value="Faça upgrade"></a>
+
+                <div id="perfil" onclick="abrirPopupPerfil()">
+                    <% if (usuario.foto_perfil == null) { %>
+                        <img src="../public/img/perfil-vazio.jpg" alt="">
+                    <% }else{ %>
+                        <img src="<%= usuario.foto_perfil %> " alt="">
+                    <% } %>
+        
+                    <span id="Nomeusuario" translate="no" style="color:white; font-weight: normal;"><%= usuario.nome_usuario  %> </span>
+                    
+                    
+                    <span id="abrirPerfil" translate="no" style="display: block; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_down</span>
+                    <span id="fecharPerfil" translate="no" style="display: none; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_up</span>
+                </div>
+                <div id="popup-perfil">
+                    <ul style="list-style: none;">
+                        <a href="#"><li>Conta</li><img style="width: 20px; height: 20px; position: relative; left: 69%; margin-top: 8px; " src="../public/img/open_in_new.png" alt=""></a>
+                        <a href="#"><li>Perfil</li></a>
+                        <a href="#"><li style="white-space: nowrap;">Faça upgrade para o Premium</li><img style="width: 20px; height: 20px; margin-left: 7px; margin-top: 8px; " src="../public/img/open_in_new.png" alt=""></a>
+                        <a href="/logout"><li>Sair</li></a>
+                    </ul>
+                    <br>
+                    
+                </div>
+            </div>
+        </div>
+        <div id="main-content">
+            <div id="content-top">
+                <% if (result.foto_play == null) { %>
+                    <img src="../public/img/playlist_foto.png"  onclick="select()">
+                <% }else{ %>
+                    <img src="<%= result.foto_play %> "  onclick="select()">
+                <% } %>
+                <form action="" method="post" enctype="multipart/form-data">
+                    <input type="text" name="output" id="output" hidden>
+                    <input type="text" name="mimetype" id="mimetype" hidden>
+                    <input type="file" name="file" id="file" accept="image/jpg,image/png,image/jpeg,image/webp" onchange="loadFile(event)" hidden>
+                    <button type="submit" id="entrar" hidden></button>
+                </form>
+                <div style="height: 160px;">
+                    <span style="text-transform: uppercase;">LISTA DE REPRODUÇÃO</span>
+                    <h1 style="cursor: pointer;" onclick="document.getElementById('section_editar').style.display = 'flex'"><%= result.nome_play %> </h1>
+                    <a style="color: white;" href="/user/<%= usuario.codigo_user %>"><%= usuario.nome_usuario %>  </a>
+                </div>
+            </div>
+        </div>
+        
+        <hr style="border-color: black; margin-top: 10px; margin-bottom: 10px;">
+        <section>
+            <div  class="main-wraper">
+                <div id="playlist-row">
+                    
+                </div>
+            </div>
+            
+        </section>
+    </div>
+
+    <%- include("reusable/player.ejs") %> 
 
 
-<audio id="audioplayer" style="position: absolute;left: 0; top: 0; z-index: -999; opacity: 0;" controls="controls" src="<%#= musica.filter((value)=>{value.id == }) %> "></audio>
+    <audio id="audioplayer" style="position: absolute;left: 0; top: 0; z-index: -999; opacity: 0;" controls="controls" src="<%#= musica.filter((value)=>{value.id == }) %> "></audio>
 
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
@@ -105,6 +134,9 @@
 <script src="../public/js/playlist.js"></script>
 <script src="../public/js/inicio.js"></script>
 <script>
+    document.getElementById('blur_edit').addEventListener("click",()=>{
+        document.getElementById('section_editar').style.display = "none"
+    })
     var audioplayer = document.getElementById('audioplayer')
 
     var volumeMaximo = document.getElementById('volume-maximo')
@@ -140,7 +172,7 @@
     }
     var playlist_row = document.getElementById('playlist-row')
     for (let index = 0; index < songList.length; index++) {
-        playlist_row.innerHTML += `<div class="playlist-col" data-id="`+index+`"><img src="`+songList[index][0].posterPath+`"><div><h2>`+songList[index][0].nomeMusica+`</h2><span>`+songList[index][0].nomeBanda+`</span></div></div>`
+        playlist_row.innerHTML += `<div class="playlist-col" data-id="`+index+`"><img width="120" src="`+songList[index][0].posterPath+`"><div id="text"><h2>`+songList[index][0].nomeMusica+`</h2><span>`+songList[index][0].nomeBanda+`</span></div></div><div id="border"><hr></div>`
         if (index == songList.length - 1) {
             playlist_row.innerHTML += `<div style="padding-bottom: 150px;"></div>`
         }
