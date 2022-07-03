@@ -12,9 +12,17 @@
     <div id="container">
         <div style="position: absolute; top: 0px; left: 0px;">
             <a href="/inicio">Ir para o inicio</a>
+
         </div>
         <div id="group_contadorMusica">
 
+        </div>
+        <div id="adm">
+            <form action="/addADM" method="post">
+                <select name="user" id="user">
+                    <option selected disabled value style="color: #777777;">Nome do Usuario</option>
+                </select>
+            </form>
         </div>
         <div id="group_adicionarMusica">
             <form action="/addMusica" enctype="multipart/form-data" method="post">
