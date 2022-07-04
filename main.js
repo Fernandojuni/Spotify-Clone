@@ -159,7 +159,6 @@ app.post('/addMusica', upload.fields([{name: 'audio', maxCount: 1},{name: 'poste
         posterPath: '../public/musicas/img/'+ nomeImgCode,
         audioPath: '../public/musicas/audio/'+ nomeAudioCode,
     }).then(function(){
-        
         res.redirect('/ADM')
     }).catch(function(erro){
         console.log('erro:'+ erro);
@@ -187,7 +186,7 @@ app.post('/criarPlay',(req,res)=>{
                 nome_play: req.body.playlistName,
                 codigo_play: codigo,
                 id_usuario: result.id,
-                musicas:null
+                musicas: null
             })
         })
         res.redirect('/inicio')
