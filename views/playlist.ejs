@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt_BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/css/playlist.css">
+    <link rel="shortcut icon" type="image/png" href="../public/img/favicon.png"/>
+    <!--fonts/icon-->
+    <!-- Outlined -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
+ 
+    <!-- Filled -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Rounded -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet">
+    
+    <!-- Sharp -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet">
+    
+    <!-- Two tone -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <!--fonts/icon-->
+    <title>Spotify - <%= result.nome_play %></title>
+</head>
+<body onload="location.reload">
+    <%- include("reusable/sideBar.ejs",{inicio:false}) %> 
+
+    <section id="section_editar">
+        <div id="popup_editar">
+            <h1>Editar detalhes</h1>
+
+            <div id="content_edit">
+                <div id="img_edit">
+                    <% if (result.foto_play == null) { %>
+                        <img src="../public/img/playlist_foto.png"  onclick="select()">
+                    <% }else{ %>
+                        <img src="<%= result.foto_play %> "  onclick="select()">
+                    <% } %>
+                </div>
+                <div id="input_edit"> 
+                    <form action="/editPlay/<%= result.codigo_play %>" method="post" >
+                        <input id="nome_play" name="nome_play" placeholder="Nome" type="text"> 
+                        <textarea name="descricao_play" placeholder="Descrição" id="descricao_play"></textarea>
+                        <input type="submit" id="guardar" value="Guardar">
+                    </form>
+                </div>
+            </div>
+            <div id="msm">
+                Ao prosseguires, concordas em dar ao Spotify acesso à imagem que escolheres carregar. Certifica-te de que tens o direito de carregar a imagem.
+            </div>  
+        </div>
+        <div id="blur_edit"></div>
+    </section>
+    
+    <div id="main">
+        <div id="main-top">
+            <div id="main-top-col">
+                <div id="avancarVoltar">
+                    <a href=""><span id="voltarPag" translate="no" class="material-symbols-outlined">chevron_left</span></a>
+                    <a href=""><span id="avancarPag" translate="no" class="material-symbols-outlined">navigate_next</span></a>
+                </div>
+
+                <a href="#" style="position: relative; left: 42%;"><input translate="no" id="facaUpgrade" type="submit" value="Faça upgrade"></a>
+
+                <div id="perfil" onclick="abrirPopupPerfil()">
+                    <% if (usuario.foto_perfil == null) { %>
+                        <img src="../public/img/perfil-vazio.jpg" alt="">
+                    <% }else{ %>
+                        <img src="<%= usuario.foto_perfil %> " alt="">
+                    <% } %>
+        
+                    <span id="Nomeusuario" translate="no" style="color:white; font-weight: normal;"><%= usuario.nome_usuario  %> </span>
+                    
+                    
+                    <span id="abrirPerfil" translate="no" style="display: block; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_down</span>
+                    <span id="fecharPerfil" translate="no" style="display: none; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_up</span>
+                </div>
+                <div id="popup-perfil">
+                    <ul style="list-style: none;">
+                        <a href="#"><li>Conta</li><img style="width: 20px; height: 20px; position: relative; left: 69%; margin-top: 8px; " src="../public/img/open_in_new.png" alt=""></a>
+                        <a href="#"><li>Perfil</li></a>
+                        <a href="#"><li style="white-space: nowrap;">Faça upgrade para o Premium</li><img style="width: 20px; height: 20px; margin-left: 7px; margin-top: 8px; " src="../public/img/open_in_new.png" alt=""></a>
+                        <a href="/logout"><li>Sair</li></a>
+                    </ul>
+                    <br>
+                    
+                </div>
+            </div>
+        </div>
+        <div id="main-content">
+            <div id="content-top">
+                <% if (result.foto_play == null) { %>
+                    <img src="../public/img/playlist_foto.png"  onclick="select()">
+                <% }else{ %>
+                    <img src="<%= result.foto_play %> "  onclick="select()">
+                <% } %>
+                <form action="" method="post" enctype="multipart/form-data">
+                    <input type="text" name="output" id="output" hidden>
+                    <input type="text" name="mimetype" id="mimetype" hidden>
+                    <input type="file" name="file" id="file" accept="image/jpg,image/png,image/jpeg,image/webp" onchange="loadFile(event)" hidden>
+                    <button type="submit" id="entrar" hidden></button>
+                </form>
+                <div style="height: 160px;">
+                    <span style="text-transform: uppercase;">LISTA DE REPRODUÇÃO</span>
+                    <h1 style="cursor: pointer;" onclick="document.getElementById('section_editar').style.display = 'flex'"><%= result.nome_play %> </h1>
+                    <a style="color: white;" href="/user/<%= usuario.codigo_user %>"><%= usuario.nome_usuario %>  </a>
+                </div>
+            </div>
+        </div>
+        
+        <hr style="border-color: black; margin-top: 10px; margin-bottom: 10px;">
+        <section>
+            <div  class="main-wraper">
+                <div id="playlist-row">
+                    
+                </div>
+            </div>
+            
+        </section>
+    </div>
+
+    <%- include("reusable/player.ejs") %> 
+
+
+    <audio id="audioplayer" style="position: absolute;left: 0; top: 0; z-index: -999; opacity: 0;" controls="controls" src="<%#= musica.filter((value)=>{value.id == }) %> "></audio>
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="../public/js/all.min.js"></script>
+<script src="../public/js/playlist.js"></script>
+<script src="../public/js/inicio.js"></script>
+<script>
+    document.getElementById('blur_edit').addEventListener("click",()=>{
+        document.getElementById('section_editar').style.display = "none"
+    })
+    var audioplayer = document.getElementById('audioplayer')
+
+    var volumeMaximo = document.getElementById('volume-maximo')
+    var volumeMutado = document.getElementById('volume-mutado')
+    var volumeBaixo = document.getElementById('volume-baixo')
+
+    var playbtn = document.getElementById('playbtn')
+    var pausebtn = document.getElementById('pausebtn')
+
+    var range = document.getElementById('volume')
+
+    var main = document.getElementById("main")
+    var playerArtistComponent = document.getElementsByClassName('player-artist')
+
+    var popup_criar_play = document.getElementById('popup_criar_play')
+
+
+
+    var main_top = document.getElementById('main-top')
+
+
+    var popup_perfil = document.getElementById("popup-perfil")
+
+
+
+    var musica = JSON.parse('<%-JSON.stringify(musica)%>')
+    var musicaPlay = '<%- musicaPlay%>'
+    musicaPlay = musicaPlay.split(/\s*,\s*/)
+    var songList = []
+    for (let index = 0; index < musicaPlay.length; index++) {
+        let musicasFilter = musica.filter((params)=>{return params.id == musicaPlay[index]})
+        songList.push(musicasFilter)
+    }
+    var playlist_row = document.getElementById('playlist-row')
+    for (let index = 0; index < songList.length; index++) {
+        playlist_row.innerHTML += `<div class="playlist-col" data-id="`+index+`"><img width="120" src="`+songList[index][0].posterPath+`"><div id="text"><h2>`+songList[index][0].nomeMusica+`</h2><span>`+songList[index][0].nomeBanda+`</span></div></div><div id="border"><hr></div>`
+        if (index == songList.length - 1) {
+            playlist_row.innerHTML += `<div style="padding-bottom: 150px;"></div>`
+        }
+    }
+
+
+    var songIndex = 0
+
+    audioplayer.onended = ()=>{
+    if (songIndex >= songList.length -1) {
+        songIndex = 0
+        iniciarMusica()
+        return
+    }
+    songIndex++
+    iniciarMusica()
+}
+
+
+document.querySelectorAll('.playlist-col').forEach(item =>{
+item.addEventListener('click', event=>{
+    let id = item.getAttribute('data-id')
+    songIndex = id
+    iniciarMusica()
+    })
+})
+
+function zerarplayer(){
+    playerArtistComponent[0].innerHTML = ""
+    audioplayer.src = ""
+    progress2.style.width = 0
+    tempo_total.innerHTML = "00:00"
+}
+
+function voltar() {
+    if (songIndex == 0) {
+        songIndex = songList.length-1
+        iniciarMusica()
+        return
+    }
+    songIndex--
+    iniciarMusica()
+}
+
+function avancar() {
+    if (songIndex >= songList.length -1) {
+        songIndex = 0
+        iniciarMusica()
+        return
+    }
+    songIndex++
+    iniciarMusica()
+}
+function alearioAtv() {
+    clicks2++
+    if (clicks == 2 || clicks == 0) {
+        console.log(clicks2);
+        if (clicks2 == 1) {
+            document.getElementById('aleario').style.color = "#00ff37"
+        }
+        if (clicks2 == 2) {
+            document.getElementById('aleario').style.color = "rgb(180, 179, 179)"
+            clicks2 = 0
+        }
+    }
+}
+//funcao de iniciar musica
+function iniciarMusica(){
+    audioplayer.src = songList[songIndex][0].audioPath
+    playerArtistComponent[0].innerHTML = `<img src="`+songList[songIndex][0].posterPath+`"/> <h3>`+songList[songIndex][0].nomeBanda+`<br/><span>`+songList[songIndex][0].nomeMusica+`</span></h3>`
+        
+    if (songIndex > songList.length) {
+        songIndex = 0
+    }
+    audioplayer.play()
+    audioplayer.onloadeddata = function() {
+        var data = new Date(null);
+        data.setSeconds(audioplayer.duration);
+        var duracao = data.toISOString().substr(14, 5);
+        tempo_total.innerHTML = duracao
+    };
+    playbtn.style.display = "none"
+    pausebtn.style.display = "inline"
+}
+
+</script>
+
+
+
+</body>
+</html>

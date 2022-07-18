@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/adm.css">
+    <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/dgcnfudya/image/upload/v1647908941/favicon.png" />
+    <title>Adiministrador</title>
+</head>
+<body>
+    <div id="container">
+        <div style="position: absolute; top: 0px; left: 0px;">
+            <a href="/inicio">Ir para o inicio</a>
+
+        </div>
+        <div id="group_contadorMusica">
+
+        </div>
+        <div id="adm">
+            <form action="/addADM" method="post">
+                <select name="user" id="user">
+                    <option selected disabled value style="color: #777777;">Nome do Usuario</option>
+                    <% users.forEach(element => { %>
+                        <option value="<%= element.codigo_user %>"><%= element.nome_usuario %></option>
+                    <% }) %>
+                </select>
+            </form>
+        </div>
+        <div id="group_adicionarMusica">
+            <form action="/addMusica" enctype="multipart/form-data" method="post">
+                <p style="font-size: 14px;">Nome da Musica</p>
+                <input class="input" type="text" name="nomeMusica" required>
+                <p style="font-size: 14px;">Nome da Banda</p>
+                <input class="input" type="text" name="nomeBanda" required>
+                <input style="display: none;" name="poster" id="file" type="file" accept="image/*" onchange="loadFile(event)" required/><br><br><br>
+                <input type="text" name="mimetype" id="mimetype" hidden>
+                <input type="text" name="nomeimg" id="nomeImg" hidden>
+                <label onclick="selecionar()" for="selecao-arquivo">Selecione o poster</label><br><br>
+                <img src="img/imagem-vazia.jpg" onclick="selecionar()" alt="Selecioanr uma imagem" id="output"/>
+                <input style="display: none;" onchange="adicionarAdudio()" type="file" name="audio" accept=".mp3" id="audio" required><br><br>
+                <input type="text" name="nomeAudio" id="nomeAudio" hidden>
+                <label onclick="selecionarAudio()"  for="selecao-arquivo">Selecione a Musica</label>
+                <p id="nome">Não há arquivo selecionado.</p>
+                <input type="submit" id="enviar" value="Enviar">
+            </form>
+        </div>
+    </div>
+    
+    <script src="js/adm.js"></script>
+</body>
+</html>

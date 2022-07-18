@@ -1,0 +1,33 @@
+<div class="sidebar">
+    <div class="sidebar-wraper">
+        <div class="sidebar-logo">
+            <a href="/inicio"><img src="../../public/img/logo_2.png" alt=""></a>
+        </div>
+        <div class="sidebar-menu">
+            <a class="<%= inicio == true ? "sidebar-menu-selecionado" : "" %> " href="/inicio"><span class="fas fa-home"></span>Inicio</a>
+            <a href="#"><span class="fas fa-search"></span>Buscar</a>
+            <a id="addMusica" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;" href="#"><span class="fas fa-database"></span></a>
+        </div>
+        <div style="margin-left: 25px;" class="sidebar-menu">
+            <p translate="no" class="sidebar-menu-title">Playlists</p>
+            <form action="/criarPlay" method="post">
+                <div onclick="criarPlay()" class="sidebar-menu-item">
+                    <div class="sidebar-menu-item-componente"> + </div>
+                    <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">Criar Playlist</span>
+                    <input type="text" name="playlistName" value="Minha Playlist nº <%= playlist.length + 1 %>" hidden>
+                    <input type="submit" id="enviarPlay" hidden>
+                </div>
+            </form>
+            <div class="sidebar-menu-item">
+                <img src="../../public/img/musicas-curtidas.jpeg">
+                <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">Musicas Curtidas</span>
+            </div>
+        </div>
+        
+        <div style="margin-left: 25px;" class="sidebar-playlists">
+            <% playlist.forEach(element => { %>
+                <a href="/playlist/<%= element.codigo_play %>"><%= element.nome_play %></a>
+            <% }) %>
+        </div>
+    </div>
+</div>

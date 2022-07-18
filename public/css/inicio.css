@@ -61,7 +61,7 @@ html,body{
 }
 
 .sidebar-menu{
-    margin: 20px 0;
+    margin: 15px 0;
     color: rgb(190, 190, 190)
 }
 .sidebar-logo img{
@@ -74,7 +74,9 @@ html,body{
     text-decoration: none;
     display: block;
     padding: 10px;
-
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .sidebar-menu svg{
     margin: 0 20px;
@@ -188,11 +190,13 @@ html,body{
 .main-col h3{
     color: white;
     margin: 8px 0;
+    text-align: left;
+    margin-left: 15px;
 }
 
 .main-col p{
     color: rgb(100, 100, 100);
-    margin: 8px 10px;
+    margin: 8px 15px;
     font-size: 13px;
     text-align: left;
 }

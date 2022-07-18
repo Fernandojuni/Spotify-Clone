@@ -8,6 +8,10 @@ const cadastros = sequelize.define('cadastros',{
         autoIncrement: true,
         primaryKey: true
     },
+    codigo_user:{
+        type: Sequelize.STRING,
+        require:true,
+    },
     email: {
         type: Sequelize.STRING,
         require: true
@@ -20,9 +24,9 @@ const cadastros = sequelize.define('cadastros',{
         type: Sequelize.STRING,
         require: true
     },
-    // foto_perfil:{
-    //     type: Sequelize.BLOB,
-    // },
+    foto_perfil:{
+        type: Sequelize.TEXT
+    },
     data_aniversario_dia:{
         type: Sequelize.STRING,
         require: true
@@ -43,8 +47,10 @@ const cadastros = sequelize.define('cadastros',{
         type: Sequelize.BOOLEAN,
         require: true
     },
-    
-
+    ADM:{
+        type: Sequelize.BOOLEAN,
+        require: true
+    }
 })
 
 const init = async () =>{

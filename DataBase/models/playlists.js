@@ -8,15 +8,26 @@ const playlists = sequelize.define('playlists',{
         autoIncrement: true,
         primaryKey: true
     },
+    nome_play:{
+        type: Sequelize.STRING,
+        require:true,
+    },
+    codigo_play:{
+        type: Sequelize.STRING,
+        require:true,
+    },
     id_usuario:{
         type: Sequelize.INTEGER,
-        references: {
-            model: 'cadastros',
-            key: 'id'
-        }
+        require:true
+    },
+    foto_play:{
+        type: Sequelize.TEXT
     },
     musicas:{
-        type: Sequelize.JSON
+        type: Sequelize.STRING
+    },
+    publica:{
+        type: Sequelize.BOOLEAN
     }
 })
 

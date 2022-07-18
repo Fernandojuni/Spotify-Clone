@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt_BR">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,97 +30,190 @@
 
 </head>
 <body>
-<div class="sidebar">
-    <div class="sidebar-wraper">
-        <div class="sidebar-logo">
-            <a href="/inicio"><img src="img/logo_2.png" alt=""></a>
-        </div>
-        <div class="sidebar-menu">
-            <a class="sidebar-menu-selecionado" href="/inicio"><span class="fas fa-home"></span>Inicio</a>
-            <a href="#"><span class="fas fa-search"></span>Buscar</a>
-            <a id="addMusica" style="display:  inline;" onclick="adicionarMusica()" href="#"><span class="fas fa-database"></span>Adicionar musica</a>
-        </div>
-        <div style="margin-left: 30px;" class="sidebar-menu">
-            <p class="sidebar-menu-title">Playlists</p>
-            <div onclick="criarPlay()" class="sidebar-menu-item">
-                <div class="sidebar-menu-item-componente"> + </div>
-                <span>Criar Playlist</span>
-            </div>
-            <div class="sidebar-menu-item">
-                <img src="img/musicas-curtidas.jpeg" alt="">
-                <span>Musicas Curtidas</span>
-            </div>
-        </div>
-        
-        <div class="sidebar-playlists">
-            
-            
-            
-        </div>
-    </div>
-</div>
-<div id="popup_criar_play" style="display: none;">
-    <form action="/telaPrincipal/playlistCriar" method="post">
-        <input type="text" name="NomePlay" id="nomePlay" placeholder=" Nome da Playlist" required> <br>
-        <button onclick="PlayCriar()" id="btnEnviarARQ">ENVIAR</button>
-    </form>
-</div>
 
+<%- include('reusable/sideBar.ejs',{inicio:true})  %> 
 
 <div id="main">
     <div id="main-top">
         <div id="main-top-col">
             <div id="avancarVoltar">
-                <a ><span id="voltarPag" class="material-symbols-outlined">chevron_left</span></a>
-                <a ><span id="avancarPag" class="material-symbols-outlined">navigate_next</span></a>
+                <a ><span translate="no" id="voltarPag" class="material-symbols-outlined">chevron_left</span></a>
+                <a ><span translate="no" id="avancarPag" class="material-symbols-outlined">navigate_next</span></a>
                 
             </div>
 
-            <a href="#" style="position: relative; left: 42%;"><input id="facaUpgrade" type="submit" value="Faça upgrade"></a>
-
+            <a href="#" style="position: relative; left: 42%;"><input translate="no" id="facaUpgrade" type="submit" value="Faça upgrade"></a>
+            
             <div id="perfil" onclick="abrirPopupPerfil()">
-                <img src="img/perfil-vazio.jpg" alt="">
-                <% if (usuario == "adm") { %>
-                    <span id="Nomeusuario" style="color:red; font-weight: bold; text-transform: uppercase;"><%= usuario %> </span>
-                <% }else{%>
-                    <span id="Nomeusuario" style="color:white; font-weight: normal;"><%= usuario %> </span>
+                <% if (result.foto_perfil == null) { %>
+                    <img src="img/perfil-vazio.jpg" alt="">
+                <% }else{ %>
+                    <img src="<%= result.foto_perfil %> " alt="">
                 <% } %>
+                <span id="Nomeusuario" style="color:white; font-weight: normal;"><%= result.nome_usuario  %> </span>
                 
-                <span id="abrirPerfil" style="display: block; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_down</span>
-                <span id="fecharPerfil" style="display: none; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_up</span>
+                
+                <span translate="no" id="abrirPerfil" style="display: block; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_down</span>
+                <span translate="no" id="fecharPerfil" style="display: none; margin-top: 3px;" class="material-symbols-outlined">arrow_drop_up</span>
             </div>
             <div id="popup-perfil">
                 <ul style="list-style: none;">
                     <a href=""><li>Conta</li><img style="width: 20px; height: 20px; position: relative; left: 69%; margin-top: 8px; " src="img/open_in_new.png" alt=""></a>
-                    <a href="/user"><li>Perfil</li></a>
+                    <a href="/user/<%= result.codigo_user  %>" ><li>Perfil</li></a>
                     <a href=""><li style="white-space: nowrap;">Faça upgrade para o Premium</li><img style="width: 20px; height: 20px; margin-left: 7px; margin-top: 8px; " src="img/open_in_new.png" alt=""></a>
                     <a href="/logout"><li>Sair</li></a>
                 </ul>
                 <br>
-                
             </div>
         </div>
     </div>
     
-    <div class="main-wraper">
+    <div  class="main-wraper">
         
         <div class="main-row">
             <div class="main-row-title"><h2>Musicas</h2></div>
-            
+            <% musica.forEach((musica,index) => { %>
+                <div data-id="<%= index %>" data-musica="<%= musica.id %> " class="main-col">
+                    <img src="<%= musica.posterPath %> ">
+                    <h3 style="text-overflow: ellipsis; font-size: 17px; overflow: hidden; white-space: nowrap; "><%= musica.nomeBanda %> </h3>
+                    <p style="text-overflow: ellipsis; font-size: 14px; overflow: hidden; white-space: nowrap; "><%= musica.nomeMusica %> </p>
+                </div>
+            <% }) %>
         </div>
+
     </div>
 </div>
 
 
-<%- include("reusable/player.ejs") %> 
 
-    
-    
-<audio id="audioplayer" style="position: absolute;left: 0; top: 0; z-index: -999; opacity: 0;" controls="controls" src=""></audio>
+<%- include("reusable/player.ejs", {playlist: playlist}) %> 
+
+
+
+
+<audio id="audioplayer" style="position: absolute;left: 0; top: 0; z-index: -999; opacity: 0;" controls="controls" src="<%#= musica.filter((value)=>{value.id == }) %> "></audio>
 
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="js/all.min.js"></script>
 <script src="js/inicio.js"></script>
+<script>
+    
+    var audioplayer = document.getElementById('audioplayer')
+
+    var volumeMaximo = document.getElementById('volume-maximo')
+    var volumeMutado = document.getElementById('volume-mutado')
+    var volumeBaixo = document.getElementById('volume-baixo')
+
+    var playbtn = document.getElementById('playbtn')
+    var pausebtn = document.getElementById('pausebtn')
+
+    var range = document.getElementById('volume')
+
+    var main = document.getElementById("main")
+    var playerArtistComponent = document.getElementsByClassName('player-artist')
+
+    var popup_criar_play = document.getElementById('popup_criar_play')
+
+
+
+    var main_top = document.getElementById('main-top')
+
+
+    var popup_perfil = document.getElementById("popup-perfil")
+
+    var songIndex = 0
+    var songID = 0
+
+    var songList = JSON.parse('<%- JSON.stringify(musica)%>')
+
+    var enviarPlay = document.getElementById('enviarPlay')
+    function criarPlay(){
+        enviarPlay.click()
+    }
+
+
+
+    audioplayer.onended = ()=>{
+        if (songIndex >= songList.length -1) {
+            songIndex = 0
+            iniciarMusica()
+            return
+        }
+        songIndex++
+        iniciarMusica()
+    }
+
+
+    document.querySelectorAll('.main-col').forEach(item =>{
+    item.addEventListener('click', event=>{
+        let id = item.getAttribute('data-id')
+        let idMusica = item.getAttribute('data-musica')
+        songID = idMusica
+        songIndex = id
+        iniciarMusica()
+        })
+    })
+
+    function zerarplayer(){
+        playerArtistComponent[0].innerHTML = ""
+        audioplayer.src = ""
+        progress2.style.width = 0
+        tempo_total.innerHTML = "00:00"
+    }
+
+    function voltar() {
+        if (songIndex == 0) {
+            songIndex = songList.length-1
+            iniciarMusica()
+            return
+        }
+        songIndex--
+        iniciarMusica()
+    }
+
+    function avancar() {
+        if (songIndex >= songList.length -1) {
+            songIndex = 0
+            iniciarMusica()
+            return
+        }
+        songIndex++
+        iniciarMusica()
+    }
+    function alearioAtv() {
+        clicks2++
+        if (clicks == 2 || clicks == 0) {
+            console.log(clicks2);
+            if (clicks2 == 1) {
+                document.getElementById('aleario').style.color = "#00ff37"
+            }
+            if (clicks2 == 2) {
+                document.getElementById('aleario').style.color = "rgb(180, 179, 179)"
+                clicks2 = 0
+            }
+        }
+    }
+    //funcao de iniciar musica
+    function iniciarMusica(){
+        audioplayer.src = songList[songIndex].audioPath
+        document.getElementById('musicaAtual').value = songID
+        playerArtistComponent[0].innerHTML = `<img src="`+songList[songIndex].posterPath+`"/> <h3>`+songList[songIndex].nomeBanda+`<br/><span>`+songList[songIndex].nomeMusica+`</span></h3>`
+            
+        if (songIndex > songList.length) {
+            songIndex = 0
+        }
+        audioplayer.play()
+        audioplayer.onloadeddata = function() {
+            var data = new Date(null);
+            data.setSeconds(audioplayer.duration);
+            var duracao = data.toISOString().substr(14, 5);
+            tempo_total.innerHTML = duracao
+        };
+        playbtn.style.display = "none"
+        pausebtn.style.display = "inline"
+    }
+    
+</script>
 </body>
 </html>

@@ -67,7 +67,6 @@ body{
     transition: 0.1s;
 }
 hr {
-
     unicode-bidi: isolate;
     margin-block-start: 0.5em;
     margin-block-end: 0.5em;
