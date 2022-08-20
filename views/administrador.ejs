@@ -21,9 +21,6 @@
             <form action="/addADM" method="post">
                 <select name="user" id="user">
                     <option selected disabled value style="color: #777777;">Nome do Usuario</option>
-                    <% users.forEach(element => { %>
-                        <option value="<%= element.codigo_user %>"><%= element.nome_usuario %></option>
-                    <% }) %>
                 </select>
             </form>
         </div>
