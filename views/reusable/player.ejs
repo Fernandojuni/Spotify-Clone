@@ -234,14 +234,14 @@ a{
     </div>
     <a onclick="ADDplaylis()" id="ADDplaylist"><span translate="no" class="material-icons-outlined">playlist_add</span></a>
     <div id="popupAddPlaylist" style="display:none;">
-        <% playlist.forEach(element => { %>
-            <form action="/AddPlay" method="post">
-                <input type="text" name="playlist"  value="<%= element.codigo_play %>" hidden>
+        <%# playlist.forEach(element => { %>
+            <!-- <form action="/AddPlay" method="post">
+                <input type="text" name="playlist"  value="<%#= element.codigo_play %>" hidden>
                 <input type="text" id="musicaAtual" name="musicaAtual" hidden>
-                <button type="submit"><%= element.nome_play %></button>
+                <button type="submit"><%#= element.nome_play %></button>
                 <hr>
-            </form>
-        <% }) %> 
+            </form> -->
+        <%# }) %> 
     </div>
 
     <div class="player-control-volume">

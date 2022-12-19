@@ -58,21 +58,15 @@ const upload = multer({ storage });
 //-------------Banco de dados--------------
 
 
-const cadastros = require('./DataBase/models/cadastros')
-const musicas = require('./DataBase/models/musicas')
-const playlists = require('./DataBase/models/playlists')
+const dados = require('./DataBase/dados')
+
 
 //------------------POST-----------------
 
 app.post('/alth',(req,res)=>{
     let login = req.body.email
     let senha2 = req.body.password
-    cadastros.findOne({
-        where:{
-            email: req.body.email,
-            senha: req.body.password
-        }
-    }).then((result)=>{
+    dados.findOne('users',req.body.email).then((result)=>{
         if (result) {           
             if (login == result.email && senha2 == result.senha) {
                 if (result.ADM == true) {
@@ -91,16 +85,12 @@ app.post('/alth',(req,res)=>{
 
 app.post('/althCadastro',(req,res)=>{
     
-    cadastros.findOne({
-        where:{
-            email: req.body.login
-        }
-    }).then((cadastrado)=>{
+    dados.findOne('users',req.body.login).then((cadastrado)=>{
         if (cadastrado) {
             res.redirect('/cadastro?cadastrado=false')
         }else{
             const codigo = require('crypto').randomBytes(22).toString('hex') + "-User";
-            cadastros.create({
+            dados.create('users',req.body.login,{
                 email: req.body.login,
                 senha: req.body.password,
                 codigo_user: codigo,
@@ -109,7 +99,7 @@ app.post('/althCadastro',(req,res)=>{
                 data_aniversario_dia:req.body.dia,
                 data_aniversario_mes:req.body.mes,
                 data_aniversario_ano:req.body.ano,
-                genero: undefined,
+                genero: null,
                 premium: false,
                 ADM: true
             }).then(function(){
@@ -153,7 +143,7 @@ app.post('/addMusica', upload.fields([{name: 'audio', maxCount: 1},{name: 'poste
     fs.unlink(__dirname + "/uploads/"+ req.body.nomeAudio, function (err){
         if (err) throw err;
     })
-    musicas.create({
+    dados.create('musicas',{
         nomeMusica: req.body.nomeMusica,
         nomeBanda:req.body.nomeBanda,
         tags: null,
@@ -170,8 +160,8 @@ app.post('/criarPlay',(req,res)=>{
     const codigo = require('crypto').randomBytes(22).toString('hex') + "-Playlist";
 
     if (req.session.adm) {
-        cadastros.findOne({where:{email:req.session.adm}}).then((result)=>{
-            playlists.create({
+        dados.findOne('users',req.session.adm).then((result)=>{
+            dados.create('playlists',{
                 nome_play: req.body.playlistName,
                 codigo_play: codigo,
                 id_usuario: result.id,
@@ -182,8 +172,8 @@ app.post('/criarPlay',(req,res)=>{
         })
         res.redirect('/inicio')
     }else{
-        cadastros.findOne({where:{email:req.session.login}}).then((result)=>{
-            playlists.create({
+        dados.findOne('users',req.session.login).then((result)=>{
+            dados.create('playlists',{
                 nome_play: req.body.playlistName,
                 codigo_play: codigo,
                 id_usuario: result.id,
@@ -201,18 +191,14 @@ app.post("/playlist/:codigo",upload.single('file'),(req,res)=>{
     })
     var imgSrc = "data:" + req.body.mimetype +";base64," + imageBase64
 
-    playlists.update({foto_play: imgSrc},{where:{codigo_play: req.params.codigo}})
+    //playlists.update({foto_play: imgSrc},{where:{codigo_play: req.params.codigo}})
 
     res.redirect('/playlist/'+ req.params.codigo)
 })
 
 app.post('/AddPlay',(req,res)=>{
     let musicaAtual = req.body.musicaAtual
-    playlists.findOne({
-        where:{
-            codigo_play: req.body.playlist
-        }
-    }).then((result)=>{
+    dados.findOne('playlists',req.body.playlist).then((result)=>{
         let musicasPlay = ""
         if (result.musicas == null || result.musicas == "null") {
             musicasPlay = musicaAtual
@@ -220,18 +206,18 @@ app.post('/AddPlay',(req,res)=>{
             musicasPlay = result.musicas + "," + musicaAtual
         }
         
-        playlists.update({musicas:musicasPlay},{where:{codigo_play: req.body.playlist}})
+        //playlists.update({musicas:musicasPlay},{where:{codigo_play: req.body.playlist}})
         res.redirect("/inicio")
     })
 })
 
 app.post("/editPlay/:codigo",(req,res)=>{
-    playlists.update({nome_play:req.body.nome_play},{where:{codigo_play: req.params.codigo}})
+    //playlists.update({nome_play:req.body.nome_play},{where:{codigo_play: req.params.codigo}})
     res.redirect("/playlist/"+req.params.codigo)
 })
 
 app.post("/editUser/:codigo",(req,res)=>{
-    cadastros.update({nome_usuario:req.body.nome_play},{where:{codigo_user: req.params.codigo}})
+    //cadastros.update({nome_usuario:req.body.nome_play},{where:{codigo_user: req.params.codigo}})
     res.redirect("/user/"+req.params.codigo)
 })
 
@@ -282,30 +268,22 @@ app.get('/cadastro',(req,res)=>{
 //
 app.get('/inicio',(req,res)=>{
     if (req.session.adm || req.session.login ) {
-        musicas.findAll().then((musica)=>{
+        dados.findAll('musicas').then((musica)=>{
             if (req.session.adm) {
-                cadastros.findOne({
-                    where:{
-                        email: req.session.adm
-                    }
-                }).then((result)=>{ 
-                    playlists.findAll({where:{id_usuario:result.id}}).then((playlist)=>{
-                        res.render('inicio',{result:result, musica:musica, playlist:playlist})
-                    })
+                dados.findOne('users',req.session.adm).then((result)=>{ 
+                    //playlists.findAll({where:{id_usuario:result.id}}).then((playlist)=>{
+                        res.render('inicio',{result:result, musica:musica, })//playlist:playlist
+                    //})
                 }).catch((err)=>{
                     console.log('erro:'+ err);
                 })
                 
                 
             }else{
-                cadastros.findOne({
-                    where:{
-                        email: req.session.login
-                    }
-                }).then((result)=>{
-                    playlists.findAll({where:{id:result.id}}).then((playlist)=>{
-                        res.render('inicio',{result:result, musica:musica, playlist:playlist})
-                    }) 
+                dados.findOne('users',req.session.login).then((result)=>{
+                    //playlists.findAll({where:{id:result.id}}).then((playlist)=>{
+                        res.render('inicio',{result:result, musica:musica, })//playlist:playlist
+                    //}) 
                 }).catch((err)=>{
                     console.log('erro:'+ err);
                 })
@@ -330,36 +308,26 @@ app.get('/logout',(req,res)=>{
 
 app.get('/user/:codigo' ,(req,res)=>{
     if (req.session.adm || req.session.login ) {
-        cadastros.findOne({
-            where:{
-                codigo_user: req.params.codigo
-            }
-        }).then((result)=>{
+        dados.findOne('users',req.params.codigo).then((result)=>{
             if (result) {
                 if (result.email == req.session.login || result.email == req.session.adm) {
-                    playlists.findAll({where:{id_usuario:result.id}}).then((playlist)=>{
-                        res.render('user',{usuario:result, userAtual:result,playlist:playlist})
-                    })
+                    //playlists.findAll({where:{id_usuario:result.id}}).then((playlist)=>{
+                        res.render('user',{usuario:result, userAtual:result,})//playlist:playlist
+                    //})
                     
                 }else{
                     if (req.session.adm) {
-                        cadastros.findOne({
-                            where:{
-                                email:req.session.adm
-                        }}).then((userAtual)=>{
-                            playlists.findAll({where:{id_usuario:userAtual.id}}).then((playlist)=>{
-                                res.render('Visualizar_User',{usuario:result, userAtual:userAtual,playlist:playlist})
-                            })
+                        dados.findOne('users',req.session.adm).then((userAtual)=>{
+                            //playlists.findAll({where:{id_usuario:userAtual.id}}).then((playlist)=>{
+                                res.render('Visualizar_User',{usuario:result, userAtual:userAtual,})//playlist:playlist
+                            //})
                            
                         })
                     }else{
-                        cadastros.findOne({
-                            where:{
-                                email:req.session.login
-                        }}).then((userAtual)=>{
-                            playlists.findAll({where:{id_usuario:userAtual.id}}).then((playlist)=>{
-                                res.render('Visualizar_User',{usuario:result, userAtual:userAtual, playlist:playlist})
-                            })
+                        dados.findOne('users',req.session.login).then((userAtual)=>{
+                            //playlists.findAll({where:{id_usuario:userAtual.id}}).then((playlist)=>{
+                                res.render('Visualizar_User',{usuario:result, userAtual:userAtual, })//playlist:playlist
+                            //})
                         })
                     }
                 }

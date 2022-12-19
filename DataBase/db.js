@@ -1,20 +1,19 @@
-const { Sequelize } = require("sequelize")
+const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
+const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
+var admin = require("firebase-admin");
+require('dotenv').config()
 
-const sequelize = new Sequelize(process.env.DATABASE_URL,{
-    dialectOptions:{
-        ssl:{
-            rejectUnauthorized:false,
-        },
-    }
-})
+var serviceAccount = JSON.parse(process.env.FIREBASE_DATA)
 
 
 
-sequelize
-    .authenticate()
-    .then(()=> console.log('Conexão estabelecida com sucesso!!!'))
-    .catch((err)=> console.error("Erro ao se conectar com o banco de dados: ",err))
+initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: process.env.DATABASE_URL
+});
 
 
 
-module.exports = sequelize;
+const db = getFirestore();
+
+module.exports = db

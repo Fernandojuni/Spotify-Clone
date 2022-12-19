@@ -14,7 +14,7 @@
                 <div onclick="criarPlay()" class="sidebar-menu-item">
                     <div class="sidebar-menu-item-componente"> + </div>
                     <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">Criar Playlist</span>
-                    <input type="text" name="playlistName" value="Minha Playlist nº <%= playlist.length + 1 %>" hidden>
+                    <input type="text" name="playlistName" value="Minha Playlist nº <%#= playlist.length + 1 %>" hidden>
                     <input type="submit" id="enviarPlay" hidden>
                 </div>
             </form>
@@ -25,9 +25,9 @@
         </div>
         
         <div style="margin-left: 25px;" class="sidebar-playlists">
-            <% playlist.forEach(element => { %>
-                <a href="/playlist/<%= element.codigo_play %>"><%= element.nome_play %></a>
-            <% }) %>
+            <%# playlist.forEach(element => { %>
+                <!-- <a href="/playlist/<%#= element.codigo_play %>"><%#= element.nome_play %></a> -->
+            <%# }) %>
         </div>
     </div>
 </div>
